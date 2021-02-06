@@ -1,0 +1,68 @@
+local Luminosity = loadstring(game:HttpGet("https://raw.githubusercontent.com/iHavoc101/Genesis-Studios/main/UserInterface/Luminosity.lua", true))()
+
+local Window = Luminosity.new("Clicker Madness!", "By: 10x", 4370345701)
+
+local Tab1 = Window.Tab("Tab 1", 6026568198)
+
+local Folder = Tab1.Folder("Main", "A bunch of farms you can use")
+
+game:GetService("Workspace").ScriptObjects.BasePickup.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame 
+
+Folder.Switch("Auto Click", function(value)
+_G.Autoclick = (value)
+while _G.Autoclick and wait() do
+game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.ClickService.Click:FireServer(999999999999999999999999999999999)
+end
+end)
+
+
+Folder.Switch("Auto Beast Mode", function(value)
+_G.Autobegien = (value)
+while _G.Autobegien and wait(3) do
+game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.BeastModeService.Begin:FireServer()
+end
+end)
+
+Folder.Switch("Auto Rebirth", function(value)
+_G.Rebirth = (value)
+while _G.Rebirth and wait() do
+game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.RebirthService.BuyRebirths:FireServer(100)
+end
+end)
+
+Folder.Switch("Auto TP Gems", function(value)
+_G.Gems = (value)
+while _G.Gems and wait() do
+game:GetService("Workspace").ScriptObjects.BasePickup.HumanoidRootPart.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame 
+end
+end)
+
+local Folder1 = Tab1.Folder("Extra", "Stuff")
+
+Folder1.Switch("Auto Upgrade (All Stats)", function(value)
+_G.AutoStat = (value)
+while _G.AutoStat and wait(5) do
+game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.UpgradeService.BuyUpgrade:FireServer("ClickMultiply")
+wait(0.8)
+game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.UpgradeService.BuyUpgrade:FireServer("CursorDamage")
+wait(0.8)
+game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.UpgradeService.BuyUpgrade:FireServer("Health")
+wait(0.8)
+game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.UpgradeService.BuyUpgrade:FireServer("JumpPower")
+wait(0.8)
+game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.UpgradeService.BuyUpgrade:FireServer("PetStorage")
+wait(0.8)
+game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.UpgradeService.BuyUpgrade:FireServer("Walkspeed")
+wait(5)
+end
+end)
+
+Folder1.Button("Unlock Gamepasses", "Click", function()
+game:GetService("Players").BloodxVibezz.Gamepasses.VIP.Value = true
+game:GetService("Players").BloodxVibezz.Gamepasses.DoubleClicks.Value = true
+game:GetService("Players").BloodxVibezz.Gamepasses.TripleHatch.Value = true
+game:GetService("Players").BloodxVibezz.Gamepasses.UnlimitedPets.Value = true
+game:GetService("Players").BloodxVibezz.Gamepasses.DoubleGems.Value = true
+game:GetService("Players").BloodxVibezz.Gamepasses.Luck.Value = true
+game:GetService("Players").BloodxVibezz.Gamepasses.ExplosiveCursors.Value = true
+end)
