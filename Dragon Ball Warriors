@@ -1,0 +1,70 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Vape%20UI%20Lib"))();
+
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Vape%20UI%20Lib"))();
+
+local win = lib:Window("Dragon Ball Warriors",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl)
+
+local tab = win:Tab("Main")
+
+tab:Toggle("Auto Train Attack", function(value)
+    _G.AutoAttack = value
+    while _G.AutoAttack and wait() do
+    local a={[1]=game:GetService("Players").LocalPlayer.Statics,[2]={["LeftLowerArm"]=game:GetService("Players").LocalPlayer.Character.LeftLowerArm,["RightUpperArm"]=game:GetService("Players").LocalPlayer.Character.RightUpperArm,["LeftFoot"]=game:GetService("Players").LocalPlayer.Character.LeftFoot,["RightHand"]=game:GetService("Players").LocalPlayer.Character.RightHand,["RightLowerArm"]=game:GetService("Players").LocalPlayer.Character.RightLowerArm,["LeftUpperLeg"]=game:GetService("Players").LocalPlayer.Character.LeftUpperLeg,["LeftUpperArm"]=game:GetService("Players").LocalPlayer.Character.LeftUpperArm,["Character"]=game:GetService("Players").LocalPlayer.Character,["LeftHand"]=game:GetService("Players").LocalPlayer.Character.LeftHand,["RightFoot"]=game:GetService("Players").LocalPlayer.Character.RightFoot,["Humanoid"]=game:GetService("Players").LocalPlayer.Character.Humanoid,["RightLowerLeg"]=game:GetService("Players").LocalPlayer.Character.RightLowerLeg,["RightUpperLeg"]=game:GetService("Players").LocalPlayer.Character.RightUpperLeg,["LeftLowerLeg"]=game:GetService("Players").LocalPlayer.Character.LeftLowerLeg},[3]=game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,[4]="no sos"}game:GetService("ReplicatedStorage").Events.GOLPE:InvokeServer(unpack(a))
+    end;
+end);
+
+tab:Toggle("Auto Train KI", function(value)
+    _G.AutoKI = value
+    while _G.AutoKI and wait() do
+    local a={[1]="KiBlast",[2]=game:GetService("Players").LocalPlayer.Status,[3]=game:GetService("Players").LocalPlayer.Statics,[4]=game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,[5]=game:GetService("Players").LocalPlayer.Character.RightHand,[6]=game:GetService("Players").LocalPlayer.Character,[7]="no sos"}game:GetService("ReplicatedStorage").Events.DOKAMEHAME:InvokeServer(unpack(a))
+    end;
+end);
+
+tab:Toggle("Auto Train Agility", function(value)
+    _G.AutoAgility = value
+    while _G.AutoAgility and wait() do
+    local a={[1]=true,[2]={["Humanoid"]=game:GetService("Players").LocalPlayer.Character.Humanoid,["HumanoidRootPart"]=game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,["Stats"]=game:GetService("Players").LocalPlayer.Statics},[3]=CFrame.new(Vector3.new(3330.685546875,34.922386169434,3381.9970703125),Vector3.new(-0.7317196726799,-0.21320308744907,-0.64740318059921))}game:GetService("ReplicatedStorage").Remotes.Training.Flight:InvokeServer(unpack(a))
+    game:GetService("ReplicatedStorage").Remotes.Training.FlightData:FireServer()
+    if not _G.AutoAgility then
+    local a={[1]=false}game:GetService("ReplicatedStorage").Remotes.Training.Flight:InvokeServer(unpack(a))
+    end;
+    end;
+end);
+
+tab:Toggle("Auto Train Defense", function(value)
+    _G.AutoDef = value
+    while _G.AutoDef and wait() do
+    local a={[1]=game:GetService("Players").LocalPlayer.Statics,[2]=game:GetService("Players").LocalPlayer.Status,[3]=game:GetService("Players").LocalPlayer.Character.Humanoid,[4]=game:GetService("Players").LocalPlayer.Character.RightHand,[5]="no sos"}game:GetService("ReplicatedStorage").Events.IDURODEEEE:InvokeServer(unpack(a))
+    end;
+end);
+
+local tab1 = win:Tab("Extra")
+
+tab1:Label("Modes Don't Save")
+
+tab1:Textbox("Form To Unlock",true, function(value)
+    FORM = value  
+    local a={[1]={[1]={[1]=FORM,[2]=1,[3]=1,[4]=1},[2]="Modes"}}game:GetService("ReplicatedStorage").Events.DameGuissss:InvokeServer(unpack(a))
+end);
+
+tab1:Textbox("KI Attack To Unlock",true, function(value)
+    KI = value
+    local a={[1]={[1]={[1]=KI,[2]=1,[3]=1,[4]=1},[2]="Energy"}}game:GetService("ReplicatedStorage").Events.DameGuissss:InvokeServer(unpack(a))
+end);
+
+tab1:Textbox("Attack To Unlock",true, function(value)
+    ATTACK = value
+    local a={[1]={[1]={[1]=ATTACK,[2]=1,[3]=1,[4]=1},[2]="Combat"}}game:GetService("ReplicatedStorage").Events.DameGuissss:InvokeServer(unpack(a))
+end);
+
+tab1:Button("Unlock Gamepasses", function()
+    lib:Notification("Notification", "Unlocked Gamepasses!", "Okay!")
+    game:GetService("Players").LocalPlayer.Gamepasses.CreatorBreaker.Value = true
+    game:GetService("Players").LocalPlayer.Gamepasses.SSJ100.Value = true
+    game:GetService("Players").LocalPlayer.Gamepasses.EILOKEN.Value = true
+    game:GetService("Players").LocalPlayer.Gamepasses.NoLimit.Value = true
+    game:GetService("Players").LocalPlayer.Gamepasses.SSJ5.Value = true
+    game:GetService("Players").LocalPlayer.Gamepasses.KiTraining.Value = true
+    game:GetService("Players").LocalPlayer.Gamepasses.LSSJG3.Value = true
+    game:GetService("Players").LocalPlayer.Gamepasses.FasterTraining.Value = true
+end);
