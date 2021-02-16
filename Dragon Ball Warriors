@@ -1,5 +1,3 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Vape%20UI%20Lib"))();
-
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Vape%20UI%20Lib"))();
 
 local win = lib:Window("Dragon Ball Warriors",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl)
