@@ -1,0 +1,143 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Vape%20UI%20Lib"))();
+
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Vape%20UI%20Lib"))();
+
+local win = lib:Window("Dragon Ball Rage",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl)
+
+local tab = win:Tab("Main")
+
+tab:Toggle("Auto Train Attack", function(value)
+    _G.AutoAttack = value
+    while _G.AutoAttack and wait() do
+    game:GetService("ReplicatedStorage").Remotes.Training.Combat:InvokeServer()
+    end;
+end);
+
+tab:Toggle("Auto Train KI", function(value)
+    _G.AutoKI = value
+    while _G.AutoKI and wait() do
+    game:GetService("ReplicatedStorage").Remote.KiBlast:InvokeServer()
+    end;
+end);
+
+tab:Toggle("Auto Train Defense", function(value)
+    _G.AutoDefense = value
+    while _G.AutoDefense and wait() do
+    local a={[1]=game:GetService("Players").LocalPlayer.Stats,[2]=game:GetService("Players").LocalPlayer.Status,[3]=game:GetService("Players").LocalPlayer.Character.Humanoid,[4]=game:GetService("Players").LocalPlayer.Character.RightHand}game:GetService("ReplicatedStorage").Remotes.Training.Defense:InvokeServer(unpack(a))
+    end;
+end);
+
+tab:Toggle("Auto Charge", function(value)
+    _G.AutoCharge = value
+    while _G.AutoCharge do
+    local a={[1]=false}game:GetService("ReplicatedStorage").Remotes.Training.Charge:InvokeServer(unpack(a))
+    if _G.AutoCharge == false then
+    game:GetService("ReplicatedStorage").Remotes.Training.ChargeFinish:FireServer()
+        end;
+    end;
+end);
+
+local tabx = win:Tab("Agility Farm")
+
+tabx:Toggle("Step 1", function(value)
+    _G.Farm = value
+
+    while _G.Farm and wait() do
+    local args = {
+        [1] = true,
+        [2] = {
+            ["HumanoidRootPart"] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+            ["Humanoid"] = game:GetService("Players").LocalPlayer.Character.Humanoid
+        },
+        [3] = CFrame.new(Vector3.new(-1960.7841796875, 78.054016113281, 397.64581298828), Vector3.new(-0.94256043434143, -0.1714108735323, -0.2867020368576))
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.Training.Flight:InvokeServer(unpack(args))
+    end;
+end)
+
+tabx:Toggle("Step 2", function(value)
+_G.Step2 = value
+
+while _G.Step2 and wait() do
+local args = {
+    [1] = true
+}
+
+game:GetService("ReplicatedStorage").Remotes.Training.FlightData:FireServer(unpack(args))
+end;
+end)
+
+local tab1 = win:Tab("LocalPlayer")
+
+tab1:Slider("Walkspeed",0,100,30, function(value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end)
+
+tab1:Slider("Jump power",0,100,30, function(value)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
+end)
+
+local tab0 = win:Tab("Extra")
+
+tab0:Toggle("Unlock Gamepasses", function(value)
+    if _G.Gamepasses then
+        game:GetService("Players").LocalPlayer.Gamepasses.DefenseTraining.Value = true
+        game:GetService("Players").LocalPlayer.Gamepasses.CustomMusic.Value = true
+        game:GetService("Players").LocalPlayer.Gamepasses.Omega.Value = true
+        game:GetService("Players").LocalPlayer.Gamepasses.FasterTraining.Value = true
+        game:GetService("Players").LocalPlayer.Gamepasses.FurySSJ.Value = true
+        game:GetService("Players").LocalPlayer.Gamepasses.CustomColor.Value = true
+        game:GetService("Players").LocalPlayer.Gamepasses.LimitBreaker.Value = true
+        game:GetService("Players").LocalPlayer.Gamepasses.KiTraining.Value = true
+        game:GetService("Players").LocalPlayer.Gamepasses.Scouter.Value = true
+        game:GetService("Players").LocalPlayer.Gamepasses.SSJ5.Value = true
+        game:GetService("Players").LocalPlayer.Gamepasses.LSSJG.Value = true
+        elseif not _G.Gamepasses then
+        game:GetService("Players").LocalPlayer.Gamepasses.DefenseTraining.Value = false
+        game:GetService("Players").LocalPlayer.Gamepasses.CustomMusic.Value = false
+        game:GetService("Players").LocalPlayer.Gamepasses.Omega.Value = false
+        game:GetService("Players").LocalPlayer.Gamepasses.FasterTraining.Value = false
+        game:GetService("Players").LocalPlayer.Gamepasses.FurySSJ.Value = false
+        game:GetService("Players").LocalPlayer.Gamepasses.CustomColor.Value = false
+        game:GetService("Players").LocalPlayer.Gamepasses.LimitBreaker.Value = false
+        game:GetService("Players").LocalPlayer.Gamepasses.KiTraining.Value = false
+        game:GetService("Players").LocalPlayer.Gamepasses.Scouter.Value = false
+        game:GetService("Players").LocalPlayer.Gamepasses.SSJ5.Value = false
+        game:GetService("Players").LocalPlayer.Gamepasses.LSSJG.Value = false
+    end;
+end);
+
+tab0:Button("Safe Farm", function()
+    Local = game:GetService('Players').LocalPlayer
+    Char  = Local.Character
+    
+    box = Instance.new('Part',workspace)
+    box.Anchored = true
+    box.CanCollide = true
+    box.Size = Vector3.new(10,1,10)
+    box.Position = Vector3.new(0,10000,0)
+    box.Touched:connect(function(part)
+       if (part.Parent.Name == Local.Name) then
+           if touched == false then
+               touched = true
+               function apply()
+                   if script.Disabled ~= true then
+                       no = Char.HumanoidRootPart:Clone()
+                       wait(.25)
+                       Char.HumanoidRootPart:Destroy()
+                       no.Parent = Char
+                       Char:MoveTo(loc)
+                       touched = false
+                   end end
+               if Char then
+                   apply()
+               end
+           end
+       end
+    end)
+    repeat wait() until Char
+    loc = Char.HumanoidRootPart.Position
+    Char:MoveTo(box.Position + Vector3.new(0,.5,0))
+    print("Platform Loaded")
+end);
