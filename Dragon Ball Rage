@@ -4,7 +4,7 @@ local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Too
 
 local win = lib:Window("Dragon Ball Rage",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl)
 
-local tab = win:Tab("Main")
+local tab = win:Tab("Main");
 
 tab:Toggle("Auto Train Attack", function(value)
     _G.AutoAttack = value
@@ -40,6 +40,18 @@ end);
 local tabx = win:Tab("Agility Farm")
 
 tabx:Toggle("Step 1", function(value)
+    _G.Step2 = value
+    
+    while _G.Step2 and wait() do
+    local args = {
+        [1] = true
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.Training.FlightData:FireServer(unpack(args))
+    end;
+end);
+
+tabx:Toggle("Step 2", function(value)
     _G.Farm = value
 
     while _G.Farm and wait() do
@@ -54,29 +66,18 @@ tabx:Toggle("Step 1", function(value)
     
     game:GetService("ReplicatedStorage").Remotes.Training.Flight:InvokeServer(unpack(args))
     end;
-end)
+end);
 
-tabx:Toggle("Step 2", function(value)
-_G.Step2 = value
-
-while _G.Step2 and wait() do
-local args = {
-    [1] = true
-}
-
-game:GetService("ReplicatedStorage").Remotes.Training.FlightData:FireServer(unpack(args))
-end;
-end)
 
 local tab1 = win:Tab("LocalPlayer")
 
 tab1:Slider("Walkspeed",0,100,30, function(value)
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
-end)
+end);
 
 tab1:Slider("Jump power",0,100,30, function(value)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
-end)
+end);
 
 local tab0 = win:Tab("Extra")
 
@@ -108,6 +109,42 @@ tab0:Toggle("Unlock Gamepasses", function(value)
     end;
 end);
 
+tab0:Toggle("Loop Safe Farm", function(value)
+    _G.LoopS = value
+    Local = game:GetService('Players').LocalPlayer
+    Char  = Local.Character
+    
+    box = Instance.new('Part',workspace)
+    box.Anchored = true
+    box.CanCollide = true
+    box.Size = Vector3.new(10,1,10)
+    box.Position = Vector3.new(0,10000,0)
+    box.Touched:connect(function(part)
+       if (part.Parent.Name == Local.Name) then
+           if touched == false then
+               touched = true
+               function apply()
+                   if script.Disabled ~= true then
+                       no = Char.HumanoidRootPart:Clone()
+                       wait(.25)
+                       Char.HumanoidRootPart:Destroy()
+                       no.Parent = Char
+                       Char:MoveTo(loc)
+                       touched = false
+                   end end
+               if Char then
+                   apply()
+               end;
+           end;
+       end;
+    end)
+    repeat wait() until Char
+    loc = Char.HumanoidRootPart.Position
+    while _G.LoopS and wait() do
+    Char:MoveTo(box.Position + Vector3.new(0,.5,0))
+    end;
+end);
+
 tab0:Button("Safe Farm", function()
     Local = game:GetService('Players').LocalPlayer
     Char  = Local.Character
@@ -132,10 +169,10 @@ tab0:Button("Safe Farm", function()
                    end end
                if Char then
                    apply()
-               end
-           end
-       end
-    end)
+               end;
+           end;
+       end;
+    end);
     repeat wait() until Char
     loc = Char.HumanoidRootPart.Position
     Char:MoveTo(box.Position + Vector3.new(0,.5,0))
