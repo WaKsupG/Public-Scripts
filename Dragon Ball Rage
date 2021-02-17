@@ -2,7 +2,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Vape
 
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Vape%20UI%20Lib"))();
 
-local win = lib:Window("Dragon Ball Rage",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl)
+local win = lib:Window("Dragon Ball Rage",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl);
 
 local tab = win:Tab("Main");
 
@@ -68,6 +68,23 @@ tabx:Toggle("Step 2", function(value)
     end;
 end);
 
+local tabxx = win:Tab("Teleports");
+
+tabxx:Button("Time Chamber", function()
+    game:GetService('TeleportService'):Teleport(1362482151)
+end);
+
+tabxx:Button("Gravity Chamber", function()
+    game:GetService('TeleportService'):Teleport(3371469539)
+end);
+
+tabxx:Button("Gravity Chamber", function()
+    game:GetService('TeleportService'):Teleport(3371469539)
+end);
+
+tabxx:Button("Gravity Chamber", function()
+    game:GetService('TeleportService'):Teleport(3336119605)
+end);
 
 local tab1 = win:Tab("LocalPlayer")
 
