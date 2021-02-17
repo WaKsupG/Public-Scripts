@@ -1,0 +1,197 @@
+local ShowerLib = loadstring(game:HttpGet("https://fluxteam.xyz/scripts/others/ShowerHeadLibrary.lua"))()
+local Window = ShowerLib:CreateWindow("PP Piece") --Clicking this will make it rotate.
+local HomePage = Window:Section("Home")
+
+HomePage:AddLabel("Penis Piece")
+
+HomePage:AddToggle(
+    "Autofarm Devil Fruit",
+    function(value)
+        _G.Autofarmfruit = (value)
+
+        while _G.Autofarmfruit do
+            wait()
+            for i, v in pairs(workspace.Mob:GetChildren(), game.ReplicatedStorage.Storage:GetChildren()) do
+                if v:IsA("Tool") then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                else
+                    wait()
+                    print("No Devil Fruit Found Sad Hours")
+                end
+            end
+        end
+    end
+)
+
+HomePage:AddButton(
+    "Server Hop",
+    function()
+        local PlaceID = game.PlaceId -- skidded from some sl2 server hopper lmaooooooooooooooooooooo
+        local AllIDs = {}
+        local foundAnything = ""
+        local actualHour = os.date("!*t").hour
+        local Deleted = false
+        local File =
+            pcall(
+            function()
+                AllIDs = game:GetService("HttpService"):JSONDecode(readfile("NotSameServers.json"))
+            end
+        )
+        if not File then
+            table.insert(AllIDs, actualHour)
+            writefile("NotSameServers.json", game:GetService("HttpService"):JSONEncode(AllIDs))
+        end
+        function TPReturner()
+            local Site
+            if foundAnything == "" then
+                Site =
+                    game.HttpService:JSONDecode(
+                    game:HttpGet(
+                        "https://games.roblox.com/v1/games/" .. PlaceID .. "/servers/Public?sortOrder=Asc&limit=100"
+                    )
+                )
+            else
+                Site =
+                    game.HttpService:JSONDecode(
+                    game:HttpGet(
+                        "https://games.roblox.com/v1/games/" ..
+                            PlaceID .. "/servers/Public?sortOrder=Asc&limit=100&cursor=" .. foundAnything
+                    )
+                )
+            end
+            local ID = ""
+            if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+                foundAnything = Site.nextPageCursor
+            end
+            local num = 0
+            for i, v in pairs(Site.data) do
+                local Possible = true
+                ID = tostring(v.id)
+                if tonumber(v.maxPlayers) > tonumber(v.playing) then
+                    for _, Existing in pairs(AllIDs) do
+                        if num ~= 0 then
+                            if ID == tostring(Existing) then
+                                Possible = false
+                            end
+                        else
+                            if tonumber(actualHour) ~= tonumber(Existing) then
+                                local delFile =
+                                    pcall(
+                                    function()
+                                        delfile("NotSameServers.json")
+                                        AllIDs = {}
+                                        table.insert(AllIDs, actualHour)
+                                    end
+                                )
+                            end
+                        end
+                        num = num + 1
+                    end
+                    if Possible == true then
+                        table.insert(AllIDs, ID)
+                        wait()
+                        pcall(
+                            function()
+                                writefile("NotSameServers.json", game:GetService("HttpService"):JSONEncode(AllIDs))
+                                wait()
+                                game:GetService("TeleportService"):TeleportToPlaceInstance(
+                                    PlaceID,
+                                    ID,
+                                    game.Players.LocalPlayer
+                                )
+                            end
+                        )
+                        wait(4)
+                    end
+                end
+            end
+        end
+
+        function Teleport()
+            while wait() do
+                pcall(
+                    function()
+                        TPReturner()
+                        if foundAnything ~= "" then
+                            TPReturner()
+                        end
+                    end
+                )
+            end
+        end
+        Teleport()
+    end
+)
+
+HomePage:AddToggle(
+    "No Water Damage",
+    function(Status)
+        _G.WaterGodMode = (Status)
+
+        while _G.WaterGodMode do
+            wait()
+            game:GetService("ReplicatedStorage").ClientEffect:FireServer("oo", false) -- theres like 20 dicks in this codes ass so bad i could of just blocked it but that's way to much work
+        end
+    end
+)
+
+local ESPd = Window:Section("Kiriot's ESP")
+
+local ESP = loadstring(game:HttpGet("https://kiriot22.com/releases/ESP.lua"))()
+
+ESPd:AddToggle(
+    "ESP",
+    function(d)
+        ESP:Toggle(d)
+    end
+)
+
+ESPd:AddToggle(
+    "Boxes",
+    function(t)
+        ESP.Boxes = t
+    end
+)
+
+ESPd:AddToggle(
+    "Tracers",
+    function(t)
+        ESP.Tracers = t
+    end
+)
+
+ESPd:AddToggle(
+    "Names",
+    function(e)
+        ESP.Names = e
+    end
+)
+
+ESPd:AddToggle(
+    "Teammates",
+    function(e)
+        ESP.TeamMates = e
+    end
+)
+
+local Player = Window:Section("Local Player")
+
+Player:AddSlider(
+    "Walkspeed",
+    16,
+    500,
+    10,
+    function(Status)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Status)
+    end
+)
+
+Player:AddSlider(
+    "JumpPower",
+    16,
+    500,
+    10,
+    function(Status)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Status)
+    end
+)
