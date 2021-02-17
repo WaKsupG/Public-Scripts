@@ -78,11 +78,7 @@ tabxx:Button("Gravity Chamber", function()
     game:GetService('TeleportService'):Teleport(3371469539)
 end);
 
-tabxx:Button("Gravity Chamber", function()
-    game:GetService('TeleportService'):Teleport(3371469539)
-end);
-
-tabxx:Button("Gravity Chamber", function()
+tabxx:Button("Beerus Planet", function()
     game:GetService('TeleportService'):Teleport(3336119605)
 end);
 
