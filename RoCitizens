@@ -1,0 +1,50 @@
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Vape%20UI%20Lib"))();
+
+local win = lib:Window("RoCitizens",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl);
+
+local tab = win:Tab("Job Farm");
+local tab0 = win:Tab("LocalPlayer");
+local changeclr = win:Tab("Change UI Color");
+
+_G.BurgerFarm = false
+_G.EndShift = false
+_G.EndTime = 100
+
+
+tab:Toggle("Autofarm", function(value)
+_G.BurgerFarm = value
+if _G.BurgerFarm then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-5411.99854, 6.26886654, 4446.59229)
+wait(0.3)
+local a={[1]="Food Clerk",[2]=workspace.WorkEnvironments["Nomburger_Food Clerk"]}workspace.CommunicationRelays.Work.StartShift:InvokeServer(unpack(a))
+while _G.BurgerFarm and wait() do
+local a={[1]=workspace.WorkEnvironments["Nomburger_Food Clerk"].Station,[2]={[3]="Cheeseburger",[2]="Fries",[4]="Orange Soda",[5]="Cheeseburger",[1]="Burger"}}workspace.WorkEnvironments["Nomburger_Food Clerk"].EnvironmentHandler.CompleteOrder:FireServer(unpack(a))
+if _G.EndShift then
+wait(_G.EndTime)
+workspace.CommunicationRelays.Work.EndShift:FireServer()
+elseif not _G.BurgerFarm then
+workspace.CommunicationRelays.Work.EndShift:FireServer()
+end;
+end;
+end;
+end);
+
+tab:Toggle("End Shift", function(value)
+_G.EndShift = value
+end);
+
+tab:Textbox("End Wait Timer",true, function(value)
+_G.EndTime = value
+end);
+
+tab0:Slider("WalkSpeed",0,100,30, function(value)
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end);
+
+tab0:Slider("Jump power",0,100,30, function(value)
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+end);
+
+changeclr:Colorpicker("Change UI Color",Color3.fromRGB(44, 120, 224), function(t)
+    lib:ChangePresetColor(Color3.fromRGB(t.R * 255, t.G * 255, t.B * 255))
+end);
