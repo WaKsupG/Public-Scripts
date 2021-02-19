@@ -3,13 +3,20 @@ local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Too
 local win = lib:Window("RoCitizens",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl);
 
 local tab = win:Tab("Job Farm");
+local tab1 = win:Tab("Police");
 local tab0 = win:Tab("LocalPlayer");
 local changeclr = win:Tab("Change UI Color");
 
+local PL = game:GetService("Players")
+_G.AutoRob = false
 _G.BurgerFarm = false
 _G.EndShift = false
 _G.EndTime = 100
 
+local PLIST = {}
+for i,v in pairs(PL:GetPlayers()) do 
+    table.insert(PLIST,v.Name)
+end
 
 tab:Toggle("Autofarm", function(value)
 _G.BurgerFarm = value
@@ -36,6 +43,17 @@ end);
 tab:Textbox("End Wait Timer",true, function(value)
 _G.EndTime = value
 end);
+
+tab1:Button("Arrest!", function()
+    local args = {
+        [1] = game:GetService("Players").getgenv().Criminal
+    }
+    workspace.CommunicationRelays.Work.ApprehendCriminal:InvokeServer(unpack(args))
+end)
+
+tab1:Dropdown("Criminal:",PLIST, function(PlayerName)
+    getgenv().Criminal = PlayerName
+end)
 
 tab0:Slider("WalkSpeed",0,100,30, function(value)
 game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
