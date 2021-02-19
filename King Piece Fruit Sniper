@@ -22,15 +22,15 @@ end);
 loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Server%20Hopper"))();
 
 -- Start Of Devil Fruit TP
-for i,v in pairs(game.Workspace:GetDescendants()) do --Fruit Path/Location--
-if v:IsA("Tool") and v:FindFirstChild("DevilFruit") then --Finding Fruit--
-print("Found Devil Fruit")
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Handle.CFrame --Teleporting To Fruit Handle--
-else --No Fruit Found--
-if _G.ServerHopper then --server hopping--
-print("No Fruit Server Hopping In _G.Wait Time") --Message When No Fruit--
-wait(_G.Wait_Timer) --Wait_Timer--
-Teleport() --Teleporting From Are telport fuction at the start--
-end;
-end;
+for i,v in next, workspace:GetDescendants() do --Fruit Path/Location--
+    if (v:IsA("Tool") and v:FindFirstChild("DevilFruit")) then --Finding Fruit--
+        print("Found Devil Fruit")
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Handle.CFrame --Teleporting To Fruit Handle--
+    else --No Fruit Found--
+        if (_G.ServerHopper) then --server hopping--
+            print("No Fruit Server Hopping In _G.Wait Time"); --Message When No Fruit--
+            wait(_G.Wait_Timer); --Wait_Timer--
+            Teleport(); --Teleporting From Are telport fuction at the start--
+        end;
+    end;
 end;
