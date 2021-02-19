@@ -2,8 +2,7 @@
 Put This In Your Autoexec folder should work on most exploits
 ]]--
 
-_G.Wait_Timer = 5 --Time Before ServerHopping (in Seconds)--
-_G.ServerHopper = true --If True then it will server hop--
+repeat wait() until game:IsLoaded();
 
 -- Server Hop Function--
 loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Server%20Hopper"))();
