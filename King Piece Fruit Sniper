@@ -2,9 +2,6 @@
 Put This In Your Autoexec folder should work on most exploits
 ]]--
 
-_G.Wait_Timer = 5 -- Time Before ServerHopping (in Seconds)
-_G.ServerHopper = true -- If True then it will server hop
-
 -- Credits To Charwar Server Hopping
 local PlaceID = game.PlaceId
 local AllIDs = {}
