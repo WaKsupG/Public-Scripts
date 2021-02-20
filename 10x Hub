@@ -2,6 +2,9 @@
 
 -- This Is The Loader You Can Find All The Scripts In This Respitory --
 
-if game.GameId == (1) then
+shared.Roghoul = true
+shared.Rocitizens = true
+
+if shared.Roghoul and game.GameId == (380704901); then
 print("Working On It!")
 end;
