@@ -4,7 +4,11 @@
 
 shared.Roghoul = true
 shared.Rocitizens = true
+shared.Dbr = true
 
-if shared.Roghoul and game.GameId == (380704901); then
+if shared.Roghoul and game.GameId == (380704901) then
 print("Working On It!")
+
+elseif shared.Dbr and game.GameId == (98929893) then
+loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Public-Scripts/main/Dragon%20Ball%20Rage"))();
 end;
