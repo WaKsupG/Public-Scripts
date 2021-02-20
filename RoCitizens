@@ -1,6 +1,6 @@
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Vape%20UI%20Lib"))();
 
-local win = lib:Window("RoCitizens",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl);
+local win = lib:Window("10x Hub",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl);
 
 local tab = win:Tab("Job Farm");
 local tab1 = win:Tab("Police");
