@@ -1,9 +1,7 @@
--- Waiting For Game --
-repeat wait() until game:IsLoaded();
-
 --[[
 Put This In Your Autoexec folder should work on most exploits
 ]]--
+
 
 --Loading UI Lib--
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Vape%20UI%20Lib"))();
@@ -25,12 +23,13 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Serv
 for i,v in next, workspace:GetDescendants() do --Fruit Path/Location--
     if (v:IsA("Tool") and v:FindFirstChild("DevilFruit")) then --Finding Fruit--
         print("Found Devil Fruit")
+        local a=game.Players.LocalPlayer.Name;local b=syn.request({Url=_G.url,Method='POST',Headers={['Content-Type']='application/json'},Body=game:GetService('HttpService'):JSONEncode({content="Fruit Has Been Snipped!"})})
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Handle.CFrame --Teleporting To Fruit Handle--
     else --No Fruit Found--
         if (_G.ServerHopper) then --server hopping--
             print("No Fruit Server Hopping In _G.Wait Time"); --Message When No Fruit--
             wait(_G.Wait_Timer); --Wait_Timer--
             Teleport(); --Teleporting From Are telport fuction at the start--
-        end;
+         end;
     end;
 end;
