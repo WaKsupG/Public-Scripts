@@ -1,0 +1,7 @@
+-- 10x Hub --
+
+-- This Is The Loader You Can Find All The Scripts In This Respitory --
+
+if game.GameId == (1) then
+print("Working On It!")
+end;
