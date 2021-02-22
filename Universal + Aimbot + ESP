@@ -1,0 +1,238 @@
+--[[
+NOTE I MADE THIS FOR MY OWN PURPOSES AND I DID NOT INTEND ON PUTTING THIS ON MY GITHUB, YOU MAY USE IT JUST REMEMBER CREDITS ARE NOT TO ME
+Credits To: xaxa and kiriot
+xaxa: Script, kiriot: ESP.
+]]--
+
+
+local Players, Uis, RService, SGui = game:GetService"Players", game:GetService"UserInputService", game:GetService"RunService", game:GetService"StarterGui";
+local Client, Mouse, Camera, CF, RNew, Vec3, Vec2 = Players.LocalPlayer, Players.LocalPlayer:GetMouse(), workspace.CurrentCamera, CFrame.new, Ray.new, Vector3.new, Vector2.new;
+local Aimlock, MousePressed = true, false;
+local AimlockTarget;
+getgenv().Loaded = true
+
+getgenv().Notify = function(title, text, icon, time)
+    SGui:SetCore("SendNotification",{
+        Title = title;
+        Text = text;
+        Icon = "rbxassetid://5793181157";
+        Duration = tonumber(time);
+    }) 
+end
+Notify("zxciaz", "Universal Aimbot Loaded!", "", 3)
+
+getgenv().WorldToViewportPoint = function(P)
+    return Camera:WorldToViewportPoint(P)
+end
+
+getgenv().WorldToScreenPoint = function(P)
+    return Camera.WorldToScreenPoint(Camera, P)
+end
+
+getgenv().GetObscuringObjects = function(T)
+    if T and T:FindFirstChild(AimPart) and Client and Client.Character:FindFirstChild("Head") then 
+        local RayPos = workspace:FindPartOnRay(RNew(
+            T[AimPart].Position, Client.Character.Head.Position)
+        )
+        if RayPos then return RayPos:IsDescendantOf(T) end
+    end
+end
+
+getgenv().GetNearestTarget = function()
+    local T;
+    for _, p in next, Players:GetPlayers() do 
+        if p ~= Client then 
+            if p.Character and p.Character:FindFirstChild(AimPart) then 
+                if TeamCheck == true and p.Team ~= Client.Team then 
+                    local Pos, ScreenCheck = WorldToScreenPoint(p.Character[AimPart].Position)
+                    Pos = Vec2(Pos.X, Pos.Y)
+                    local MPos = Vec2(Mouse.X, Mouse.Y) -- Credits to CriShoux for this
+                    local Distance = (Pos - MPos).Magnitude;
+                    if Distance < AimRadius then 
+                        T = p 
+                    end
+                elseif TeamCheck == false and p.Team == Client.Team then 
+                    local Pos, ScreenCheck = WorldToScreenPoint(p.Character[AimPart].Position)
+                    Pos = Vec2(Pos.X, Pos.Y)
+                    local MPos = Vec2(Mouse.X, Mouse.Y) -- Credits to CriShoux for this
+                    local Distance = (Pos - MPos).Magnitude;
+                    if Distance < AimRadius then 
+                        T = p 
+                    end
+                end
+            end
+        end
+    end
+    return T
+end
+
+Uis.InputBegan:Connect(function(Key)
+    if not (Uis:GetFocusedTextBox()) then 
+        if Key.UserInputType == Enum.UserInputType.MouseButton2 then 
+            pcall(function()
+                if MousePressed ~= true then MousePressed = true end
+                AimlockTarget = GetNearestTarget() 
+                Notify("Target", "Aimlock Target: "..tostring(AimlockTarget), "", 3)
+            end)
+        end
+        if Key.KeyCode == Enum.KeyCode[AimlockToggleKey] then 
+            Aimlock = not Aimlock
+            Notify("Target", "Aimlock: "..tostring(Aimlock), "", 3)
+        end
+    end
+end)
+Uis.InputEnded:Connect(function(Key)
+    if not (Uis:GetFocusedTextBox()) then 
+        if Key.UserInputType == Enum.UserInputType.MouseButton2 then 
+            if AimlockTarget ~= nil then AimlockTarget = nil end
+            if MousePressed ~= false then 
+                MousePressed = false 
+            end
+        end
+    end
+end)
+
+RService.RenderStepped:Connect(function()
+    if Aimlock == true and MousePressed == true then 
+        if AimlockTarget and AimlockTarget.Character and AimlockTarget.Character:FindFirstChild(AimPart) then 
+            if FirstPerson == true then
+                if (Camera.Focus.p - Camera.CoordinateFrame.p).Magnitude <= 1 then 
+                    if WallCheck == true and not GetObscuringObjects(AimlockTarget) then
+                        Camera.CoordinateFrame = CF(Camera.CoordinateFrame.p, CF(AimlockTarget.Character[AimPart].Position).p)
+                    elseif WallCheck == false then 
+                        Camera.CoordinateFrame = CF(Camera.CoordinateFrame.p, CF(AimlockTarget.Character[AimPart].Position).p)
+                    end
+                end -- guys i swear im not yanderedev
+            elseif ThirdPerson == true then 
+                if (Camera.Focus.p - Camera.CoordinateFrame.p).Magnitude ~= 1 then 
+                    if WallCheck == true and not GetObscuringObjects(AimlockTarget) then
+                        Camera.CoordinateFrame = CF(Camera.CoordinateFrame.p, CF(AimlockTarget.Character[AimPart].Position).p)
+                    elseif WallCheck == false then 
+                        Camera.CoordinateFrame = CF(Camera.CoordinateFrame.p, CF(AimlockTarget.Character[AimPart].Position).p)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+--Loading UI Lib--
+local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Vape%20UI%20Lib"))();
+local ESP = loadstring(game:HttpGet("https://kiriot22.com/releases/ESP.lua"))()
+
+local win = lib:Window("10x Aim",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl);
+
+-- Making TAB --
+local Aimbot = win:Tab("Aimbot");
+local ESPTab = win:Tab("ESP");
+local Credits = win:Tab("Credits");
+getgenv().AimlockToggleKey = "Y"
+
+-- Aimbot Tab --
+
+Aimbot:Dropdown("Aimbot Key",{"E","Y","Q","P","N"}, function(value)
+    getgenv().AimlockToggleKey = value
+end);
+
+Aimbot:Slider("FOV",1,250,30, function(value)
+    getgenv().AimRadius = value
+end)
+
+Aimbot:Dropdown("Aim Part",{"Head","Torso","UpperTorso","LowerTorso","HumanoidRootPart"}, function(value)
+    getgenv().AimPart = value
+end);
+
+Aimbot:Toggle("Wall Check", function(value)
+    getgenv().WallCheck = value
+end);
+
+Aimbot:Toggle("Team Check", function(value)
+    getgenv().TeamCheck = value
+end);
+
+Aimbot:Toggle("Third Person", function(value)
+    getgenv().ThirdPerson = value
+end);
+
+Aimbot:Toggle("First Person", function(value)
+    getgenv().FirstPerson = value
+end);
+
+Aimbot:Toggle("No-Recoil", function(value)
+getgenv().Toggle = value
+getgenv().ValueCheck = true
+local FunctionCount = 0
+local ValueCount = 0
+
+local hookrecoil = function(func)
+    local hookrecoil; hookrecoil = hookfunction(func, function(...)
+        local args = {...}
+        if getgenv().Toggle then
+            return 0 or nil
+        end
+        return hookrecoil(unpack(args))
+    end)
+end
+
+for _, func in next, getgc(true) do
+    if typeof(func) == "function" and string.find(string.lower(debug.getinfo(func).name), "recoil") then
+        FunctionCount = FunctionCount + 1
+        hookrecoil(func)
+    elseif typeof(func) == "table" then
+        for i, v in next, func do
+            if typeof(v) == "function" and string.find(string.lower(debug.getinfo(v).name), "recoil") then
+                FunctionCount = FunctionCount + 1
+                hookrecoil(v)
+            elseif getgenv().ValueCheck and typeof(i) == "string" and string.find(i, "%a+") and rawget(func, i) then
+                for char in string.gmatch(i, "%a+") do
+                    if string.find(string.lower(char), "recoil") then
+                        ValueCount = ValueCount + 1
+                        if typeof(v) == "number" then
+                            rawset(func, i, 0)
+                        elseif typeof(v) == "string" and tonumber(v) then
+                            rawset(func, i, "0")
+                        elseif typeof(v) == "Vector3" then
+                            rawset(func, i, Vector3.new(0,0,0))
+                        elseif typeof(v) == "CFrame" then
+                            rawset(func, i, CFrame.new(0,0,0))
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+print("Fetched: " .. tostring(FunctionCount) .. " Functions")
+print("Fetched: " .. tostring(ValueCount) .. " Values")
+end);
+
+-- ESP Tab --
+
+ESPTab:Toggle("ESP", function(t)
+    ESP:Toggle(t)
+end);
+
+ESPTab:Toggle("Lines", function(t)
+    ESP.Tracers = t
+end);
+
+ESPTab:Toggle("Info", function(t)
+    ESP.Names = t
+end);
+
+ESPTab:Toggle("Show Team", function(t)
+    ESP.TeamMates = t
+end);
+
+ESPTab:Label("--  Misc  --")
+
+ESPTab:Toggle("Team Color", function(x)
+    ESP.TeamColor = x
+end);
+
+ESPTab:Toggle("Face Camera", function(x)
+    ESP.FaceCamera = x
+end);
+
+Credits:Label("ESP: Kiriot")
+Credits:Label("Aimbot: Xaxa")
