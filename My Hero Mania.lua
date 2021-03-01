@@ -32,10 +32,16 @@ end;
 --//Vars\\--
 local CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 local Player = game:GetService("Players").LocalPlayer;
+local Human = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid");
 local MobP = "";
 local QuestP = "";
 local USERID = game.Players.LocalPlayer.UserId
 local DIS = -3
+
+Human.Died:Connect(function()
+wait(5.5);
+game:GetService("ReplicatedStorage").Package.Events.EquipUnequip:InvokeServer();
+end);
 
 --//Main Section\\--
 
@@ -106,6 +112,14 @@ Set:AddBox("Distance", function(Goul, Reg)
     DIS = tonumber(Goul.Text) or -3
 end);
 
+Set:AddToggle("Auto Equip", function(value)
+    _G.Equip = value
+    while _G.Equip and wait() do
+        if game:GetService("Players").LocalPlayer.Status.Weapon.Value == "None" then
+            game:GetService("ReplicatedStorage").Package.Events.EquipUnequip:InvokeServer()
+        end;
+    end;
+end);
 
 --//Credits & Options Section\\--
 
