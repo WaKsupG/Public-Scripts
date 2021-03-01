@@ -1,4 +1,7 @@
-local library = loadstring(game:HttpGet("https://pastebin.com/raw/zH17BK2a", true))()
+local library = loadstring(game:HttpGet("https://pastebin.com/raw/zH17BK2a", true))();
+for i, v in next, getconnections(game.Players.LocalPlayer.Idled) do
+    v:Disable();
+end;
 
 
 --//Credits To {} I Kinda stole his autoquest idea lmaoo\\--
