@@ -7,8 +7,12 @@ local example = library:CreateWindow({
   text = "Main"
 })
 
+local Set = library:CreateWindow({
+    text = "Settings"
+})
+
 local extra = library:CreateWindow({
-    text = "Extra"
+    text = "Credits"
   })
 
 --//Quest Table\\--
@@ -32,6 +36,8 @@ local MobP = "";
 local QuestP = "";
 local USERID = game.Players.LocalPlayer.UserId
 local DIS = -3
+
+--//Main Section\\--
 
 example:AddToggle("Autofarm", function(value)
     _G.Autofarm = value
@@ -70,12 +76,38 @@ dropdown = example:AddDropdown(QuestTbl, function(value)
     QuestP = value
 end);
 
+--//Settings\\--
+
+Set:AddToggle("Use Skills", function(value)
+_G.UseSkills = value
+end);
+
+Set:AddLabel("Skills");
+
+Set:AddToggle("Skill 1", function(value)
+    _G.Skill1 = value
+
+    while _G.UseSkills and _G.Skill1 and wait() do
+        local a={[1]="1",[2]="Down",[3]={["MouseHit"]=CFrame.new(Vector3.new()),["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a))
+    end;
+end);
+
+Set:AddToggle("Skill 2", function(value)
+    _G.Skill2 = value
+
+    while _G.UseSkills and _G.Skill2 and wait() do
+        local a={[1]="2",[2]="Down",[3]={["MouseHit"]=CFrame.new(Vector3.new(),Vector3.new()),["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a))
+    end;
+end);
+
+--//Credits & Options Section\\--
+
 extra:AddToggle("Hide Name", function(value)
     _G.HideN = value
 
     while _G.HideN and wait() do
-    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-        if v.Name == 'Pants' or v.ClassName == "Accessory" or v.Name == 'Shirt' or v.Name == 'Title' then
+        for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+            if v.Name == 'Pants' or v.ClassName == "Accessory" or v.Name == 'Shirt' or v.Name == 'Title' then
                  v:Destroy()
             end;
         end; 
