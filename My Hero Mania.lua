@@ -78,13 +78,13 @@ end);
 
 --//Settings\\--
 
+Set:AddLabel("Skills");
+
 Set:AddToggle("Use Skills", function(value)
 _G.UseSkills = value
 end);
 
-Set:AddLabel("Skills");
-
-Set:AddToggle("Skill 1", function(value)
+Set:AddToggle("First Skill", function(value)
     _G.Skill1 = value
 
     while _G.UseSkills and _G.Skill1 and wait() do
@@ -92,13 +92,20 @@ Set:AddToggle("Skill 1", function(value)
     end;
 end);
 
-Set:AddToggle("Skill 2", function(value)
+Set:AddToggle("Second Skill", function(value)
     _G.Skill2 = value
 
     while _G.UseSkills and _G.Skill2 and wait() do
         local a={[1]="2",[2]="Down",[3]={["MouseHit"]=CFrame.new(Vector3.new(),Vector3.new()),["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a))
     end;
 end);
+
+Set:AddLabel("Autofarm");
+
+Set:AddBox("Distance", function(Goul, Reg)
+    DIS = tonumber(Goul.Text) or -3
+end);
+
 
 --//Credits & Options Section\\--
 
