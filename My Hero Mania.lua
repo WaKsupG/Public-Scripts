@@ -82,12 +82,6 @@ extra:AddToggle("Hide Name", function(value)
     end;
 end);
 
-extra:AddButton("Reset", function()
-    game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0;
-end);
-
 extra:AddButton("Copy Discord", function()
     setclipboard('https://discord.gg/Tcdx6RwjGR')
 end);
-
-extra:AddLabel("Credits\n10x: Script\nwally: UI\n")
