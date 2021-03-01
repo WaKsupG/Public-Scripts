@@ -89,7 +89,7 @@ Set:AddToggle("First Skill", function(value)
     _G.Skill1 = value
 
     while _G.UseSkills and _G.Skill1 and wait() do
-        local a={[1]="1",[2]="Down",[3]={["MouseHit"]=CFrame.new(Vector3.new()),["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a))
+        local a={[1]="1",[2]="Down",[3]={["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a))
     end;
 end);
 
@@ -97,7 +97,7 @@ Set:AddToggle("Second Skill", function(value)
     _G.Skill2 = value
 
     while _G.UseSkills and _G.Skill2 and wait() do
-        local a={[1]="2",[2]="Down",[3]={["MouseHit"]=CFrame.new(Vector3.new(),Vector3.new()),["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a))
+        local a={[1]="2",[2]="Down",[3]={["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a))
     end;
 end);
 
