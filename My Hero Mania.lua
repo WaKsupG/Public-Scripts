@@ -38,11 +38,6 @@ local QuestP = "";
 local USERID = game.Players.LocalPlayer.UserId
 local DIS = -3
 
-Human.Died:Connect(function()
-wait(5.5);
-game:GetService("ReplicatedStorage").Package.Events.EquipUnequip:InvokeServer();
-end);
-
 --//Main Section\\--
 
 example:AddToggle("Autofarm", function(value)
