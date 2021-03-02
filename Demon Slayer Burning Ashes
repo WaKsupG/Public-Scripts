@@ -1,0 +1,67 @@
+--//Games Anti-Cheat\\--
+
+for i,v in pairs(game:GetService("ReplicatedStorage").funs:GetChildren()) do
+v:Destroy()
+end;
+
+-- What A Shame they didn't even check if it was destroyed
+
+local library = loadstring(game:HttpGet("https://pastebin.com/raw/zH17BK2a", true))()
+
+local example = library:CreateWindow({
+    text = "Main"
+  })
+
+local extra = library:CreateWindow({
+    text = "Extra"
+})
+  
+  --//Npc Table\\--
+  local NPC = {};
+  
+  for i,v in pairs(game:GetService("Workspace").npc.npcs:GetChildren()) do
+      table.insert(NPC,v.Name)
+  end;
+  
+  --//Vars\\--
+  local CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+  local Player = game:GetService("Players").LocalPlayer;
+  local Human = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid");
+  local USERID = game.Players.LocalPlayer.UserId
+  local DIS = -3
+  
+  --//Main Section\\--
+
+example:AddLabel("Mob");
+
+local dropdown;
+dropdown = example:AddDropdown(NPC, function(value)
+    Mob = value
+end);
+
+example:AddLabel("Distance");
+
+example:AddBox("Distance", function(Goul, Reg)
+    DIS = tonumber(Goul.Text) or -3
+end);
+  
+example:AddToggle("Autofarm", function(value)
+    _G.Autofarm = value
+
+    while _G.Autofarm and wait() do
+        for i,v in pairs(game:GetService("Workspace").npc.npcs:GetChildren()) do
+        if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        if string.match(v.Name, Mob) and v.Humanoid.Health > 0 then
+                        repeat wait()
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * DIS)
+                        game:GetService("ReplicatedStorage").events.remote:FireServer("NormalAttack")
+                    until v.Humanoid.Health <= 0 or not _G.Autofarm
+                end;
+            end;
+        end;
+    end;
+end);
+
+extra:AddBox("WalkSpeed", function(Goul, Reg)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(Goul.Text) or -3
+end);
