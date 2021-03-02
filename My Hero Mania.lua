@@ -82,41 +82,10 @@ end);
 
 --//Settings\\--
 
-Set:AddLabel("Skills");
-
-Set:AddToggle("Use Skills", function(value)
-_G.UseSkills = value
-end);
-
-Set:AddToggle("First Skill", function(value)
-    _G.Skill1 = value
-
-    while _G.UseSkills and _G.Skill1 and wait() do
-        local a={[1]="1",[2]="Down",[3]={["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a))
-    end;
-end);
-
-Set:AddToggle("Second Skill", function(value)
-    _G.Skill2 = value
-
-    while _G.UseSkills and _G.Skill2 and wait() do
-        local a={[1]="2",[2]="Down",[3]={["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a))
-    end;
-end);
-
 Set:AddLabel("Autofarm");
 
 Set:AddBox("Distance", function(Goul, Reg)
     DIS = tonumber(Goul.Text) or -3
-end);
-
-Set:AddToggle("Auto Equip", function(value)
-    _G.Equip = value
-    while _G.Equip and wait() do
-        if game:GetService("Players").LocalPlayer.Status.Weapon.Value == "None" then
-            game:GetService("ReplicatedStorage").Package.Events.EquipUnequip:InvokeServer()
-        end;
-    end;
 end);
 
 --//Credits & Options Section\\--
