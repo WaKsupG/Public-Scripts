@@ -1,0 +1,214 @@
+local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/AbstractPoo/Main/main/Library"))()
+
+--//Anti-AFK\\--
+for i, v in next, getconnections(game.Players.LocalPlayer.Idled) do
+    v:Disable();
+end;
+
+--//Vars\\--
+local CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+local Player = game:GetService("Players").LocalPlayer;
+local Human = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid");
+local MobP = "";
+local QuestP = "";
+local USERID = game.Players.LocalPlayer.UserId
+local DIS = -3
+
+-- NoClip
+game:GetService("RunService").Stepped:Connect(function()
+    if _G.Autofarm then
+        game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+    end;
+end);
+
+--//Quest Table\\--
+local QuestTbl = {};
+
+for i,v in pairs(game:GetService("ReplicatedStorage").Package.Quests:GetChildren()) do
+    table.insert(QuestTbl,v.Name)
+end;
+
+--//Npc Table\\--
+local NPC = {};
+
+for i,v in pairs(game:GetService("Workspace").Others.NPCSpawns:GetChildren()) do
+    table.insert(NPC,v.Name)
+end;
+
+local UI = Lib:Create{
+   Theme = "Shadow",
+   Size = UDim2.new(0, 555, 0, 400)
+}
+
+local Main = UI:Tab{
+   Name = "Main"
+}
+
+local SkillTab = UI:Tab{
+    Name = "Skills"
+}
+
+local Skills = SkillTab:Divider{
+    Name = "Use Skills"
+}
+
+local Divider = Main:Divider{
+   Name = "My Hero Mania"
+}
+
+local Settings = Main:Divider{
+    Name = "Settings"
+ }
+
+local QuitDivider = Main:Divider{
+   Name = "Quit"
+}
+
+local Autofarm = Divider:Toggle{
+   Name = "Autofarm",
+   Description = "Automatically farms mobs and kills them..",
+   Callback = function(value)
+    getgenv().Autofarm = value
+
+    while getgenv().Autofarm and wait() do
+        for i,v in pairs(game:GetService("Workspace").Living:GetChildren()) do
+            if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                if v.Name == MobP and v.Humanoid.Health > 0 then
+                    repeat wait() 
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * DIS)
+                    game:GetService("ReplicatedStorage").Package.Events.Combat:FireServer(1,Lol) game:GetService("ReplicatedStorage").Package.Events.Combat:FireServer(2,Lol) game:GetService("ReplicatedStorage").Package.Events.Combat:FireServer(3,Lol) game:GetService("ReplicatedStorage").Package.Events.Combat:FireServer(4,Lol) game:GetService("ReplicatedStorage").Package.Events.Combat:FireServer(5,Lol)
+                    until v.Humanoid.Health <= 0 or not getgenv().Autofarm
+                end;
+            end;
+        end;
+    end;
+end;
+}
+
+local AutoQuest = Divider:Toggle{
+    Name = "Auto Quest",
+    Description = "Automatically grabs quest..",
+    Callback = function(value)
+        _G.AutoQuest = value
+
+        while _G.AutoQuest and wait() do
+        if game:GetService("ReplicatedStorage").Datas[USERID].QuestProgress.Value == 0 then
+            game:GetService("ReplicatedStorage").Package.Events.GetQuest:InvokeServer(QuestP)
+        end; 
+    end;
+end;
+}
+
+local AutTool = Settings:Toggle{
+    Name = "Auto Equip",
+    Description = "Auto Equip's your knife or Weapon",
+    Callback = function(value)
+    _G.AutoEquip = value
+
+        while _G.AutoEquip and wait() do
+                if game.Players.LocalPlayer.Status.Weapon.Value == "None" then
+                game:GetService("ReplicatedStorage").Package.Events.EquipUnequip:InvokeServer()
+            end;
+        end;
+    end;
+}
+
+local AutTool = Settings:Toggle{
+    Name = "Invisibilty",
+    Description = "Turns you invisible to players!",
+    Callback = function(value)
+    _G.Invis = value
+
+    while _G.Invis and wait() do
+        if game.Players.LocalPlayer.Character then
+        if game.Players.LocalPlayer.Character:FindFirstChild("LowerTorso") then
+            if game.Players.LocalPlayer.Character.LowerTorso:FindFirstChild("Root") then
+                game.Players.LocalPlayer.Character.LowerTorso.Root:Destroy() end;
+            end;
+        end;
+    end;
+end;
+}
+
+local AutTool = Settings:Toggle{
+    Name = "Hide Name",
+    Description = "Hides your roblox avatar and username to players!",
+    Callback = function(value)
+        _G.HideN = value
+
+        while _G.HideN and wait() do
+            for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if v.Name == 'Pants' or v.ClassName == "Accessory" or v.Name == 'Shirt' or v.Name == 'Title' then
+                     v:Destroy()
+                end;
+            end; 
+        end;
+    end;
+}
+
+local Players = Divider:Dropdown{
+   Name = "Mob",
+   Options = NPC,
+   Callback = function(value)
+       MobP = value
+   end
+}
+
+local Quest = Divider:Dropdown{
+    Name = "Quest",
+    Options = QuestTbl,
+    Callback = function(value)
+        QuestP = value
+    end
+ }
+
+local Quit = QuitDivider:Button{
+   Name = "Destroy UI",
+   Callback = function()
+       UI:Quit{
+           Message = "Goodbye...",
+           Length = 1
+       }
+   end
+}
+
+local SkillsSettings = Skills:Toggle{
+    Name = "Use Skills",
+    Description = "This setting will use your set amount of skills!",
+    Callback = function(value)
+    _G.Using = value
+
+        while _G.Using and wait() do
+            if _G.Skills == "1" then
+                local a={[1]="1",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+            elseif _G.Skills == "2" then
+                local a={[1]="1",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+                local a={[1]="2",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+            elseif _G.Skills == "3" then
+                local a={[1]="1",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+                local a={[1]="2",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+                local a={[1]="3",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+            elseif _G.Skills == "4" then
+                local a={[1]="1",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+                local a={[1]="2",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+                local a={[1]="3",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+                local a={[1]="4",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3) 
+            elseif _G.Skills == "5" then
+                local a={[1]="1",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+                local a={[1]="2",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+                local a={[1]="3",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+                local a={[1]="4",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+                local a={[1]="5",[2]="Down",[3]={["MouseHit"]=game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame,["Mobile"]=false}}game:GetService("ReplicatedStorage").Package.Events.Skill:InvokeServer(unpack(a)) wait(3)
+            end;
+        end;
+    end;
+}
+
+local SKillsToUse = Skills:Box{
+    Name = "Skills 1 - 5",
+    ClearText = false,
+    Callback = function(value)
+        print("Skills To Use:", value)
+        _G.Skills = value
+    end
+}
