@@ -13,9 +13,7 @@ for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
 table.insert(Mobs,v.Name)
 end;
 
-local mt = getrawmetatable(game)
-local old = mt.__namecall
-local protect = newcclosure or protect_function
+local Speed = 5
 
 --//NoClip\\--
 game:GetService("RunService").Stepped:Connect(function()
@@ -29,29 +27,9 @@ local MobToFarm = "";
 local DIS = 5;
 local PlayerName = game.Players.LocalPlayer.Name
 
+--//Info\\--
+tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(1, Enum.EasingStyle.Linear)
 
---//Anti-AFK/Anti-Kick\\--
-    if is_synapse_function then
-    if not protect then
-    protect = function(f) return f end
-    end
-    setreadonly(mt, false)
-    mt.__namecall = protect(function(self, ...)
-    local method = getnamecallmethod()
-    if method == "Kick" then
-    wait(9e9)
-    return
-    end
-    return old(self, ...)
-    end)
-    hookfunction(game:GetService("Players").LocalPlayer.Kick,protect(function() wait(9e9) end))
-    print("Anti-Kick Loaded!")
-end;
-
---//Anti-Cheat\\--
-if is_synapse_function then
-game:GetService("ReplicatedStorage").ExploitKick:Destroy()
-end;
 
 --//Def\\--
 getgenv().Autofarm = false;
@@ -81,10 +59,10 @@ section1:addToggle("Autofarm",nil,function(value)
                 if v.Name == MobToFarm and v.Humanoid.Health > 0 then
                     repeat wait()
                     game:GetService("Players").LocalPlayer.Character.Quirk8.E:FireServer()
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,DIS,0)
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position,v.HumanoidRootPart.Position)
-                    until v.Humanoid.Health <= 0 or not getgenv().Autofarm
-                end;
+                        tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(v.HumanoidRootPart.Position + v.HumanoidRootPart.CFrame.lookVector * DIS)})
+                        tween:Play()
+                        until v.Humanoid.Health <= 0 or not getgenv().Autofarm
+                    end;
                 end;
             end;
         end);
@@ -94,14 +72,26 @@ end);
 section1:addToggle("Auto Quest",nil,function(value)
     getgenv().AutoQ = value
 
-    while getgenv().AutoQ and wait() do
+    while getgenv().AutoQ and wait(1) do
             game:GetService("ReplicatedStorage").Remotes.Quest.AcceptQuest:FireServer(QuestNum)
-        if game:GetService("Workspace").Quests[PlayerName]["Kill Criminal"].AmountKilled.Value == game:GetService("Workspace").Quests[PlayerName]["Kill Criminal"].AmountNeeded.Value then
+        if game:GetService("Workspace").Quests[PlayerName][QuestNum].AmountKilled.Value == game:GetService("Workspace").Quests[PlayerName][QuestNum].AmountNeeded.Value then
             game:GetService("ReplicatedStorage").Remotes.Quest.CompleteQuest:FireServer(QuestNum)
         end;
     end;
 end);
 
-section2:addSlider("Distance",0, 0, 10,function(value)
+section2:addSlider("Distance",0, -10, 10,function(value)
 DIS = value
+end);
+
+section2:addToggle("Hide Name",nil,function(value)
+    getgenv().HideName = value
+
+    while getgenv().HideName and wait() do
+        for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+            if v.Name == 'Pants' or v.ClassName == "Accessory" or v.Name == 'Shirt' or v.Name == 'OverHead' or v.Name == "face" then
+                v:Destroy()
+            end;
+        end; 
+    end;
 end);
