@@ -22,7 +22,10 @@ local QuestP = "";
 local USERID = game.Players.LocalPlayer.UserId
 local DIS = -3
 
--- NoClip
+--//Info\\--
+tweenService, tweenInfo = game:GetService("TweenService"), TweenInfo.new(1, Enum.EasingStyle.Linear)
+
+--//NoClip\\--
 game:GetService("RunService").Stepped:Connect(function()
     if _G.Autofarm then
         game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
@@ -60,7 +63,8 @@ section1:addToggle("Autofarm", nil, function(value)
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
                 if v.Name == MobP and v.Humanoid.Health > 0 then
                     repeat wait() 
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * DIS)
+                    tween = tweenService:Create(game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(v.HumanoidRootPart.Position + v.HumanoidRootPart.CFrame.lookVector * DIS)})
+                    tween:Play()
                     game:GetService("ReplicatedStorage").Package.Events.Combat:FireServer(1,Lol) game:GetService("ReplicatedStorage").Package.Events.Combat:FireServer(2,Lol) game:GetService("ReplicatedStorage").Package.Events.Combat:FireServer(3,Lol) game:GetService("ReplicatedStorage").Package.Events.Combat:FireServer(4,Lol) game:GetService("ReplicatedStorage").Package.Events.Combat:FireServer(5,Lol)
                     until v.Humanoid.Health <= 0 or not getgenv().Autofarm
                 end;
