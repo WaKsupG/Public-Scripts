@@ -49,12 +49,8 @@ local PlayerName = game.Players.LocalPlayer.Name
 end;
 
 --//Anti-Cheat\\--
-for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
-    if protect then
-        if v.Name == "ExploitKick" then
-            v:Destroy(); print("Bypassed Anti-Cheat")
-        end;
-    end;
+if is_synapse_function then
+game:GetService("ReplicatedStorage").ExploitKick:Destroy()
 end;
 
 --//Def\\--
