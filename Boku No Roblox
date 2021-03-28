@@ -1,0 +1,111 @@
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Venyx%20UI"))()
+
+local library = library.new("Boku No Shit", 5013109572)
+
+--//Vars\\--
+local Quest = {};
+for i,v in pairs(game:GetService("ReplicatedStorage").Modules.Quests:GetChildren()) do
+table.insert(Quest,v.Name)
+end;
+
+local Mobs = {};
+for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
+table.insert(Mobs,v.Name)
+end;
+
+local mt = getrawmetatable(game)
+local old = mt.__namecall
+local protect = newcclosure or protect_function
+
+--//NoClip\\--
+game:GetService("RunService").Stepped:Connect(function()
+    if getgenv().Autofarm then
+        game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+    end
+end)
+
+local QuestNum = "";
+local MobToFarm = "";
+local DIS = 5;
+local PlayerName = game.Players.LocalPlayer.Name
+
+
+--//Anti-AFK/Anti-Kick\\--
+    if is_synapse_function then
+    if not protect then
+    protect = function(f) return f end
+    end
+    setreadonly(mt, false)
+    mt.__namecall = protect(function(self, ...)
+    local method = getnamecallmethod()
+    if method == "Kick" then
+    wait(9e9)
+    return
+    end
+    return old(self, ...)
+    end)
+    hookfunction(game:GetService("Players").LocalPlayer.Kick,protect(function() wait(9e9) end))
+    print("Anti-Kick Loaded!")
+end;
+
+--//Anti-Cheat\\--
+for i,v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+    if protect then
+        if v.Name == "ExploitKick" then
+            v:Destroy(); print("Bypassed Anti-Cheat")
+        end;
+    end;
+end;
+
+--//Def\\--
+getgenv().Autofarm = false;
+getgenv().AutoQ = false;
+
+--//Page Starting\\--
+local page = library:addPage("Main", 5012544693)
+
+local section1 = page:addSection("Autofarms")
+local section2 = page:addSection("Settings")
+
+section1:addDropdown("Quest",Quest,function(value)
+QuestNum = value
+end);
+
+section1:addDropdown("Mob",Mobs,function(value)
+MobToFarm = value
+end);
+
+section1:addToggle("Autofarm",nil,function(value)
+    getgenv().Autofarm = value
+
+    while getgenv().Autofarm and wait() do
+    pcall(function()
+        for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
+            if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                if v.Name == MobToFarm and v.Humanoid.Health > 0 then
+                    repeat wait()
+                    game:GetService("Players").LocalPlayer.Character.Quirk8.E:FireServer()
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,DIS,0)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position,v.HumanoidRootPart.Position)
+                    until v.Humanoid.Health <= 0 or not getgenv().Autofarm
+                end;
+                end;
+            end;
+        end);
+    end;
+end);
+
+section1:addToggle("Auto Quest",nil,function(value)
+    getgenv().AutoQ = value
+
+    while getgenv().AutoQ and wait() do
+            game:GetService("ReplicatedStorage").Remotes.Quest.AcceptQuest:FireServer(QuestNum)
+        if game:GetService("Workspace").Quests[PlayerName]["Kill Criminal"].AmountKilled.Value == game:GetService("Workspace").Quests[PlayerName]["Kill Criminal"].AmountNeeded.Value then
+            game:GetService("ReplicatedStorage").Remotes.Quest.CompleteQuest:FireServer(QuestNum)
+        end;
+    end;
+end);
+
+section2:addSlider("Distance",0, 0, 10,function(value)
+DIS = value
+end);
