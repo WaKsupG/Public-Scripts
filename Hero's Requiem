@@ -78,6 +78,19 @@ section1:addToggle("Auto Equip",nil, function(value)
     end;
 end);
 
+section2:addToggle("Hide Name",nil, function(value)
+    getgenv().HideName = value
+
+    while getgenv().HideName and wait() do
+    pcall(function()
+            game.Players.LocalPlayer.Character.Head.DisplayBar.pName.Text = "Haha Lol Noob Can't Report Me"
+            game.Players.LocalPlayer.Character.Clothing:Destroy()
+            game.Players.LocalPlayer.Character.Head.face:Destroy()
+            game.Players.LocalPlayer.Character["Meshes/LimitBreakingHairBlackAccessory"]:Destroy()
+        end);
+    end;
+end);
+
 section2:addSlider("Distance", 0, -20, 20, function(value)
     DIS = value
 end);
