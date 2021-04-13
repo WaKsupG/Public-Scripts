@@ -1,0 +1,107 @@
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Venyx%20UI"))()
+local ulib = library.new("Epic Hub", 5013109572)
+
+--//Page Starting\\--
+local page = ulib:addPage("Main", 5012544693)
+
+local section1 = page:addSection("Autofarms")
+local section2 = page:addSection("Settings")
+
+--//Vars\\--
+--//Vars\\--
+local serv = {};
+setmetatable(serv, {__index = function(a,b) return game:GetService(b) end, __newindex = function(t,k) t[k] = nil return end});
+local cam = workspace.CurrentCamera;
+local plr = serv.Players.LocalPlayer;
+local Distance = {0, 0, 4};
+local Speed = 100;
+local MobVal = "";
+getgenv().AutoQuest = false
+
+
+
+--//Tween Function\\--
+local function TweenTP(a, b, c, d) 
+    if not type(c) == "table" then return end 
+    if typeof(b) == "CFrame" then IsCFrame = true end 
+    local a = a or plr; 
+    pcall(function() 
+        if IsCFrame then 
+            local cframe = b; 
+            local vector3 = cframe.p; 
+            local Info = TweenInfo.new(a:DistanceFromCharacter(vector3 + Vector3.new(unpack(c))) / d, Enum.EasingStyle.Linear, Enum.EasingDirection.Out); 
+            local tweens = game:service'TweenService':Create(a.Character.HumanoidRootPart, Info, {CFrame = cframe + Vector3.new(unpack(c))}):Play(); 
+            wait(a:DistanceFromCharacter(vector3 + Vector3.new(unpack(c))) / d); 
+        else 
+            local Info = TweenInfo.new(a:DistanceFromCharacter(b.Position + Vector3.new(unpack(c))) / d, Enum.EasingStyle.Linear, Enum.EasingDirection.Out); 
+            local tweens = game:service'TweenService':Create(a.Character.HumanoidRootPart, Info, {CFrame = b.CFrame * CFrame.new(unpack(c))}):Play(); 
+            wait(a:DistanceFromCharacter(b.Position + Vector3.new(unpack(c))) / d); 
+        end 
+    end) 
+end
+
+--//Stuff\\--
+local Quest = {""};
+for i,v in pairs(game:GetService("Workspace").DialogueNPCs:GetChildren()) do
+    if v:FindFirstChild("QuestTag") then
+        table.insert(Quest,v.Name)
+    end;
+end;
+local Mob = {""};
+for i,v in pairs(game:GetService("Workspace").Living:GetChildren()) do
+    table.insert(Mob,v.Name)
+end;
+
+section1:addToggle("Autofarm",false, function(value)
+    getgenv().Autofarm = value
+    
+    while getgenv().Autofarm and wait() do
+    pcall(function()
+        if game:GetService("Players").LocalPlayer.PlayerGui.NoReset.QuestBox.Conditions:FindFirstChild("Condition1") then
+        for i,v in pairs(game:GetService("Workspace").Living:GetChildren()) do
+            if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                if v.Name == MobVal and v.Humanoid.Health > 0 then
+                    repeat wait()
+                            TweenTP(nil, v.HumanoidRootPart, Distance, Speed)
+                            game:GetService("Players").LocalPlayer.Character.CharacterHandler.Events.Combat:FireServer("LightAttack")
+                            until v.Humanoid.Health <= 0 or not getgenv().Autofarm
+                            end;
+                        end;
+                    end
+                end;
+        end);
+    end;
+end);
+
+section1:addToggle("Auto Quest", nil, function(value)
+getgenv().Bestautoquest = value
+
+while getgenv().Bestautoquest and wait() do
+for i,v in pairs(game:GetService("Workspace").DialogueNPCs:GetChildren()) do
+if not game:GetService("Players").LocalPlayer.PlayerGui.NoReset.QuestBox.Conditions:FindFirstChild("Condition1") then
+    if v.Name == QuestName then
+            repeat wait()
+                    fireclickdetector(v.ChatPart.ClickDetector)
+                    mousemoveabs(1170.99, 820) mouse1click()
+                    until game:GetService("Players").LocalPlayer.PlayerGui.NoReset.QuestBox.Conditions:FindFirstChild("Condition1") or not getgenv().Bestautoquest
+                end;
+            end;
+        end;
+    end;
+end);
+    
+section1:addDropdown("Quest",Quest,function(value)
+    QuestName = value
+end);
+
+section1:addDropdown("Mob",Mob,function(value)
+    MobVal = value
+end);
+    
+section1:addToggle("Hide Name", nil, function(value)
+while getgenv().HideName and wait() do
+        pcall(function() --// Yes Thanks I Did Just PCall FindFirstChild Is Gay, Obv PCall is Way better we do be loving hydra hub tbh
+            game.Players.LocalPlayer.Character.Head.HealthGui:Destroy()
+        end);
+    end;
+end);
