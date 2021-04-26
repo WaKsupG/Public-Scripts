@@ -1,0 +1,24 @@
+while getgenv().AutoJob and wait() do
+if game.Players.LocalPlayer.Backpack:FindFirstChild("Shoes") then
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(397, 15, -215) wait(getgenv().Wait)
+    fireclickdetector(game:GetService("Workspace")["Restocking job"].Shoes.ClickDetector)
+elseif game.Players.LocalPlayer.Backpack:FindFirstChild("Hats") then
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(412, 15, -193) wait(getgenv().Wait)
+    fireclickdetector(game:GetService("Workspace")["Restocking job"].Hats.ClickDetector)
+elseif game.Players.LocalPlayer.Backpack:FindFirstChild("Backpacks") then
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(429, 15, -213) wait(getgenv().Wait)
+    fireclickdetector(game:GetService("Workspace")["Restocking job"].Backpacks.ClickDetector)
+elseif game.Players.LocalPlayer.Backpack:FindFirstChild("Shirts") then
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(398, 15, -199) wait(getgenv().Wait)
+    fireclickdetector(game:GetService("Workspace")["Restocking job"].Shirts.ClickDetector)
+elseif game.Players.LocalPlayer.Backpack:FindFirstChild("Belts") then
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(429, 15, -201) wait(getgenv().Wait)
+    fireclickdetector(game:GetService("Workspace")["Restocking job"].Belts.ClickDetector)
+elseif game.Players.LocalPlayer.Backpack:FindFirstChild("Pants") then
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(429, 15, -191) wait(getgenv().Wait)
+    fireclickdetector(game:GetService("Workspace")["Restocking job"].Pants.ClickDetector)
+else
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(421, 15, -228)
+    fireclickdetector(game:GetService("Workspace")["Restocking job"].Box.ClickDetector)
+    end;
+end;
