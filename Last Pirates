@@ -1,0 +1,93 @@
+    --//Last Piece\\--
+
+    local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Venyx%20UI"))()
+
+    local library = library.new("Epic Hub", 5013109572)
+    
+    --//Page Starting\\--
+    local page = library:addPage("Main", 5012544693)
+    
+    local section1 = page:addSection("Autofarms")
+    local section2 = page:addSection("Settings")
+    
+    local Autofarm = false
+    local virtualUser = game:GetService('VirtualUser')
+    local MobVal = "";
+    local DIS = -3
+    local AutoQuest = false
+    local InstaKill = false
+    local Player = game.Players.LocalPlayer
+    local toolname = UseTool
+    local Plr = game:GetService("Players").LocalPlayer
+    
+    --//Tools\\--
+    local ToolTBL = {};
+    for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+    if v:IsA("Tool") then
+        table.insert(ToolTBL, v.Name)
+        end;
+    end;
+    --//End\\--
+    
+    section1:addDropdown("Mob",{"Bandit [Lv:5]","Pirates [Lv:15]","BagyPirates","Revolutionary Troop [Lv:50]","Marines [Lv:100]","MarineBoss [Lv:150]"}, function(value)
+    MobVal = value
+    end);
+    
+    section1:addDropdown("Quest",{"BanditClick","PiratesClick","BagyPirates","TroopClick","MarineClick","MarineBossClick"}, function(value)
+        QuestName = value
+    end);
+    
+    section1:addToggle("Autofarm", nil, function(value)
+        Autofarm = value
+    
+        while Autofarm and wait() do
+        if game:GetService("Players").LocalPlayer.Quest.Doing.Value == "Bandit" or game:GetService("Players").LocalPlayer.Quest.Doing.Value == "Pirates" or game:GetService("Players").LocalPlayer.Quest.Doing.Value == "BagyPirates" or game:GetService("Players").LocalPlayer.Quest.Doing.Value == "Revolutionary Troop" or game:GetService("Players").LocalPlayer.Quest.Doing.Value == "Marines" or game:GetService("Players").LocalPlayer.Quest.Doing.Value == "MarineBoss" and Autofarm then
+                for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
+                    if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        if v.Name == MobVal and v.Humanoid.Health > 0 then
+                            repeat wait()
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * DIS)
+                                virtualUser:CaptureController() virtualUser:Button1Down(Vector2.new(), CFrame.new())
+                                until v.Humanoid.Health <= 0 or not Autofarm
+                        end;
+                    end;
+                end;
+            end;
+        end;
+    end);
+    
+    section1:addToggle("Auto Quest", nil, function(value)
+        AutoQuest = value
+    
+        while AutoQuest and wait() do
+        for i,v in next, workspace:GetDescendants() do
+            if v.Name == QuestName then
+            if game:GetService("Players").LocalPlayer.Quest.Doing.Value == "None" then
+                repeat wait()
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48.160141, 24.4035339, -689.513062, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+                        fireclickdetector(v.ClickDetector)
+                    until game:GetService("Players").LocalPlayer.Quest.Doing.Value == "Bandit" or game:GetService("Players").LocalPlayer.Quest.Doing.Value == "Pirates" or game:GetService("Players").LocalPlayer.Quest.Doing.Value == "BagyPirates" or game:GetService("Players").LocalPlayer.Quest.Doing.Value == "Revolutionary Troop" or game:GetService("Players").LocalPlayer.Quest.Doing.Value == "Marines" or game:GetService("Players").LocalPlayer.Quest.Doing.Value == "MarineBoss" or not AutoQuest
+                    end;
+                end;
+            end;
+        end;
+    end);
+    
+    section2:addDropdown("Tool",ToolTBL, function(value)
+        UseTool = value
+    end);
+    
+    section2:addToggle("Auto Equip", nil, function(value)
+        _G.AutoEquip = value
+    
+        while _G.AutoEquip and wait() do
+            local toolname = UseTool
+            local Plr = game:GetService("Players").LocalPlayer
+                pcall(function()
+                if Plr.Backpack:FindFirstChild(toolname) and Plr.Character:FindFirstChild(toolname) == nil then
+                local tool = Plr.Backpack:FindFirstChild(toolname)
+                Plr.Character.Humanoid:EquipTool(tool)
+            end;
+        end);
+    end;
+end);
