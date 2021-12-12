@@ -1,42 +1,58 @@
 local create = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Yes%20UI%20Lib"))()
+
 local Window = create:Win("Sex Man")
-create:Notifile("10x UwU Rawr","Made this in like 10 mins sorry if it's not perfect",3)
-local Tap1 = Window:Taps("Aincrad")
+create:Notifile("10x UwU Rawr","I cum in ur mom hahahaha",3)
+local Tap1 = Window:Taps("Revengers")
 local page1 = Tap1:newpage()
-page1:Label("Autofarm")
+page1:Label("Auto-Train")
 page1:Line()
 
-page1:Toggle("Autofarm",false,function(value)
-    _G.Autofarm = value
+local Stats = game:GetService("Players").LocalPlayer.Stats
 
-    while _G.Autofarm and wait() do
-    pcall(function()
-        for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
-            if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
-                if string.find(v.Name, _G.Mob) and v.Humanoid.Health > 0 then
-                    repeat wait()
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -5)
-                        until v:FindFirstChild("iFrames") or not _G.Autofarm
-                    end;
+
+page1:Toggle("Auto Train",false,function(value)
+    _G.AutoMill = value
+
+    while _G.AutoMill and wait() do
+       for i,v in pairs(game:GetService("Workspace").Game.WorkOut:GetDescendants()) do
+           if game:GetService("Players").LocalPlayer.Stats.Stamina.Value == game.Players.LocalPlayer.Character.INFO.MaxStamina.Value then
+            if _G.Stat == "Treadmill" then
+                fireclickdetector(game:GetService("Workspace").Game.WorkOut.Treadmill.Platform.ClickDetector)
+                elseif _G.Stat == "Push Up" then
+                    fireclickdetector(game:GetService("Workspace").Game.WorkOut.PushUp.Part.ClickDetector)
+                elseif _G.Stat == "Squat" then
+                    fireclickdetector(game:GetService("Workspace").Game.WorkOut.Squats.Part.ClickDetector)
+                elseif _G.Stat == "Situp" then
+                    fireclickdetector(game:GetService("Workspace").Game.WorkOut.SitUp.Part.ClickDetector)
                 end;
             end;
-        end);
+        end;
     end;
 end);
 
-page1:Toggle("Kill Aura",false,function(value)
-    _G.KillAura = value
+page1:Drop("Stat",false,{"Treadmill","Push Up","Squat","Situp"},function(value)
+    _G.Stat = value
+end);
 
-    while _G.KillAura and wait() do
-    pcall(function()
-        game:GetService("ReplicatedStorage").Combat.M1:FireServer(1,false,Enum.HumanoidStateType.Running)
-        game:GetService("ReplicatedStorage").Combat.M1:FireServer(2,false,Enum.HumanoidStateType.Running)
-        game:GetService("ReplicatedStorage").Combat.M1:FireServer(3,false,Enum.HumanoidStateType.Running)
-        game:GetService("ReplicatedStorage").Combat.M1:FireServer(4,false,Enum.HumanoidStateType.Running)       
-        end);
+local page2 = Tap1:newpage()
+
+page2:Label("Auto Eat Just Keeps Eating Till U Poor")
+
+page2:Toggle("Auto Eat (To Get Thic)",false,function(value)
+_G.Lol = value
+
+while _G.Lol and wait(1) do
+    if game.Players.LocalPlayer.Backpack:FindFirstChild("Hamburger") then
+        game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack["Hamburger"])
+    elseif game.Players.LocalPlayer.Character:FindFirstChild("Hamburger") then
+    	game.Players.LocalPlayer.Character.Hamburger:Activate()
+    elseif not game.Players.LocalPlayer.Backpack:FindFirstChild("Hamburger") then
+        fireclickdetector(game:GetService("Workspace").Game.Selling.Hamburger.ClickDetector)
+        end;
     end;
 end);
 
-page1:Drop("Mob",false,{"Boar","Wolf","Fire","Mantis"},function(value)
-    _G.Mob = value
+page2:Button("Copy Discord", function()
+setclipboard("https://discord.gg/8XfrZSxyKk")
+create:Notifile("Thanks","Copied To Clipboard",3)
 end);
