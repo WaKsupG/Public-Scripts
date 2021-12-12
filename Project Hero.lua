@@ -9,7 +9,6 @@ local page1 = Tap1:newpage()
 page1:Label("Autofarm")
 page1:Line()
 
-
 local Mob = {};
 
 for i,v in pairs(game:GetService("Workspace").Mobs:GetDescendants()) do
@@ -30,12 +29,13 @@ end
 page1:Toggle("Autofarm",false,function(value)
     _G.Autofarm = value
 
-    while _G.Autofarm and wait() do
+    while _G.Autofarm and wait(_G.Timer) do
         if game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ActiveQuest.Visible == true then
         for i,v in pairs(game:GetService("Workspace").Mobs:GetDescendants()) do
             if v:IsA("Model") then
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
                 if v.Name == _G.Mob and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                    if not v:FindFirstChild(_G.Mob) then _G.Timer = 4 else _G.Timer = 0 end;
                     repeat wait()
                             v.HumanoidRootPart.Anchored = true
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -3)
