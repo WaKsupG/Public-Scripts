@@ -1,7 +1,7 @@
 --//Alright listen before you judge my code I know i could of done everything 100000000x easier i just wanted it to look good cause i like this game LOL
 --//loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Public-Scripts/main/Project%20Hero.lua"))();
 
-local create = loadstring(game:HttpGet("http://www.mene.world/WhoAmI.lua"))()
+local create = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Yes%20UI%20Lib"))()
 local Window = create:Win("Sex Man")
 create:Notifile("10x UwU Rawr","Ty mene for ui lib sexy",3)
 local Tap1 = Window:Taps("Project Hero")
