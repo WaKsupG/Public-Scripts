@@ -8,9 +8,10 @@ local Tap1 = Window:Taps("Project Hero")
 local page1 = Tap1:newpage()
 page1:Label("Autofarm")
 page1:Line()
-
+local mt = getrawmetatable(game)
+setreadonly(mt, false)
+local old = mt.__newindex
 local Mob = {};
-
 for i,v in pairs(game:GetService("Workspace").Mobs:GetDescendants()) do
     if v:IsA("Model") then
     table.insert(Mob,v.Name)
@@ -78,13 +79,16 @@ page1:Toggle("Auto Quest",false,function(value)
         elseif _G.Quest == "Jeff [Lv. 60-70]" then
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-468.70086669922, 1180.1823730469, -1135.6849365234)
             game:GetService("ReplicatedStorage").Quests.AcceptQuest:FireServer("Defeat musce Vilain")
+        elseif _G.Quest == "Lerion [Lv. 60-70]" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-632.16473388672, 1180.1821289062, -1121.3626708984)
+            game:GetService("ReplicatedStorage").Quests.AcceptQuest:FireServer("Defeat Muscle")
             end;
         end;
     end;
 end);
 
 
-page1:Drop("Quest NPC",false,{"Zak [Lv. 1-10]","Bus [Lv. 10-15]","Onix [Lv. 15-20]","Uraraka [Lv. 20-30]","Todoroki [Lv. 30-40]","Gun Head [Lv. 40-50]","Nomus [Lv. 50-60]","Jeff [Lv. 60-70]"},function(value)
+page1:Drop("Quest NPC",false,{"Zak [Lv. 1-10]","Bus [Lv. 10-15]","Onix [Lv. 15-20]","Uraraka [Lv. 20-30]","Todoroki [Lv. 30-40]","Gun Head [Lv. 40-50]","Nomus [Lv. 50-60]","Jeff [Lv. 60-70]","Lerion [Lv. 60-70]"},function(value)
     _G.Quest = value
 end);
 
@@ -131,4 +135,19 @@ end);
 page2:Button("Copy Discord", function()
 setclipboard("https://discord.gg/8XfrZSxyKk")
 create:Notifile("Thanks","Copied To Clipboard",3)
+end);
+
+local Tap2 = Window:Taps("Extra")
+local page3 = Tap2:newpage()
+
+page3:Label("Cum Tbh")
+
+page3:Slider("WalkSpeed",false,false,0,500,10,1,false,function(value)
+_G.Speed = value
+mt.__newindex = newcclosure(function(o, k, v)
+    if tostring(o) == "Humanoid" and tostring(k) == "WalkSpeed" then
+      return old(o, k, _G.Speed)
+    end;
+    return old(o, k, v)
+  end);
 end);
