@@ -18,6 +18,7 @@ for i,v in pairs(game:GetService("Workspace").Mobs:GetDescendants()) do
     end;
 end;
 
+
 local function attack()
     wait(math.random(.1,.2))
     if game.Players.LocalPlayer.Backpack:FindFirstChild("Combat") then
@@ -31,22 +32,21 @@ page1:Toggle("Autofarm",false,function(value)
     _G.Autofarm = value
 
     while _G.Autofarm and wait(_G.Timer) do
-        if game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ActiveQuest.Visible == true then
+    pcall(function()
+        if game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ActiveQuest.Visible == true and not _G.InvisTest then
         for i,v in pairs(game:GetService("Workspace").Mobs:GetDescendants()) do
-            if v:IsA("Model") then
-            if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
-                if v.Name == _G.Mob and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
-                    if not v:FindFirstChild(_G.Mob) then _G.Timer = 4 else _G.Timer = 0 end;
+            if not v:FindFirstChild(_G.Mob) then _G.Timer = 4 else _G.Timer = 0 end;
+            if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") then
+                if v.Name == _G.Mob and v.Humanoid.Health > 0 then
                     repeat wait()
-                            v.HumanoidRootPart.Anchored = true
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -3)
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position,v.HumanoidRootPart.Position)
-                            until v.Humanoid.Health <= 0 or not _G.Autofarm
+                        v.HumanoidRootPart.Anchored = true
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -3)
+                        until v.Humanoid.Health <= 0 or not _G.Autofarm
                         end;
                     end;
                 end;
             end;
-        end;
+        end);
     end;
 end);
 
@@ -54,7 +54,8 @@ page1:Toggle("Auto Quest",false,function(value)
     _G.AutoQuest = value
 
     while _G.AutoQuest and wait(2) do
-    if game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ActiveQuest.Visible == false then
+    pcall(function()
+    if game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ActiveQuest.Visible == false and not _G.InvisTest then
         if _G.Quest == "Zak [Lv. 1-10]" then
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").QuestNPCs.Zak.HumanoidRootPart.CFrame wait(.2)
             game:GetService("ReplicatedStorage").Quests.AcceptQuest:FireServer("KillNeighbor")
@@ -80,10 +81,11 @@ page1:Toggle("Auto Quest",false,function(value)
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-468.70086669922, 1180.1823730469, -1135.6849365234)
             game:GetService("ReplicatedStorage").Quests.AcceptQuest:FireServer("Defeat musce Vilain")
         elseif _G.Quest == "Lerion [Lv. 60-70]" then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-632.16473388672, 1180.1821289062, -1121.3626708984)
-            game:GetService("ReplicatedStorage").Quests.AcceptQuest:FireServer("Defeat Muscle")
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-632.16473388672, 1180.1821289062, -1121.3626708984)
+                game:GetService("ReplicatedStorage").Quests.AcceptQuest:FireServer("Defeat Muscle")
+                end;
             end;
-        end;
+        end);
     end;
 end);
 
@@ -126,7 +128,7 @@ page2:Toggle("Auto Attack",false,function(value)
     end;
 end);
 
-page2:TextBox("Instant Time","Recommend 0 - 0.5",function(value)
+page2:TextBox("Instant Time","Recommend 0.1 - 0.5",function(value)
     _G.TimeIns = value
 end);
 
