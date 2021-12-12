@@ -1,4 +1,5 @@
 --//Alright listen before you judge my code I know i could of done everything 100000000x easier i just wanted it to look good cause i like this game LOL
+--//loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Public-Scripts/main/Project%20Hero.lua"))();
 
 local create = loadstring(game:HttpGet("http://www.mene.world/WhoAmI.lua"))()
 local Window = create:Win("Sex Man")
@@ -38,6 +39,7 @@ page1:Toggle("Autofarm",false,function(value)
                     repeat wait()
                             v.HumanoidRootPart.Anchored = true
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -3)
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position,v.HumanoidRootPart.Position)
                             until v.Humanoid.Health <= 0 or not _G.Autofarm
                         end;
                     end;
@@ -73,16 +75,20 @@ page1:Toggle("Auto Quest",false,function(value)
         elseif _G.Quest == "Nomus [Lv. 50-60]" then
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1125.4204101562, 1179.1822509766, 355.70474243164)
             game:GetService("ReplicatedStorage").Quests.AcceptQuest:FireServer("Help Defeat Nomus")
+        elseif _G.Quest == "Jeff [Lv. 60-70]" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-468.70086669922, 1180.1823730469, -1135.6849365234)
+            game:GetService("ReplicatedStorage").Quests.AcceptQuest:FireServer("Defeat musce Vilain")
             end;
         end;
     end;
 end);
 
-page1:Drop("Quest NPC",false,{"Zak [Lv. 1-10]","Bus [Lv. 10-15]","Onix [Lv. 15-20]","Uraraka [Lv. 20-30]","Todoroki [Lv. 30-40]","Gun Head [Lv. 40-50]","Nomus [Lv. 50-60]"},function(value)
+
+page1:Drop("Quest NPC",false,{"Zak [Lv. 1-10]","Bus [Lv. 10-15]","Onix [Lv. 15-20]","Uraraka [Lv. 20-30]","Todoroki [Lv. 30-40]","Gun Head [Lv. 40-50]","Nomus [Lv. 50-60]","Jeff [Lv. 60-70]"},function(value)
     _G.Quest = value
 end);
 
-page1:Drop("Mob",false,{"Neighbor","Prisoner","OnixBoss","Uraraka","Shoto Todoroki","GunheadStudent","Nomu"},function(value)
+page1:Drop("Mob",false,{"Neighbor","Prisoner","OnixBoss","Uraraka","Shoto Todoroki","GunheadStudent","Nomu","Muscle Boss"},function(value)
     _G.Mob = value
 end);
 
