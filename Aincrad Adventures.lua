@@ -1,4 +1,4 @@
-local create = loadstring(game:HttpGet("http://www.mene.world/WhoAmI.lua"))()
+local create = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/Yes%20UI%20Lib"))()
 local Window = create:Win("Sex Man")
 create:Notifile("10x UwU Rawr","Made this in like 10 mins sorry if it's not perfect",3)
 local Tap1 = Window:Taps("Aincrad")
