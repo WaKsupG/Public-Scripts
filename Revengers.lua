@@ -36,7 +36,21 @@ end);
 
 local page2 = Tap1:newpage()
 
-page2:Label("Sir Cums Alot")
+page2:Label("Auto Eat Just Keeps Eating Till U Poor")
+
+page2:Toggle("Auto Eat (To Get Thic)",false,function(value)
+_G.Lol = value
+
+while _G.Lol and wait(1) do
+    if game.Players.LocalPlayer.Backpack:FindFirstChild("Hamburger") then
+        game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack["Hamburger"])
+    elseif game.Players.LocalPlayer.Character:FindFirstChild("Hamburger") then
+    	game.Players.LocalPlayer.Character.Hamburger:Activate()
+    elseif not game.Players.LocalPlayer.Backpack:FindFirstChild("Hamburger") then
+        fireclickdetector(game:GetService("Workspace").Game.Selling.Hamburger.ClickDetector)
+        end;
+    end;
+end);
 
 page2:Button("Copy Discord", function()
 setclipboard("https://discord.gg/8XfrZSxyKk")
