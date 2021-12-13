@@ -40,3 +40,11 @@ end);
 page1:Drop("Mob",false,{"Boar","Wolf","Fire","Mantis"},function(value)
     _G.Mob = value
 end);
+
+
+local page2 = Tap1:newpage()
+
+page2:Button("Copy Discord", function()
+setclipboard("https://discord.gg/8XfrZSxyKk")
+create:Notifile("Thanks","Copied To Clipboard",3)
+end);
