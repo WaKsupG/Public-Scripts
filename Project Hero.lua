@@ -18,6 +18,16 @@ for i,v in pairs(game:GetService("Workspace").Mobs:GetDescendants()) do
     end;
 end;
 
+local TBL = {}
+
+for i,v in pairs(game:GetDescendants()) do
+    if v:IsA("Tool") then
+        if v:FindFirstChild("Skills") then
+        table.insert(TBL,v.Name)
+        end;
+    end;
+end;
+
 
 local function attack()
     wait(math.random(.1,.2))
@@ -132,17 +142,92 @@ page2:TextBox("Instant Time","Recommend 0.1 - 0.5",function(value)
     _G.TimeIns = value
 end);
 
+page2:Drop("Quirk",false,TBL,function(value)
+    _G.Steal = value
+end);
 
+page2:Button("Rob Quirk", function()
+for i,v in pairs(game:GetDescendants()) do
+    if v.Name == _G.Steal then
+            v.Parent = game.Players.LocalPlayer.Backpack
+        end;
+    end;
+end);
 
 page2:Button("Copy Discord", function()
 setclipboard("https://discord.gg/8XfrZSxyKk")
 create:Notifile("Thanks","Copied To Clipboard",3)
 end);
 
+
+local Tap3 = Window:Taps("Auto Stats")
+local page4 = Tap3:newpage()
+
+page4:Toggle("Auto Strength",false,function(value)
+_G.S = value
+
+while _G.S and wait(1) do
+        game:GetService("ReplicatedStorage").Remotes.To_Server.AddStat:FireServer("StrengthUp",1)
+    end;
+end);
+
+page4:Toggle("Auto Defense",false,function(value)
+    _G.D = value
+
+    while _G.D and wait(1) do
+        game:GetService("ReplicatedStorage").Remotes.To_Server.AddStat:FireServer("DurabilityUp",1)
+    end;
+end);
+
+page4:Toggle("Auto Stamina",false,function(value)
+    _G.SS = value
+
+    while _G.SS and wait(1) do
+        game:GetService("ReplicatedStorage").Remotes.To_Server.AddStat:FireServer("StaminaUp",1)
+    end;
+end);
+
+page4:Toggle("Auto Quirk",false,function(value)
+    _G.Q = value
+    
+    while _G.Q and wait(1) do
+        game:GetService("ReplicatedStorage").Remotes.To_Server.AddStat:FireServer("QuirkMasteryUp",1)
+    end;
+end);
+
+
 local Tap2 = Window:Taps("Extra")
 local page3 = Tap2:newpage()
 
 page3:Label("Cum Tbh")
+
+page3:Toggle("God Mode",false,function(value)
+    _G.GodMode = value
+
+    while _G.GodMode and wait() do
+        pcall(function()
+            for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+                if v.Name == ("Grip_Ting") or v.Name == ("is_grip_asdasd") or v.Name == ("KnockedOut") then
+                    v:Destroy()
+                end;
+            end;
+        end);
+    end;
+end);
+
+page3:Toggle("Anti-Ragdoll",false,function(value)
+    _G.NoStun = value
+
+    while _G.NoStun and wait() do
+        pcall(function()
+            for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+                if v.Name == ("Stun") or v.Name == ("RagDoll") then
+                    v:Destroy()
+                end;
+            end;
+        end);
+    end;
+end);
 
 page3:Slider("WalkSpeed",false,false,0,500,10,1,false,function(value)
 _G.Speed = value
