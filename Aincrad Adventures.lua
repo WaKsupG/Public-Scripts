@@ -6,12 +6,23 @@ local page1 = Tap1:newpage()
 page1:Label("Autofarm")
 page1:Line()
 
+
 for i, v in next, getconnections(game.Players.LocalPlayer.Idled) do
     v:Disable();
 end;
 
-local ArmorTBL = {}
+game:GetService("RunService").Stepped:Connect(function()
+    if _G.Autofarm then
+    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+        if v:IsA("BasePart") and v.CanCollide == true then
+             v.CanCollide = false
+             game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+          end;
+       end;
+    end;
+ end);
 
+local ArmorTBL = {}
 for i,v in pairs(game.Players.LocalPlayer.PlayerGui.UI.Background.ArmorContainer:GetChildren()) do
     if v:IsA("ImageLabel") then
         table.insert(ArmorTBL,v.Name)
@@ -135,6 +146,17 @@ page3:Toggle("Infinite Money",false,function(value)
         end;
     end;
 end);
+
+page3:Toggle("Monke",false,function(value)
+    _G.Beat = value
+
+    while _G.Beat and wait() do
+        game:GetService("Workspace").Monkey1.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        game:GetService("Workspace").Monkey1.RootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    end;
+end);
+
+page3:Label("Makes you feel the pain the monke does")
 
 page3:Button("Join Low Server", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Public-Scripts/main/Lowest%20Server"))()
