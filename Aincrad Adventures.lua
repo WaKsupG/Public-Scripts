@@ -33,8 +33,7 @@ page1:Toggle("Autofarm",false,function(value)
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
                 if v.Name == _G.Mob and v.Humanoid.Health > 0 then
                     repeat wait()
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -10)
-                 
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -_G.DIS)
                         until v:FindFirstChild("iFrames") or not _G.Autofarm
                     end;
                 end;
@@ -64,10 +63,14 @@ page1:Drop("Mob",false,{"Boar","Wolf","Fire Wolf","Mantis","Monkey"},function(va
     end;
 end);
 
+page1:Slider("Distance",false,false,0,15,10,1,false,function(time)
+    _G.DIS = time
+end)
+
 
 local page2 = Tap1:newpage()
 
-page1:Label("Auto Quest Just get the quest once and start it")
+page2:Label("Auto Quest Just get the quest once and start it")
 
 page2:Toggle("Auto Quest",false,function(value)
 _G.AutoRedo = value
@@ -88,8 +91,14 @@ page2:Toggle("Auto Sell Armor",false,function(value)
     _G.Sell = value
 
     while _G.Sell and wait() do
-        game:GetService("ReplicatedStorage").Inventory.EquipArmor:FireServer(_G.ArmorT) wait(1)
-        game:GetService("ReplicatedStorage").Quest.sellarmor:FireServer()
+        for i,v in pairs(game.Players.LocalPlayer.PlayerGui.UI.Background.ArmorContainer:GetChildren()) do
+            if v:IsA("ImageLabel") then
+                if v.Name == _G.ArmorT then
+                game:GetService("ReplicatedStorage").Inventory.EquipArmor:FireServer(_G.ArmorT) wait(1)
+                game:GetService("ReplicatedStorage").Quest.sellarmor:FireServer()
+                end;
+            end;
+        end;
     end;
 end);
 
