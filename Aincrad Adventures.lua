@@ -44,9 +44,10 @@ page1:Toggle("Autofarm",false,function(value)
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
                 if v.Name == _G.Mob and v.Humanoid.Health > 0 then
                     repeat wait()
+                        v.HumanoidRootPart.Anchored = true
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -15)
                         if _G.Mob == "Monkey1" then
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Emitter.CFrame - Vector3.new(0,-1,0)
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,10,0)
                         end;
                         until v:FindFirstChild("iFrames") or not _G.Autofarm
                     end;
