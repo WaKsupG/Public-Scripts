@@ -24,17 +24,6 @@ game:GetService("RunService").Stepped:Connect(function()
     end;
 end);
 
-game:GetService("RunService").Stepped:Connect(function()
-    if _G.Autofarm and _G.Mob == "Monkey1" then
-    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-        if v:IsA("BasePart") and v.CanCollide == true then
-             v.CanCollide = false
-             game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
-          end;
-       end;
-    end;
- end);
-
 page1:Toggle("Autofarm",false,function(value)
     _G.Autofarm = value
 
@@ -45,9 +34,7 @@ page1:Toggle("Autofarm",false,function(value)
                 if v.Name == _G.Mob and v.Humanoid.Health > 0 then
                     repeat wait()
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -15)
-                        if _G.Mob == "Monkey1" then
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,-8,0)
-                        end;
+                 
                         until v:FindFirstChild("iFrames") or not _G.Autofarm
                     end;
                 end;
