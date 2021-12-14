@@ -10,11 +10,30 @@ for i, v in next, getconnections(game.Players.LocalPlayer.Idled) do
     v:Disable();
 end;
 
+local ArmorTBL = {}
+
+for i,v in pairs(game.Players.LocalPlayer.PlayerGui.UI.Background.ArmorContainer:GetChildren()) do
+    if v:IsA("ImageLabel") then
+        table.insert(ArmorTBL,v.Name)
+    end;
+end;
+
 game:GetService("RunService").Stepped:Connect(function()
     if _G.KillAura then
         game:GetService("ReplicatedStorage").Combat.M1:FireServer(1,false,Enum.HumanoidStateType.Running)
     end;
 end);
+
+game:GetService("RunService").Stepped:Connect(function()
+    if _G.Autofarm then
+    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+        if v:IsA("BasePart") and v.CanCollide == true then
+             v.CanCollide = false
+             game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+          end;
+       end;
+    end;
+ end);
 
 page1:Toggle("Autofarm",false,function(value)
     _G.Autofarm = value
@@ -26,7 +45,9 @@ page1:Toggle("Autofarm",false,function(value)
                 if v.Name == _G.Mob and v.Humanoid.Health > 0 then
                     repeat wait()
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -15)
-                        v.HumanoidRootPart.Anchored = true
+                        if _G.Mob == "Monkey1" then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Emitter.CFrame - Vector3.new(0,-1,0)
+                        end;
                         until v:FindFirstChild("iFrames") or not _G.Autofarm
                     end;
                 end;
@@ -40,7 +61,7 @@ page1:Toggle("Kill Aura",false,function(value)
     _G.KillAura = value
 end);
 
-page1:Drop("Mob",false,{"Boar","Wolf","Fire Wolf","Mantis"},function(value)
+page1:Drop("Mob",false,{"Boar","Wolf","Fire Wolf","Mantis","Monkey"},function(value)
     _G.Mob = value
 
     if _G.Mob == "Fire Wolf" then
@@ -51,6 +72,8 @@ page1:Drop("Mob",false,{"Boar","Wolf","Fire Wolf","Mantis"},function(value)
     _G.Mob = "Mantis1"
     elseif _G.Mob == "Wolf" then
         _G.Mob = "Wolf1"
+    elseif _G.Mob == "Monkey" then
+        _G.Mob = "Monkey1"
     end;
 end);
 
@@ -83,6 +106,19 @@ page2:Toggle("Infinite Block",false,function(value)
            end;
         end);
     end;
+end);
+
+page2:Toggle("Auto Sell Armor",false,function(value)
+    _G.Sell = value
+
+    while _G.Sell and wait() do
+        game:GetService("ReplicatedStorage").Inventory.EquipArmor:FireServer(_G.ArmorT) wait(.1)
+        game:GetService("ReplicatedStorage").Quest.sellarmor:FireServer()
+    end;
+end);
+
+page2:Drop("Armor",false,ArmorTBL,function(value)
+    _G.ArmorT = value
 end);
 
 page2:Button("Copy Discord", function()
