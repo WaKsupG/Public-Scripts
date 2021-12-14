@@ -24,6 +24,17 @@ game:GetService("RunService").Stepped:Connect(function()
     end;
 end);
 
+game:GetService("RunService").Stepped:Connect(function()
+    if _G.Autofarm and _G.Mob == "Monkey1" then
+    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+        if v:IsA("BasePart") and v.CanCollide == true then
+             v.CanCollide = false
+             game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+          end;
+       end;
+    end;
+ end);
+
 page1:Toggle("Autofarm",false,function(value)
     _G.Autofarm = value
 
@@ -35,7 +46,7 @@ page1:Toggle("Autofarm",false,function(value)
                     repeat wait()
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -15)
                         if _G.Mob == "Monkey1" then
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,10,0)
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,-8,0)
                         end;
                         until v:FindFirstChild("iFrames") or not _G.Autofarm
                     end;
@@ -85,23 +96,12 @@ if game.Players.LocalPlayer.PlayerGui.UI.Redoquest.Visible == true then
     end;
 end);
 
-page2:Toggle("Infinite Block",false,function(value)
-    _G.InfBlock = value
-
-    while _G.InfBlock and wait() do
-        pcall(function()
-           if game.Players.LocalPlayer.Character:FindFirstChild("Blockbar") then
-            game.Players.LocalPlayer.Character.Blockbar:Destroy()
-           end;
-        end);
-    end;
-end);
 
 page2:Toggle("Auto Sell Armor",false,function(value)
     _G.Sell = value
 
     while _G.Sell and wait() do
-        game:GetService("ReplicatedStorage").Inventory.EquipArmor:FireServer(_G.ArmorT) wait(.1)
+        game:GetService("ReplicatedStorage").Inventory.EquipArmor:FireServer(_G.ArmorT) wait(1)
         game:GetService("ReplicatedStorage").Quest.sellarmor:FireServer()
     end;
 end);
@@ -113,4 +113,33 @@ end);
 page2:Button("Copy Discord", function()
 setclipboard("https://discord.gg/8XfrZSxyKk")
 create:Notifile("Thanks","Copied To Clipboard",3)
+end);
+
+local Tap2 = Window:Taps("OP")
+local page3 = Tap2:newpage()
+
+page3:Toggle("Infinite Block",false,function(value)
+    _G.InfBlock = value
+
+    while _G.InfBlock and wait() do
+        pcall(function()
+           if game.Players.LocalPlayer.Character:FindFirstChild("Blockbar") then
+            game.Players.LocalPlayer.Character.Blockbar:Destroy()
+           end;
+        end);
+    end;
+end);
+
+page3:Toggle("Infinite Money",false,function(value)
+    _G.InfM = value
+
+    while _G.InfM and wait(.1) do
+        for i = 1,50 do
+        game:GetService("ReplicatedStorage").Inventory.EquipItem:FireServer("Coldstormscroll")
+        end;
+    end;
+end);
+
+page3:Button("Join Low Server", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Public-Scripts/main/Lowest%20Server"))()
 end);
