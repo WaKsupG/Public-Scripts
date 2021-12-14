@@ -13,9 +13,9 @@ page1:Toggle("Autofarm",false,function(value)
     pcall(function()
         for i,v in pairs(game:GetService("Workspace"):GetChildren()) do
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
-                if string.find(v.Name, _G.Mob) and v.Humanoid.Health > 0 then
+                if string.match(v.Name, _G.Mob) and v.Humanoid.Health > 0 then
                     repeat wait()
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -6.5)
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -15)
                         until v:FindFirstChild("iFrames") or not _G.Autofarm
                     end;
                 end;
@@ -37,12 +37,28 @@ page1:Toggle("Kill Aura",false,function(value)
     end;
 end);
 
-page1:Drop("Mob",false,{"Boar","Wolf","Fire","Mantis"},function(value)
+page1:Drop("Mob",false,{"Boar","Wolf","FireWolf","Mantis"},function(value)
     _G.Mob = value
 end);
 
 
 local page2 = Tap1:newpage()
+
+page1:Label("Auto Quest Just get the quest once and start it")
+
+page2:Toggle("Auto Quest",false,function(value)
+_G.AutoRedo = value
+
+while _G.AutoRedo and wait(2) do
+pcall(function()
+if game.Players.LocalPlayer.PlayerGui.UI.Redoquest.Visible == true then
+    for _, v in pairs(getconnections(game.Players.LocalPlayer.PlayerGui.UI.Redoquest.Accept.MouseButton1Click)) do
+                    v:Fire()
+                end;
+            end;
+        end);
+    end;
+end);
 
 page2:Button("Copy Discord", function()
 setclipboard("https://discord.gg/8XfrZSxyKk")
