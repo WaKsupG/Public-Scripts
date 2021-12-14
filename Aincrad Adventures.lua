@@ -108,7 +108,7 @@ end);
 
 page2:Button("Copy Discord", function()
 setclipboard("https://discord.gg/8XfrZSxyKk")
-create:Notifile("Thanks","Copied To Clipboard",3)
+create:Notifile("Thanks","Copied To Clipboard",2.5)
 end);
 
 local Tap2 = Window:Taps("OP")
