@@ -6,6 +6,10 @@ local page1 = Tap1:newpage()
 page1:Label("Autofarm")
 page1:Line()
 
+for i, v in next, getconnections(game.Players.LocalPlayer.Idled) do
+    v:Disable();
+end;
+
 game:GetService("RunService").Stepped:Connect(function()
     if _G.KillAura then
         game:GetService("ReplicatedStorage").Combat.M1:FireServer(1,false,Enum.HumanoidStateType.Running)
