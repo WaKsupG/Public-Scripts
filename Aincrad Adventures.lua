@@ -29,6 +29,8 @@ for i,v in pairs(game.Players.LocalPlayer.PlayerGui.UI.Background.ArmorContainer
     end;
 end;
 
+local a={}for b,c in pairs(game:GetService("Workspace").NPCS.Knightsofblood:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.TitansHand:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.DivineDragon:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.AincradLiberation:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.Solo:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.Fuur:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.Goldenapple:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.LaughingCoffin:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end
+
 game:GetService("RunService").Stepped:Connect(function()
     if _G.KillAura then
         game:GetService("ReplicatedStorage").Combat.M1:FireServer(1,false,Enum.HumanoidStateType.Running)
@@ -122,7 +124,7 @@ setclipboard("https://discord.gg/8XfrZSxyKk")
 create:Notifile("Thanks","Copied To Clipboard",2.5)
 end);
 
-local Tap2 = Window:Taps("OP")
+local Tap2 = Window:Taps("Extra")
 local page3 = Tap2:newpage()
 
 page3:Toggle("Infinite Block",false,function(value)
@@ -161,3 +163,17 @@ page3:Label("Makes you feel the pain the monke does")
 page3:Button("Join Low Server", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Public-Scripts/main/Lowest%20Server"))()
 end);
+
+local page4 = Tap2:newpage()
+
+page4:Drop("NPC",false,a,function(value)
+    _G.NPCTP = value
+end);
+
+page4:Button("Teleport", function()
+for i,v in pairs(game:GetService("Workspace").NPCS:GetDescendants()) do
+    if v.Name == _G.NPCTP then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+        end;
+    end;
+end)
