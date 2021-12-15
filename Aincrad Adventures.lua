@@ -100,7 +100,7 @@ if game.Players.LocalPlayer.PlayerGui.UI.Redoquest.Visible == true then
 end);
 
 
-page2:Toggle("Auto Sell Armor",false,function(value)
+page2:Toggle("Auto Sell Armor [DONT USE]",false,function(value)
     _G.Sell = value
 
     while _G.Sell and wait() do
