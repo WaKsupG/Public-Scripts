@@ -28,6 +28,12 @@ for i,v in pairs(game.Players.LocalPlayer.PlayerGui.UI.Background.ArmorContainer
         table.insert(ArmorTBL,v.Name)
     end;
 end;
+local Tool = {}
+for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.UI.Background.WeaponContainer:GetChildren()) do
+    if v.Name ~= "UIGridLayout" then
+        table.insert(Tool,v.Name)
+    end;
+end;
 
 local a={}for b,c in pairs(game:GetService("Workspace").NPCS.Knightsofblood:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.TitansHand:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.DivineDragon:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.AincradLiberation:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.Solo:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.Fuur:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.Goldenapple:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end;for b,c in pairs(game:GetService("Workspace").NPCS.LaughingCoffin:GetChildren())do if c:IsA("Part")then table.insert(a,c.Name)end end
 
@@ -100,14 +106,14 @@ if game.Players.LocalPlayer.PlayerGui.UI.Redoquest.Visible == true then
 end);
 
 
-page2:Toggle("Auto Sell Armor [DONT USE]",false,function(value)
+page2:Toggle("Auto Sell",false,function(value)
     _G.Sell = value
 
-    while _G.Sell and wait() do
+    while _G.Sell and wait(1) do
         for i,v in pairs(game.Players.LocalPlayer.PlayerGui.UI.Background.ArmorContainer:GetChildren()) do
             if v:IsA("ImageLabel") then
                 if v.Name == _G.ArmorT then
-                game:GetService("ReplicatedStorage").Inventory.EquipArmor:FireServer(_G.ArmorT) wait(1)
+                game:GetService("ReplicatedStorage").Inventory.EquipArmor:FireServer(_G.ArmorT) wait(.2)
                 game:GetService("ReplicatedStorage").Quest.sellarmor:FireServer()
                 end;
             end;
@@ -119,8 +125,12 @@ page2:Drop("Armor",false,ArmorTBL,function(value)
     _G.ArmorT = value
 end);
 
+page2:Drop("Weapon",false,Tool,function(value)
+    _G.WeaponT = value
+end);
+
 page2:Button("Copy Discord", function()
-setclipboard("https://discord.gg/8XfrZSxyKk")
+setclipboard("https://discord.gg/2jepzJ3Eyp")
 create:Notifile("Thanks","Copied To Clipboard",2.5)
 end);
 
