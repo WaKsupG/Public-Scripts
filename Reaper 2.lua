@@ -90,7 +90,7 @@ end);
 UI.newCheckBox(UI.Main,'Auto Quest',function(value)
 _G.AutoQuest = value
 
-while _G.AutoQuest and wait() do
+while _G.AutoQuest and wait(1) do
 pcall(function()
 for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
 if not game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2:FindFirstChild(_G.Quest) then
