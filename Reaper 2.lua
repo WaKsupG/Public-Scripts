@@ -44,6 +44,7 @@ game:GetService("RunService").Stepped:Connect(function()
  end);
 
 local Mob = {};
+_G.DIS = 6
 for i,v in pairs(game:GetService("Workspace").Living:GetChildren()) do
 if not table.find(Mob,v.Name) and not v:FindFirstChild("ClientHandler") then
         table.insert(Mob,v.name)
@@ -76,11 +77,7 @@ UI.newCheckBox(UI.Main,'Autofarm',function(value)
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
                 if v.Name == _G.Mob and v.Humanoid.Health > 0 then
                     repeat wait() 
-                    if _G.Method == "Underground" then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,7,0)
-                    elseif _G.Method == "Behind" then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -4)
-                    end;
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,_G.DIS,0)
                         local args = {[1] = {["inputType"] = Enum.UserInputType.MouseButton1,["keyCode"] = Enum.KeyCode.Unknown}}
                         game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args))
                     until v.Humanoid.Health <= 0 or not getgenv().Autofarm
@@ -115,8 +112,8 @@ UI.newCheckBox(UI.Main,'Auto Equip',function(value)
     end;
 end);
 
-UI.newDropDown(UI.Main,'TP Method',{"Behind","Underground"},function(value)
-    _G.Method = value
+UI.newSlider(UI.Main,'Distance',0,10,function(amount)
+    _G.DIS = amount
 end);
 
 UI.newButton(UI.Main,'Copy Discord',function()
