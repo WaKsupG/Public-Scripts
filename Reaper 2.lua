@@ -71,6 +71,7 @@ UI.newCheckBox(UI.Main,'Autofarm',function(value)
     getgenv().Autofarm = value
     
     while getgenv().Autofarm and wait() do
+    pcall(function()
         for i,v in pairs(game:GetService("Workspace").Living:GetChildren()) do
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
                 if v.Name == _G.Mob and v.Humanoid.Health > 0 then
@@ -79,9 +80,10 @@ UI.newCheckBox(UI.Main,'Autofarm',function(value)
                         local args = {[1] = {["inputType"] = Enum.UserInputType.MouseButton1,["keyCode"] = Enum.KeyCode.Unknown}}
                         game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args))
                     until v.Humanoid.Health <= 0 or not getgenv().Autofarm
+                    end;
                 end;
             end;
-        end;
+        end);
     end;
 end);
 
@@ -89,11 +91,13 @@ UI.newCheckBox(UI.Main,'Auto Quest',function(value)
 _G.AutoQuest = value
 
 while _G.AutoQuest and wait() do
-    for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
+pcall(function()
+for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
 if not game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2:FindFirstChild(_G.Quest) then
-            game:GetService("ReplicatedStorage").Remotes.TakeQuest:FireServer(_G.Quest)
+                    game:GetService("ReplicatedStorage").Remotes.TakeQuest:FireServer(_G.Quest)
+                end;
             end;
-        end;
+        end);
     end;
 end);
 
