@@ -76,7 +76,11 @@ UI.newCheckBox(UI.Main,'Autofarm',function(value)
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
                 if v.Name == _G.Mob and v.Humanoid.Health > 0 then
                     repeat wait() 
+                    if _G.Method == "Underground" then
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,7,0)
+                    elseif _G.Method == "Behind" then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * 4)
+                    end;
                         local args = {[1] = {["inputType"] = Enum.UserInputType.MouseButton1,["keyCode"] = Enum.KeyCode.Unknown}}
                         game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args))
                     until v.Humanoid.Health <= 0 or not getgenv().Autofarm
@@ -109,4 +113,12 @@ UI.newCheckBox(UI.Main,'Auto Equip',function(value)
             local a={[1]={["inputType"]=Enum.UserInputType.Keyboard,["keyCode"]=Enum.KeyCode.E}}game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(a))
         end;
     end;
+end);
+
+UI.newDropDown(UI.Main,'TP Method',{"Behind","Underground"},function(value)
+    _G.Method = value
+end);
+
+UI.newButton(UI.Main,'Copy Discord',function()
+    setclipboard("https://discord.gg/YsUwMnA2Tq")
 end);
