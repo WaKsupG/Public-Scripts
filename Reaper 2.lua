@@ -1,7 +1,7 @@
 local plr = game:GetService("Players").LocalPlayer
 local tweenService = game:GetService("TweenService")
 local VirtualInputManager = game:GetService("VirtualInputManager");
-getgenv().speed = 200
+getgenv().speed = 500
 function toTarget(target)
     local speed = getgenv().speed
     local info = TweenInfo.new((target.Position - plr.Character.HumanoidRootPart.Position).Magnitude / speed, Enum.EasingStyle.Linear)
@@ -88,7 +88,7 @@ UI.newCheckBox(UI.Main,'Autofarm',function(value)
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,_G.DIS,0)
                         local args = {[1] = {["inputType"] = Enum.UserInputType.MouseButton1,["keyCode"] = Enum.KeyCode.Unknown}}
                         game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args)) end;
-                    until v.Humanoid.Health <= 0 or not getgenv().Autofarm
+                        until v.Humanoid.Health <= 0 or not getgenv().Autofarm
                         end;
                     end;
                 end;
@@ -100,11 +100,13 @@ end);
 UI.newCheckBox(UI.Main,'Auto Quest',function(value)
 _G.AutoQuest = value
 
-while _G.AutoQuest and wait(1) do
+while _G.AutoQuest and wait() do
 pcall(function()
 for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
-if not game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2:FindFirstChild(_G.Quest) then wait(4)
-                    game:GetService("ReplicatedStorage").Remotes.TakeQuest:FireServer(_G.Quest)
+    if game:GetService("Players").LocalPlayer.PlayerGui.HUD:FindFirstChild("QuestsFrame2") then
+        if not game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2:FindFirstChild(_G.Quest) then wait(2)
+                        game:GetService("ReplicatedStorage").Remotes.TakeQuest:FireServer(_G.Quest)
+                    end;
                 end;
             end;
         end);
@@ -129,7 +131,7 @@ while _G.Eat and wait() do
 pcall(function()
 for i, v in pairs(game:GetService("Workspace").Food:GetDescendants()) do
     if v:FindFirstChild("ProximityPrompt") then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame - Vector3.new(0,-5,0)
                 fireproximityprompt(v.ProximityPrompt)
                 end;
             end;
