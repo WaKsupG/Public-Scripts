@@ -121,7 +121,7 @@ UI.newButton(UI.Main,'Copy Discord',function()
     setclipboard("https://discord.gg/YsUwMnA2Tq")
 end);
 
-UI.newButton(UI.Main,'Kazuto❤️',function()
+UI.newButton(UI.Main,'Kazuto [Not Crashes U]',function()
     while true do
         print("kazuto is daddy")
     end
