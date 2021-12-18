@@ -1,5 +1,6 @@
 local plr = game:GetService("Players").LocalPlayer
 local tweenService = game:GetService("TweenService")
+local VirtualInputManager = game:GetService("VirtualInputManager");
 getgenv().speed = 200
 function toTarget(target)
     local speed = getgenv().speed
@@ -41,7 +42,7 @@ game:GetService("RunService").Stepped:Connect(function()
           end;
        end;
     end;
- end);
+end);
 
 local Mob = {};
 _G.DIS = 6
@@ -94,7 +95,7 @@ _G.AutoQuest = value
 while _G.AutoQuest and wait(1) do
 pcall(function()
 for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
-if not game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2:FindFirstChild(_G.Quest) then
+if not game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2:FindFirstChild(_G.Quest) then wait(4)
                     game:GetService("ReplicatedStorage").Remotes.TakeQuest:FireServer(_G.Quest)
                 end;
             end;
