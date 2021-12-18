@@ -25,6 +25,7 @@ function newIndexHook()
     setreadonly(mt, true)
 end
 newIndexHook()
+getgenv().No = false
 
 local UI = loadstring(game:HttpGet'https://raw.githubusercontent.com/10x00/Tools/main/Super%20Hot%20Monke%20UI')()
 
@@ -75,13 +76,16 @@ UI.newCheckBox(UI.Main,'Autofarm',function(value)
     while getgenv().Autofarm and wait() do
     pcall(function()
         for i,v in pairs(game:GetService("Workspace").Living:GetChildren()) do
+        if getgenv().getgenv().No == false then
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
                 if v.Name == _G.Mob and v.Humanoid.Health > 0 then
                     repeat wait() 
+                        if not game:GetService("Workspace").Food:FindFirstChild("Hollow") then
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,_G.DIS,0)
                         local args = {[1] = {["inputType"] = Enum.UserInputType.MouseButton1,["keyCode"] = Enum.KeyCode.Unknown}}
-                        game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args))
+                        game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args)) end;
                     until v.Humanoid.Health <= 0 or not getgenv().Autofarm
+                        end;
                     end;
                 end;
             end;
@@ -113,16 +117,26 @@ UI.newCheckBox(UI.Main,'Auto Equip',function(value)
     end;
 end);
 
+UI.newCheckBox(UI.Main,'Auto Eat',function(value)
+_G.Eat = value
+
+
+while _G.Eat and wait() do
+pcall(function()
+for i, v in pairs(game:GetService("Workspace").Food:GetDescendants()) do
+    if v:FindFirstChild("ProximityPrompt") then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+                fireproximityprompt(v.ProximityPrompt)
+                end;
+            end;
+        end);
+    end;
+end);
+
 UI.newSlider(UI.Main,'Distance',0,10,function(amount)
     _G.DIS = amount
 end);
 
 UI.newButton(UI.Main,'Copy Discord',function()
     setclipboard("https://discord.gg/YsUwMnA2Tq")
-end);
-
-UI.newButton(UI.Main,'Kazuto [Not Crashes U]',function()
-    while true do
-        print("kazuto is daddy")
-    end
 end);
