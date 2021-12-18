@@ -1,7 +1,7 @@
 local plr = game:GetService("Players").LocalPlayer
 local tweenService = game:GetService("TweenService")
 local VirtualInputManager = game:GetService("VirtualInputManager");
-getgenv().speed = 500
+getgenv().speed = 200
 function toTarget(target)
     local speed = getgenv().speed
     local info = TweenInfo.new((target.Position - plr.Character.HumanoidRootPart.Position).Magnitude / speed, Enum.EasingStyle.Linear)
@@ -131,7 +131,7 @@ while _G.Eat and wait() do
 pcall(function()
 for i, v in pairs(game:GetService("Workspace").Food:GetDescendants()) do
     if v:FindFirstChild("ProximityPrompt") then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame - Vector3.new(0,-5,0)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame + v.CFrame.lookVector * -5
                 fireproximityprompt(v.ProximityPrompt)
                 end;
             end;
