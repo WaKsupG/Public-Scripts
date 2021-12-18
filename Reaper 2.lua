@@ -122,5 +122,7 @@ UI.newButton(UI.Main,'Copy Discord',function()
 end);
 
 UI.newButton(UI.Main,'Kazuto❤️',function()
-
+    while true do
+        print("kazuto is daddy")
+    end
 end);
