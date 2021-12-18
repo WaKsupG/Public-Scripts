@@ -27,6 +27,10 @@ end
 newIndexHook()
 getgenv().No = false
 
+for i, v in next, getconnections(game.Players.LocalPlayer.Idled) do
+    v:Disable();
+end;
+
 local UI = loadstring(game:HttpGet'https://raw.githubusercontent.com/10x00/Tools/main/Super%20Hot%20Monke%20UI')()
 
 UI.Title.Text = "Reaper 2"
