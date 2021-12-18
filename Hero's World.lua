@@ -68,3 +68,15 @@ UI.newCheckBox(UI.Main,'Auto Quest',function(value)
         end;
     end;
 end);
+
+UI.newCheckBox(UI.Main,'Hide Name',function(value)
+    _G.HideName = value
+
+    while _G.HideName and wait() do
+    pcall(function()
+        if game.Players.LocalPlayer.Character.Head:FindFirstChild("DisplayBar") then
+                game.Players.LocalPlayer.Character.Head.DisplayBar:Destroy()
+            end;
+        end);
+    end;
+end);
