@@ -84,7 +84,7 @@ UI.newCheckBox(UI.Main,'Autofarm',function(value)
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
                 if v.Name == _G.Mob and v.Humanoid.Health > 0 then
                     repeat wait() 
-                        if not game:GetService("Workspace").Food:FindFirstChild("Hollow") then
+                        if not game:GetService("Workspace").Food:FindFirstChild("Hollow") or not game:GetService("Workspace").Food:FindFirstChild("Corrupted Brute") then
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,_G.DIS,0)
                         local args = {[1] = {["inputType"] = Enum.UserInputType.MouseButton1,["keyCode"] = Enum.KeyCode.Unknown}}
                         game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args)) end;
