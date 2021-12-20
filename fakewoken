@@ -1,0 +1,74 @@
+local UI = loadstring(game:HttpGet'https://raw.githubusercontent.com/10x00/Tools/main/Super%20Hot%20Monke%20UI')()
+    
+UI.Title.Text = "fakewoken 2"
+
+UI.newTab("Main")
+
+local plr = game:GetService("Players").LocalPlayer
+local tweenService = game:GetService("TweenService")
+getgenv().speed = 250
+function toTarget(target)
+    local speed = getgenv().speed
+    local info = TweenInfo.new((target.Position - plr.Character.HumanoidRootPart.Position).Magnitude / speed, Enum.EasingStyle.Linear)
+    local _, err = pcall(function()
+        tweenService:Create(plr.Character.HumanoidRootPart, info, {CFrame = target}):Play()
+    end)
+    if err then error("Couldn't create/start tween: ", err) end
+end
+function newIndexHook()
+    local mt = getrawmetatable(game)
+    local oldIndex = mt.__newindex
+    setreadonly(mt, false)
+    mt.__newindex = newcclosure(function(self, i, v)
+        if checkcaller() and self == plr.Character.HumanoidRootPart and i == 'CFrame' then
+            game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+            return toTarget(v) 
+        end
+        return oldIndex(self, i, v)
+    end)
+setreadonly(mt, true)
+end
+newIndexHook()
+
+--//No-Clip\\--
+game:GetService("RunService").Stepped:Connect(function()
+    if getgenv().Autofarm then
+    for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+        if v:IsA("BasePart") and v.CanCollide == true then
+            v.CanCollide = false
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+            end;
+        end;
+    end;
+end);
+
+UI.newCheckBox(UI.Main,'Autofarm',function(value)
+    getgenv().Autofarm = value
+    
+    while getgenv().Autofarm and wait() do
+    pcall(function()
+        for i,v in pairs(game.Players:GetChildren()) do
+                if v.Character.Humanoid.Health > 0 and v.Character.Name ~= game.Players.LocalPlayer.Name then
+                repeat wait()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame + Vector3.new(0, -6, 0)
+                if game.Players.LocalPlayer.Backpack:FindFirstChild("Sword") then
+                    game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack["Sword"]) end;
+                game:GetService("Players").LocalPlayer.Character.Sword.Combat.RemoteEvent:FireServer("M1")
+                until v.Character.Humanoid.Health <= 0 or not getgenv().Autofarm
+                end;
+            end;
+        end);
+    end;
+end);
+
+UI.newCheckBox(UI.Main,'Auto Respawn',function(value)
+    _G.Respawn = value
+
+    while _G.Respawn and wait(0.1) do
+    pcall(function()
+        if game.Players.LocalPlayer.Character.Humanoid.Health <= 0 then
+                game:GetService("ReplicatedStorage").Events.Spawn:FireServer()
+            end;
+        end);
+    end;
+end);
