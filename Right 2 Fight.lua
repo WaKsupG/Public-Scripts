@@ -5,6 +5,8 @@
     UI.newTab("Main")
     
     local Mob = {};
+    _G.WaitTP = 15
+    _G.KillSpeed = 10
     
     for i,v in pairs(game:GetService("Workspace").Bots.AI:GetDescendants()) do
     if v:FindFirstChild("TouchInterest") then
