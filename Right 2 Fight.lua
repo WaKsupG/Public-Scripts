@@ -46,3 +46,11 @@
             end);
         end;
     end);
+
+    UI.newTextBox(UI.damn,'Kill Speed','0.1 - 0.10',function(text) 
+    _G.KillSpeed = text
+    end);
+    
+    UI.newTextBox(UI.damn,'TP Wait','5 - 20',function(text) 
+        _G.WaitTP = text
+    end);
