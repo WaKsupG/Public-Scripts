@@ -144,5 +144,5 @@ UI.newSlider(UI.Main,'Distance',0,10,function(amount)
 end);
 
 UI.newButton(UI.Main,'Copy Discord',function()
-    setclipboard("https://discord.gg/YsUwMnA2Tq")
+    setclipboard("https://discord.gg/MAzdhG55er")
 end);
