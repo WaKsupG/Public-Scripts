@@ -53,6 +53,6 @@ while _G.Lol and wait(1) do
 end);
 
 page2:Button("Copy Discord", function()
-setclipboard("https://discord.gg/8XfrZSxyKk")
-create:Notifile("Thanks","Copied To Clipboard",3)
+setclipboard("https://discord.gg/MAzdhG55er")
+create:Notifile("Thanks","Copied To Clipboard",2.5)
 end);
