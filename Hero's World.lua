@@ -82,5 +82,5 @@ UI.newCheckBox(UI.Main,'Hide Name',function(value)
 end);
 
 UI.newButton(UI.Main,'Copy Discord',function()
-    setclipboard("https://discord.gg/YsUwMnA2Tq")
+    setclipboard("https://discord.gg/MAzdhG55er")
 end);
