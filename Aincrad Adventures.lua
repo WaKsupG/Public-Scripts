@@ -130,7 +130,7 @@ page2:Drop("Weapon",false,Tool,function(value)
 end);
 
 page2:Button("Copy Discord", function()
-setclipboard("https://discord.gg/2jepzJ3Eyp")
+setclipboard("https://discord.gg/MAzdhG55er")
 create:Notifile("Thanks","Copied To Clipboard",2.5)
 end);
 
