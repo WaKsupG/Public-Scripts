@@ -1677,3 +1677,26 @@ page2:Toggle("Auto Equip",nil, function(value)
         end;
     end;
 end);
+
+local tap2 = window:addtap("Other")
+
+local page3 = tap2:addpage()
+
+page3:Ti("Stuff")
+
+local drop = page3:DropDown("Select","Race",{"Soul Reaper","Quincy","Hollow","Menos","Adjucha","Vasto Lorde"}, function(value)
+    _G.Race = value
+end);
+
+page3:Button("Spoof Race", function(value)
+ mt = getrawmetatable(game)
+setreadonly(mt,false)
+old = mt.__namecall
+mt.__namecall = newcclosure(function(self,...)
+    local args = {...}
+        if getnamecallmethod() == "InvokeServer" and args[1] == "Race" then
+            return _G.Race
+        end;
+        return old(self,...);
+    end);
+end);
