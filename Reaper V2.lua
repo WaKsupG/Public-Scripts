@@ -1610,10 +1610,13 @@ page1:Toggle("Autofarm",nil, function(value)
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
                 if v.Name == _G.Mob and v.Humanoid.Health > 0 then
                     repeat wait() 
-                        if not game:GetService("Workspace").Food:FindFirstChildWhichIsA("Part") or not game:GetService("Workspace").Food:FindFirstChildWhichIsA("MeshPart") then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,_G.DIS,0)
                         local args = {[1] = {["inputType"] = Enum.UserInputType.MouseButton1,["keyCode"] = Enum.KeyCode.Unknown}}
-                        game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args)) end;
+                        game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args))
+                        if not game:GetService("Workspace").Food:FindFirstChildWhichIsA("Part") or not game:GetService("Workspace").Food:FindFirstChildWhichIsA("MeshPart") and _G.AutoEat then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,_G.DIS,0)
+                        elseif not _G.AutoEat then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,_G.DIS,0)
+                        end
                         until v.Humanoid.Health <= 0 or not getgenv().Autofarm
                     end;
                 end;
