@@ -1688,8 +1688,8 @@ local drop = page3:DropDown("Select","Race",{"Soul Reaper","Quincy","Hollow","Me
     _G.Race = value
 end);
 
-page3:Button("Spoof Race", function(value)
- mt = getrawmetatable(game)
+page3:Button("Spoof Race", function()
+mt = getrawmetatable(game)
 setreadonly(mt,false)
 old = mt.__namecall
 mt.__namecall = newcclosure(function(self,...)
@@ -1699,4 +1699,8 @@ mt.__namecall = newcclosure(function(self,...)
         end;
         return old(self,...);
     end);
+end);
+
+page3:Button("Reset", function()
+    game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end);
