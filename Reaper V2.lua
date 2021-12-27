@@ -1707,3 +1707,7 @@ end);
 page3:Button("Reset", function()
     game.Players.LocalPlayer.Character.Humanoid.Health = 0
 end);
+
+page3:Button("Discord Copy", function()
+setclipboard("https://discord.gg/FZdxeYc8WC")
+end);
