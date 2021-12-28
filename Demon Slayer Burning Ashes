@@ -1576,6 +1576,19 @@ for i, v in next, getconnections(game.Players.LocalPlayer.Idled) do
     v:Disable();
 end;
 
+--//WalkSpeed Bypass\\--
+local mt = getrawmetatable(game)
+local oldindex = mt.__index
+setreadonly(mt, false)
+
+mt.__index = newcclosure(function(self, k)
+   if k == "WalkSpeed" then
+       return 16
+   end
+   return oldindex(self, k)
+end)
+setreadonly(mt, true)
+
 local Mob = {};
 for i,v in pairs(game:GetService("Workspace").npc.npcs:GetChildren()) do
 if not table.find(Mob,v.Name) then
@@ -1640,10 +1653,20 @@ page1:Toggle("Invisibility",nil, function(value)
     end;
 end);
 
+page2:Button("Reset", function()
+    for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+        v:Destroy()
+    end;
+end);
+
 page2:Button("Discord", function()
     setclipboard("https://discord.gg/FZdxeYc8WC")
 end);
 
 local getslider = page2:Slder("Distance",-5,5,0, function(value)
     _G.DIS = value
+end);
+
+local getslider = page2:Slder("WalkSpeed",0,300,0, function(value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
 end);
