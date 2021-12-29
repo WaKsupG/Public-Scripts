@@ -20,7 +20,9 @@
     --//Mobs\\--
     local Mob = {};
     for i,v in pairs(game:GetService("Workspace").Spawns:GetChildren()) do
-        table.insert(Mob,v.Name)
+        if not table.find(Mob,v.Name) then
+            table.insert(Mob,v.Name)
+        end;
     end;
     --//End\\--
 
@@ -48,7 +50,7 @@
         while _G.AutoQuest and wait() do
         if game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.QuestBackground.Visible == false then
         repeat wait()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").QuestParts["QuestPart" .. tostring(QuestNum)].CFrame
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").StaticHumanoids["Quest " .. tostring(QuestNum)].HumanoidRootPart.CFrame
                 game:GetService("ReplicatedStorage").RemoteEvent:FireServer("GetQuest",QuestNum)
                 until not _G.AutoQuest or game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.QuestBackground.Visible == true
             end;
@@ -59,6 +61,7 @@
         _G.Autofarm = value
 
         while _G.Autofarm and wait() do
+        pcall(function()
         if game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.QuestBackground.Visible == true then
             for i,v in pairs(game:GetService("Workspace").Spawns:GetChildren()) do 
                 local PATH = v:FindFirstChildOfClass("Model")
@@ -66,13 +69,18 @@
                         repeat wait()
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = PATH.HumanoidRootPart.CFrame + (PATH.HumanoidRootPart.CFrame.lookVector * DIS)
                             game:GetService("ReplicatedStorage").RemoteEvent:FireServer("Punch", "Right")
-                    until PATH.Humanoid.Health <= 0 or not _G.Autofarm or game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.QuestBackground.Visible == false
+                        until PATH.Humanoid.Health <= 0 or not _G.Autofarm or game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.QuestBackground.Visible == false
+                    end;
                 end;
             end;
-        end;
+        end);
     end;
 end);
 
-    section2:addSlider("Distance", -3, -5, 5, function(value)
-        DIS = value
-    end);
+section2:addSlider("Distance", -3, -5, 5, function(value)
+    DIS = value
+end);
+
+section2:addButton("Copy Discord", function()
+    setclipboard("https://discord.gg/6jXyFNBK")
+end);
