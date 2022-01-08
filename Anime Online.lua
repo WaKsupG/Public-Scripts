@@ -17,7 +17,7 @@ end;
 
 local plr = game:GetService("Players").LocalPlayer
 local tweenService = game:GetService("TweenService")
-getgenv().speed = 500
+getgenv().speed = 500000000
 function toTarget(target)
     local speed = getgenv().speed
     local info = TweenInfo.new((target.Position - plr.Character.HumanoidRootPart.Position).Magnitude / speed, Enum.EasingStyle.Linear)
