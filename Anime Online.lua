@@ -70,9 +70,11 @@ section1:addToggle("Auto Attack",nil, function(value)
     _G.Attack = value
 
     while _G.Attack and wait() do
+    pcall(function()
         for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-            game:GetService("Players").LocalPlayer.Backpack[v.Name].Combat:FireServer("Combo1")
-        end;
+                game:GetService("Players").LocalPlayer.Backpack[v.Name].Combat:FireServer("Combo1")
+            end;
+        end);
     end;
 end);
 
@@ -80,11 +82,13 @@ section2:addToggle("No Stun",nil, function(value)
     _G.NoStun = value
 
     while _G.NoStun and wait() do
+    pcall(function()
         for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
             if v:FindFirstChild("Stun") then
-                v:Destroy()
+                    v:Destroy()
+                end;
             end;
-        end;
+        end);
     end;
 end);
 
@@ -92,11 +96,13 @@ section2:addToggle("No Jump CD",nil, function(value)
     _G.NoJump = value
 
     while _G.NoJump and wait() do
+    pcall(function()
         for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
             if v:FindFirstChild("JumpCD") then
-                v:Destroy()
+                    v:Destroy()
+                end;
             end;
-        end;
+        end);
     end;
 end);
 
