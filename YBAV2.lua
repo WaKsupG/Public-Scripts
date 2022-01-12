@@ -28,6 +28,7 @@ folder:AddToggle({text = "Autofarm", callback = function(value)
     while shared.Autofarm and wait() do
     pcall(function()
         for i,v in pairs(game:GetService("Workspace").Living:GetChildren()) do
+            if not v:FindFirstChild(shared.Mob) then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(170.16456604004, 877.81109619141, 290.9909362793) end;
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
                 if v.Name == shared.Mob and v.Humanoid.Health > 0 then
                     repeat wait()
