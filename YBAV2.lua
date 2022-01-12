@@ -4,7 +4,6 @@ local Window = Library:CreateWindow("10x - YBA")
 
 local folder = Window:AddFolder("Autofarms")
 
-local QFrame = game:GetService("Players").LocalPlayer.PlayerGui.HUD.Main.Frames.Quest.Quests
 local MobsTBL = {"Zombie Henchman","Security Guard","Deovolo","Vampire","Thug","Bruce Brunorati","Alpha Thug","Deo","Corrupt Police","Joe","Ice Cube","Leaking Eye Luke"}
 local QuestTBL = {"Officer Sam [Lvl. 1+]","Deputy Bertrude [Lvl. 10+]","Lion [Lvl 15+]","Dracula [Lvl. 20+]","Deo [Lvl. 35+]"}
 local Hook;
@@ -36,7 +35,7 @@ folder:AddToggle({text = "Autofarm", callback = function(value)
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -3)
                         game:GetService("Players").LocalPlayer.Character.RemoteFunction:InvokeServer("Attack","m1")
                         if v:FindFirstChild("Health") and v.Health.Value <= 0 then v:remove() end
-                        until v.Health.Value <= 0 or not shared.Autofarm
+                        until not shared.Autofarm
                     end;
                 end;
             end
@@ -53,6 +52,8 @@ folder:AddToggle({text = "Auto Quest", callback = function(value)
 
     while shared.AutoQuest and wait() do
     pcall(function()
+    local QFrame = game:GetService("Players").LocalPlayer.PlayerGui.HUD.Main.Frames.Quest.Quests
+
     if shared.Quest == "Officer Sam [Lvl. 1+]" then
         if not QFrame:FindFirstChild("Take down 5 thugs") then
         local a={[1]="DialogueInteracted",[2]={["DialogueName"]="Officer Sam",["Speaker"]="Officer Sam [Lvl. 1+]"}}game:GetService("Players").LocalPlayer.Character.RemoteEvent:FireServer(unpack(a))wait(2)local a={[1]="ReturnQuest",[2]="Take down 5 thugs"}game:GetService("Players").LocalPlayer.Character.RemoteFunction:InvokeServer(unpack(a))wait(1)local a={[1]="EndDialogue",[2]={["NPC"]="Officer Sam",["Option"]="Option1",["Dialogue"]="Dialogue5"}}game:GetService("Players").LocalPlayer.Character.RemoteEvent:FireServer(unpack(a))local a={[1]="ReturnData"}game:GetService("Players").LocalPlayer.QuestsRemoteFunction:InvokeServer(unpack(a)) end;
