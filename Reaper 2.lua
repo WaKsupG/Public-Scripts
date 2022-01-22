@@ -54,7 +54,7 @@ if getgenv().Autofarm or getgenv().SP then
 end);
 
 local Mob = {};
-_G.DIS = 6
+getgenv().DIS = 6
 for i,v in pairs(game:GetService("Workspace").Living:GetChildren()) do
 if not table.find(Mob,v.Name) and not v:FindFirstChild("ClientHandler") and not v:FindFirstChild("xSIXxAnimationSaves") and not string.match(v.Name,"Masta") and v.Name ~= "Noob" then --//I'm so sorry you had to witness this i apolgize whoever sees this...
         table.insert(Mob,v.name)
@@ -81,14 +81,14 @@ folder:AddToggle({text = "Autofarm", callback = function(value)
     pcall(function()
         for i,v in pairs(game:GetService("Workspace").Living:GetChildren()) do
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
-                if v.Name == _G.Mob and v.Humanoid.Health > 0 then
+                if v.Name == getgenv().Mob and v.Humanoid.Health > 0 then
                     repeat wait() 
                         local args = {[1] = {["inputType"] = Enum.UserInputType.MouseButton1,["keyCode"] = Enum.KeyCode.Unknown}}
                         game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args))
-                        if not game:GetService("Workspace").Food:FindFirstChildWhichIsA("Part") or not game:GetService("Workspace").Food:FindFirstChildWhichIsA("MeshPart") and _G.AutoEat then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,_G.DIS,0)
-                        elseif not _G.Eat then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,_G.DIS,0)
+                        if not game:GetService("Workspace").Food:FindFirstChildWhichIsA("Part") or not game:GetService("Workspace").Food:FindFirstChildWhichIsA("MeshPart") and getgenv().AutoEat then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,getgenv().DIS,0)
+                        elseif not getgenv().Eat then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,getgenv().DIS,0)
                         end
                         until v.Humanoid.Health <= 0 or not getgenv().Autofarm
                     end;
@@ -99,14 +99,14 @@ folder:AddToggle({text = "Autofarm", callback = function(value)
 end});
 
 folder:AddToggle({text = "Auto Quest", callback = function(value) 
- _G.AutoQuest = value
+ getgenv().AutoQuest = value
 
-while _G.AutoQuest and wait() do
+while getgenv().AutoQuest and wait() do
 pcall(function()
 for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
     if game:GetService("Players").LocalPlayer.PlayerGui.HUD:FindFirstChild("QuestsFrame2") then
-        if not game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2:FindFirstChild(_G.Quest) then wait(2)
-                        game:GetService("ReplicatedStorage").Remotes.TakeQuest:FireServer(_G.Quest)
+        if not game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2:FindFirstChild(getgenv().Quest) then wait(2)
+                        game:GetService("ReplicatedStorage").Remotes.TakeQuest:FireServer(getgenv().Quest)
                     end;
                 end;
             end;
@@ -115,21 +115,21 @@ for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
 end});
 
 folder:AddList({text = "Mob", values = Mob, callback = function(value)
-    _G.Mob = value
+    getgenv().Mob = value
 end});
 
 folder:AddList({text = "Quests", values = Quest, callback = function(value)
-    _G.Quest = value
+    getgenv().Quest = value
 end});
 
 
 folder:AddSlider({text = 'Distance', min = 0, max = 10, callback = function(value) 
-    _G.DIS = value
+    getgenv().DIS = value
 end});
 
 folder2:AddToggle({text = "Auto Eat", callback = function(value) 
-    _G.Eat = value
-    while _G.Eat and wait() do
+    getgenv().Eat = value
+    while getgenv().Eat and wait() do
     pcall(function()
         for i, v in pairs(game:GetService("Workspace").Food:GetDescendants()) do
                 if v:FindFirstChild("ProximityPrompt") then
@@ -142,9 +142,9 @@ folder2:AddToggle({text = "Auto Eat", callback = function(value)
 end});
 
 folder2:AddToggle({text = "Auto Equip", callback = function(value) 
-    _G.Equip = value
+    getgenv().Equip = value
 
-    while _G.Equip and wait(.3) do
+    while getgenv().Equip and wait(.3) do
         if game:GetService("Players").LocalPlayer.Status.Weapon.Value == nil then
             local a={[1]={["inputType"]=Enum.UserInputType.Keyboard,["keyCode"]=Enum.KeyCode.E}}game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(a))
         end;
@@ -159,20 +159,20 @@ folder2:AddToggle({text = "Auto Adjust Mob", callback = function(value)
     local wtf = game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2["Acquired Taste"].Frame.Objective
 
     if string.match(wtf.Text,"Kill 1 Clawed") or string.match(wtf.Text,"Kill 2 Clawed") then
-            _G.Mob = "Clawed Hollow"
+            getgenv().Mob = "Clawed Hollow"
         elseif string.match(wtf.Text,"Kill 1 Winged") or string.match(wtf.Text,"Kill 2 Winged") and string.match(wtf.Text,"Kill 0 Clawed") then
-            _G.Mob = "Winged Hollow"
+            getgenv().Mob = "Winged Hollow"
         elseif string.match(wtf.Text,"Kill 1 Savage") and string.match(wtf.Text,"Kill 0 Clawed") and string.match(wtf.Text,"Kill 0 Winged") then
-                _G.Mob = "Savage Hollow"
+                getgenv().Mob = "Savage Hollow"
             end; 
         end);
     end;
 end});
 
 folder2:AddToggle({text = "Insta TP", callback = function(value) 
-    _G.InstaTP = value
+    getgenv().InstaTP = value
 
-    if _G.InstaTP then
+    if getgenv().InstaTP then
         getgenv().speed = 9e9
         game.Players.LocalPlayer.Name = "123imnotmomo"
     else
@@ -184,56 +184,77 @@ folder2:AddButton({text = "Discord", callback = function(value)
     setclipboard("https://discord.gg/FZdxeYc8WC")
 end})
 
-local Window2 = Library:CreateWindow("Skills")
+local Window2 = Library:CreateWindow("Extra")
 
-local folder3 = Window2:AddFolder("Auto Use")
+local folder3 = Window2:AddFolder("Skills")
 
 folder3:AddToggle({text = "Skill 1", callback = function(value)
-    _G.One = value
+    getgenv().One = value
 
-    while _G.One and wait() do
+    while getgenv().One and wait() do
         game:GetService("VirtualInputManager"):SendKeyEvent(true, "One", false, game); wait(1)
         local a={[1]={["inputType"]=Enum.UserInputType.MouseButton1,["keyCode"]=Enum.KeyCode.Unknown}}game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(a))
     end;
 end});
 
 folder3:AddToggle({text = "Skill 2", callback = function(value)
-    _G.Two = value
+    getgenv().Two = value
 
-    while _G.Two and wait() do
+    while getgenv().Two and wait() do
         game:GetService("VirtualInputManager"):SendKeyEvent(true, "Two", false, game); wait(1)
         local a={[1]={["inputType"]=Enum.UserInputType.MouseButton1,["keyCode"]=Enum.KeyCode.Unknown}}game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(a))
     end;
 end});
 
 folder3:AddToggle({text = "Skill 3", callback = function(value)
-    _G.Three = value
+    getgenv().Three = value
 
-    while _G.Three and wait() do
+    while getgenv().Three and wait() do
         game:GetService("VirtualInputManager"):SendKeyEvent(true, "Three", false, game); wait(1)
         local a={[1]={["inputType"]=Enum.UserInputType.MouseButton1,["keyCode"]=Enum.KeyCode.Unknown}}game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(a))
     end;
 end});
 
 folder3:AddToggle({text = "Skill 4", callback = function(value)
-    _G.Four = value
+    getgenv().Four = value
 
-    while _G.Four and wait() do
+    while getgenv().Four and wait() do
         game:GetService("VirtualInputManager"):SendKeyEvent(true, "Four", false, game); wait(1)
         local a={[1]={["inputType"]=Enum.UserInputType.MouseButton1,["keyCode"]=Enum.KeyCode.Unknown}}game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(a))
     end;
 end});
 
 folder3:AddToggle({text = "Skill 5", callback = function(value)
-    _G.Five = value
+    getgenv().Five = value
 
-    while _G.Five and wait() do
+    while getgenv().Five and wait() do
         game:GetService("VirtualInputManager"):SendKeyEvent(true, "Five", false, game); wait(1)
         local a={[1]={["inputType"]=Enum.UserInputType.MouseButton1,["keyCode"]=Enum.KeyCode.Unknown}}game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(a))
     end;
 end});
 
+local folder4 = Window2:AddFolder("Other Farms")
 
+folder4:AddToggle({text = "Menos Farm", callback = function(value)
+    getgenv().MenosFarm = value
+
+    while getgenv().MenosFarm and wait() do
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-265.44021606445, 65.581199645996, 1871.4075927734)
+    end;
+end});
+
+folder4:AddList({text = "Stomp Key", values = {"One","Two","Three","Four","Five"}, callback = function(value)
+    getgenv().SKey = value
+end})
+
+folder4:AddToggle({text = "Auto Stomp", callback = function(value)
+    getgenv().Stomp = value
+
+    while getgenv().Stomp and wait() do
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, getgenv().SKey, false, game); wait(1)
+        local a={[1]={["inputType"]=Enum.UserInputType.MouseButton1,["keyCode"]=Enum.KeyCode.Unknown}}game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(a))
+    end;
+end});
 
 
 Library:Init()
