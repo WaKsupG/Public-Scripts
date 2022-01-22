@@ -1,4 +1,4 @@
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/un-named%20backups/jans", true))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/10x00/Tools/main/UwUWare%20UI.lua", true))()
 
 local Window = Library:CreateWindow("Autofarm")
 
@@ -14,7 +14,6 @@ end;
 for i, v in next, getconnections(game.Players.LocalPlayer.Idled) do
     v:Disable();
 end;
-
 
 local plr = game:GetService("Players").LocalPlayer
 local tweenService = game:GetService("TweenService")
@@ -151,6 +150,21 @@ folder2:AddToggle({text = "Auto Equip", callback = function(value)
         end;
     end;
 end});
+
+folder2:AddToggle({text = "Insta TP", callback = function(value) 
+    _G.InstaTP = value
+
+    if _G.InstaTP then
+        getgenv().speed = 9e9
+        game.Players.LocalPlayer.Name = "momoisme"
+    else
+        getgenv().speed = 300
+    end;
+end})
+
+folder2:AddButton({text = "Discord", callback = function(value) 
+    setclipboard("https://discord.gg/FZdxeYc8WC")
+end})
 
 local Window2 = Library:CreateWindow("Specific")
 
