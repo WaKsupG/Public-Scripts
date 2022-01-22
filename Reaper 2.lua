@@ -174,7 +174,7 @@ folder2:AddToggle({text = "Insta TP", callback = function(value)
 
     if _G.InstaTP then
         getgenv().speed = 9e9
-        game.Players.LocalPlayer.Name = "momoisme"
+        game.Players.LocalPlayer.Name = "123imnotmomo"
     else
         getgenv().speed = 300
     end;
