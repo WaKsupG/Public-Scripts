@@ -121,6 +121,24 @@ for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
     end;
 end});
 
+folder:AddToggle({text = "Auto Adjust Mob", callback = function(value) 
+    getgenv().SP = value
+    
+    while getgenv().SP and wait() do    
+    pcall(function()
+    local wtf = game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2["Acquired Taste"].Frame.Objective
+
+    if string.match(wtf.Text,"Kill 1 Clawed") or string.match(wtf.Text,"Kill 2 Clawed") then
+            getgenv().Mob = "Clawed Hollow"
+        elseif string.match(wtf.Text,"Kill 1 Winged") or string.match(wtf.Text,"Kill 2 Winged") and string.match(wtf.Text,"Kill 0 Clawed") then
+            getgenv().Mob = "Winged Hollow"
+        elseif string.match(wtf.Text,"Kill 1 Savage") and string.match(wtf.Text,"Kill 0 Clawed") and string.match(wtf.Text,"Kill 0 Winged") then
+                getgenv().Mob = "Savage Hollow"
+            end; 
+        end);
+    end;
+end});
+
 folder:AddList({text = "Mob", values = Mob, callback = function(value)
     getgenv().Mob = value
 end});
@@ -130,7 +148,7 @@ folder:AddList({text = "Quests", values = Quest, callback = function(value)
 end});
 
 
-folder:AddSlider({text = 'Distance', min = 0, max = 10, callback = function(value) 
+folder:AddSlider({text = 'Distance', min = 0, max = 10, incrementalMode = true, callback = function(value) 
     getgenv().DIS = value
 end});
 
@@ -158,23 +176,6 @@ folder2:AddToggle({text = "Auto Equip", callback = function(value)
     end;
 end});
 
-folder2:AddToggle({text = "Auto Adjust Mob", callback = function(value) 
-    getgenv().SP = value
-    
-    while getgenv().SP and wait() do    
-    pcall(function()
-    local wtf = game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2["Acquired Taste"].Frame.Objective
-
-    if string.match(wtf.Text,"Kill 1 Clawed") or string.match(wtf.Text,"Kill 2 Clawed") then
-            getgenv().Mob = "Clawed Hollow"
-        elseif string.match(wtf.Text,"Kill 1 Winged") or string.match(wtf.Text,"Kill 2 Winged") and string.match(wtf.Text,"Kill 0 Clawed") then
-            getgenv().Mob = "Winged Hollow"
-        elseif string.match(wtf.Text,"Kill 1 Savage") and string.match(wtf.Text,"Kill 0 Clawed") and string.match(wtf.Text,"Kill 0 Winged") then
-                getgenv().Mob = "Savage Hollow"
-            end; 
-        end);
-    end;
-end});
 
 folder2:AddToggle({text = "Insta TP", callback = function(value) 
     getgenv().InstaTP = value
@@ -270,6 +271,7 @@ local folder5 = Window3:AddFolder("NPCS")
 folder5:AddList({text = "NPC", values = NPC, callback = function(value)
     getgenv().NPCTP = value
 end})
+
 
 folder5:AddButton({text = "Teleport", callback = function(value) 
 pcall(function()
