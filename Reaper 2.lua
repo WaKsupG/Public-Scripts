@@ -70,6 +70,13 @@ if v:IsA("Model") and not v:FindFirstChild("xSIXxAnimationSaves") then
     end);
 end;
 
+local NPC = {};
+for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
+if v:IsA("Model") and not v:FindFirstChild("xSIXxAnimationSaves") then
+        table.insert(NPC,v.Name)
+    end;
+end;
+
 for i, v in next, getconnections(game.Players.LocalPlayer.Idled) do
     v:Disable();
 end;
@@ -256,5 +263,22 @@ folder4:AddToggle({text = "Auto Stomp", callback = function(value)
     end;
 end});
 
+local Window3 = Library:CreateWindow("Teleports")
+
+local folder5 = Window3:AddFolder("NPCS")
+
+folder5:AddList({text = "NPC", values = NPC, callback = function(value)
+    getgenv().NPCTP = value
+end})
+
+folder5:AddButton({text = "Teleport", callback = function(value) 
+pcall(function()
+    for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
+        if v.Name == getgenv().NPCTP then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
+            end;
+        end;
+    end);
+end});
 
 Library:Init()
