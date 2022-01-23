@@ -62,10 +62,12 @@ if not table.find(Mob,v.Name) and not v:FindFirstChild("ClientHandler") and not 
 end;
 
 local Quest = {};
-for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
+for i,v in pairs(game:GetService("Workspace").NPCs:GetDescendants()) do
 pcall(function()
-if v:IsA("Model") and not v:FindFirstChild("xSIXxAnimationSaves") then
-        table.insert(Quest,v.Dialogue["1"]["2"].Quest.Value)
+if v.Name == ("Quest") and not v.Parent:FindFirstChild("xSIXxAnimationSaves") then
+    if v.Value ~= "" and v.Value ~= "Test Quest" then
+                table.insert(Quest,v.Value)
+            end;
         end;
     end);
 end;
@@ -122,20 +124,40 @@ for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
 end});
 
 folder:AddToggle({text = "Auto Adjust Mob", callback = function(value) 
-    getgenv().SP = value
+    if getgenv().Quest == "Op Killer" and value then
+        getgenv().OPK = true
+        getgenv().AQ = false
+    elseif getgenv().Quest == "Acquired Taste" and value then
+        getgenv().AQ = true
+        getgenv().OPK = false
+    end;
     
-    while getgenv().SP and wait() do    
+    while getgenv().AQ and wait() do    
     pcall(function()
     local wtf = game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2["Acquired Taste"].Frame.Objective
-
+    
     if string.match(wtf.Text,"Kill 1 Clawed") or string.match(wtf.Text,"Kill 2 Clawed") then
             getgenv().Mob = "Clawed Hollow"
         elseif string.match(wtf.Text,"Kill 1 Winged") or string.match(wtf.Text,"Kill 2 Winged") and string.match(wtf.Text,"Kill 0 Clawed") then
             getgenv().Mob = "Winged Hollow"
         elseif string.match(wtf.Text,"Kill 1 Savage") and string.match(wtf.Text,"Kill 0 Clawed") and string.match(wtf.Text,"Kill 0 Winged") then
                 getgenv().Mob = "Savage Hollow"
-            end; 
+            end;
         end);
+    end;
+    
+    while getgenv().OPK and wait() do
+    pcall(function()
+    local wtf2 = game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2["Op Killer"].Frame.Objective
+
+        if string.match(wtf2.Text,"Kill 1 Heavy") or string.match(wtf2.Text,"Kill 2 Heavy") then
+                getgenv().Mob = "Heavy Corrupted Kido Corps"
+            elseif string.match(wtf2.Text,"Kill 1 Experienced") and string.match(wtf2.Text,"Kill 0 Heavy") then
+                getgenv().Mob = "Experienced Corrupted Shikai User"
+            elseif string.match(wtf2.Text,"Kill 3 Corrupted") or string.match(wtf2.Text,"Kill 2 Corrupted") or string.match(wtf2.Text,"Kill 1 Corrupted") and string.match(wtf2.Text,"Kill 0 Experienced") then
+                getgenv().Mob = "Corrupted Kido Corps"
+            end;
+        end); 
     end;
 end});
 
