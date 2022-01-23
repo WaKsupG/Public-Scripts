@@ -43,7 +43,7 @@ end
 newIndexHook()
 
 game:GetService("RunService").Stepped:Connect(function()
-if getgenv().Autofarm or getgenv().SP then
+if getgenv().Autofarm or getgenv().SP or getgenv().MenosFarm then
     for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") and v.CanCollide == true then
                  v.CanCollide = false
@@ -269,8 +269,12 @@ folder4:AddToggle({text = "Menos Farm", callback = function(value)
     getgenv().MenosFarm = value
 
     while getgenv().MenosFarm and wait() do
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-265.44021606445, 65.581199645996, 1871.4075927734)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = (getgenv().MPos)
     end;
+end});
+
+folder4:AddButton({text = "Set Position", callback = function(value) 
+    getgenv().MPos = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
 end});
 
 folder4:AddList({text = "Stomp Key", values = {"One","Two","Three","Four","Five"}, callback = function(value)
