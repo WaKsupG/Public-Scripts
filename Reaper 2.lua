@@ -57,7 +57,7 @@ local Mob = {};
 getgenv().DIS = 6
 for i,v in pairs(game:GetService("Workspace").Living:GetChildren()) do
 if not table.find(Mob,v.Name) and not v:FindFirstChild("ClientHandler") and not v:FindFirstChild("xSIXxAnimationSaves") and not string.match(v.Name,"Masta") and v.Name ~= "Noob" then --//I'm so sorry you had to witness this i apolgize whoever sees this...
-        table.insert(Mob,v.name)
+        table.sort(Mob) table.insert(Mob,v.name)
     end;
 end;
 
@@ -66,7 +66,7 @@ for i,v in pairs(game:GetService("Workspace").NPCs:GetDescendants()) do
 pcall(function()
 if v.Name == ("Quest") and not v.Parent:FindFirstChild("xSIXxAnimationSaves") then
     if v.Value ~= "" and v.Value ~= "Test Quest" then
-                table.insert(Quest,v.Value)
+                table.sort(Quest) table.insert(Quest,v.Value)
             end;
         end;
     end);
@@ -75,7 +75,7 @@ end;
 local NPC = {};
 for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
 if v:IsA("Model") and not v:FindFirstChild("xSIXxAnimationSaves") then
-        table.insert(NPC,v.Name)
+        table.sort(NPC) table.insert(NPC,v.Name)
     end;
 end;
 
