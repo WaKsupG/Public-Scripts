@@ -327,7 +327,7 @@ folder6:AddToggle({text = "Kill Player", callback = function(value)
     getgenv().pFarm = value
 
     while pFarm and wait() do
-        pcall(function() game.Players.LocalPlayer.Name = "123imnotmomo"
+        pcall(function()
             for i,v in pairs(game.Players:GetChildren()) do
                 if v.Name == getgenv().Player and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame + (v.Character.HumanoidRootPart.CFrame.lookVector * -3)
@@ -347,7 +347,7 @@ folder6:AddToggle({text = "Auto Reset", callback = function(value)
 
     while getgenv().autoReset and wait(getgenv().Wait) do
     pcall(function()
-            game.Players.LocalPlayer.Character.Humanoid.Health = 0
+            game.Players.LocalPlayer.Character.Head:Destroy()
         end);
     end;
 end});
