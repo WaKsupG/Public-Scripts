@@ -316,9 +316,13 @@ local folder6 = Window4:AddFolder("Bounty Farm")
 folder6:AddToggle({text = "Auto Bounty Quest", callback = function(value) 
     getgenv().bFarm = value
 
-    while getgenv().bFarm and wait() do
+    while getgenv().bFarm and wait(.1) do
     pcall(function()
+        if not game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2:FindFirstChild("Bounty") then
+            game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer() end;
+        if not game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2.Bounty.Frame.Objective.Text:match(getgenv().Player) then
             game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+            end;
         end);
     end;
 end});
@@ -345,15 +349,11 @@ end});
 folder6:AddToggle({text = "Auto Reset", callback = function(value) 
     getgenv().autoReset = value
 
-    while getgenv().autoReset and wait(getgenv().Wait) do
+    while getgenv().autoReset and wait(5.5) do
     pcall(function()
             game.Players.LocalPlayer.Character.Head:Destroy()
         end);
     end;
-end});
-
-folder6:AddSlider({text = 'Reset Wait Time', min = 0, max = 10, incrementalMode = true, callback = function(value) 
-    getgenv().Wait = value
 end});
 
 Library:Init()
