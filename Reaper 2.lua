@@ -309,4 +309,51 @@ pcall(function()
     end);
 end});
 
+local Window4 = Library:CreateWindow("OP")
+
+local folder6 = Window4:AddFolder("Bounty Farm")
+
+folder6:AddToggle({text = "Auto Bounty Quest", callback = function(value) 
+    getgenv().bFarm = value
+
+    while getgenv().bFarm and wait() do
+    pcall(function()
+            game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+        end);
+    end;
+end});
+
+folder6:AddToggle({text = "Kill Player", callback = function(value) 
+    getgenv().pFarm = value
+
+    while pFarm and wait() do
+        pcall(function() game.Players.LocalPlayer.Name = "123imnotmomo"
+            for i,v in pairs(game.Players:GetChildren()) do
+                if v.Name == getgenv().Player and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame + (v.Character.HumanoidRootPart.CFrame.lookVector * -3)
+                    local args = {[1] = {["inputType"] = Enum.UserInputType.MouseButton1,["keyCode"] = Enum.KeyCode.Unknown}} game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args))
+                end;
+            end;    
+        end);
+    end;
+end});
+
+folder6:AddBox({text = 'Player', callback = function(value) 
+    getgenv().Player = value
+end});
+
+folder6:AddToggle({text = "Auto Reset", callback = function(value) 
+    getgenv().autoReset = value
+
+    while getgenv().autoReset and wait(getgenv().Wait) do
+    pcall(function()
+            game.Players.LocalPlayer.Character.Humanoid.Health = 0
+        end);
+    end;
+end});
+
+folder6:AddSlider({text = 'Reset Wait Time', min = 0, max = 10, incrementalMode = true, callback = function(value) 
+    getgenv().Wait = value
+end});
+
 Library:Init()
