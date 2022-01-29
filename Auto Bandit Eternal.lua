@@ -11,7 +11,7 @@ pcall(function() for a,b in pairs(game:GetService("Workspace"):GetDescendants())
             if v.Humanoid.Health > 0 then
                 repeat wait() 
                     game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,6.5,0)
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0)
                     until v.Humanoid.Health <= 0 or not shared.autoBandit
                 end;
             end;
