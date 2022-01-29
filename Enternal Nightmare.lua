@@ -17,6 +17,13 @@ game:GetService("RunService").Stepped:Connect(function()
     end;
 end);
 
+local weaponList = {};
+for i,v in pairs(game:GetService("ReplicatedStorage").ClientSidedActions:GetChildren()) do
+    if string.find(v.Name, "Basic") then
+        table.insert(weaponList, v.Name)
+    end;
+end;
+
 folder:AddToggle({text = "Autofarm", callback = function(value) 
 shared.autoFarm = value
     
@@ -26,7 +33,7 @@ pcall(function()
         if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and not v:FindFirstChild("LookDirection") then
             if v.Humanoid.Health > 0 then
                 repeat wait() 
-                    game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer("DaggerBasic",1)
+                    game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0)
                     until v.Humanoid.Health <= 0 or not shared.autoFarm
                     end;
@@ -34,6 +41,10 @@ pcall(function()
             end;
         end);
     end;
+end});
+
+folder:AddList({text = "Weapon", values = weaponList, callback = function(value)
+    shared.weapon = value
 end});
 
 folder:AddToggle({text = "Hide Identity", callback = function(value) 
