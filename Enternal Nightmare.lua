@@ -49,14 +49,6 @@ while shared.hideName and wait() do
     end;
 end});
 
-folder:AddToggle({text = "Kill Aura", callback = function(value) 
-    shared.aura = value
-
-    while shared.aura and wait() do
-        game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer("DaggerBasic",1)
-    end;
-end});
-
 folder:AddSlider({text = 'Distance', min = 0, max = 10, incrementalMode = true, callback = function(value) 
     shared.mobDistance = value
 end});
