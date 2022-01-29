@@ -83,8 +83,21 @@ folder2:AddButton({text = "Discord", callback = function(value)
     setclipboard("https://discord.gg/FZdxeYc8WC")
 end})
 
+folder2:AddToggle({text = "Auto Bandit Stage", callback = function(value)
+    shared.banditStage = value
+
+    while shared.banditStage and wait(1) do
+        for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
+            if v:IsA("TouchTransmitter") then
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+            end;
+        end;
+    end;
+end});
+
 folder2:AddButton({text = "Warp Bandit Camp", callback = function(value) 
     local a={[1]=workspace.Interactions.BanditCamps.Data.ID,[2]={[1]="Let's go !"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a))
 end})
+
 
 Library:Init()
