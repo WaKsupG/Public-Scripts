@@ -26,7 +26,6 @@ pcall(function()
         if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and not v:FindFirstChild("LookDirection") then
             if v.Humanoid.Health > 0 then
                 repeat wait() 
-                    v.Humanoid.Health = 0
                     game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer("DaggerBasic",1)
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0)
                     until v.Humanoid.Health <= 0 or not shared.autoFarm
