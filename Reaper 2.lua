@@ -319,9 +319,9 @@ folder6:AddToggle({text = "Auto Bounty Quest", callback = function(value)
     while getgenv().bFarm and wait(.1) do
     pcall(function()
         if not game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2:FindFirstChild("Bounty") then
-            game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer() end;
+            game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer() game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(68.866889953613, 3.4504423141479, 1300.1274414062) end;
         if not game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2.Bounty.Frame.Objective.Text:match(getgenv().Player) then
-            game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer()
+            game:GetService("ReplicatedStorage").Remotes.Bounty:InvokeServer() game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(68.866889953613, 3.4504423141479, 1300.1274414062)
             end;
         end);
     end;
