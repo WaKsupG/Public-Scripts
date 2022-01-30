@@ -15,19 +15,7 @@ local X = Material.Load({
 
 for i, v in next, getconnections(game.Players.LocalPlayer.Idled) do
     v:Disable();
-end;    
-
-local Y = X.New({
-    Title = "Main"
-})
-
-local Y3 = X.New({
-    Title = "Extra"
-})
-
-local Y2 = X.New({
-    Title = "Bandit/Ascension"
-})
+end;
 
 game:GetService("RunService").Stepped:Connect(function()
     if shared.autoFarm or shared.autoBandit then
@@ -36,14 +24,6 @@ game:GetService("RunService").Stepped:Connect(function()
             v.CanCollide = false
             game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
             end;
-        end;
-    end;
-end);
-
-game:GetService("RunService").Stepped:Connect(function()
-    if shared.autoBandit then
-        if game.Players.LocalPlayer.Character.Humanoid.Health <= 20 then 
-            game.Players.LocalPlayer.Character.Humanoid:Destroy() 
         end;
     end;
 end);
@@ -57,6 +37,7 @@ else
 end;
 
 local weaponList = {};
+local npcList = {};
 local readWeapon = readfile("WhatWeaponBro.txt")
 shared.mobDistance = 6.3
 shared.weapon = readWeapon
@@ -67,6 +48,25 @@ for i,v in pairs(game:GetService("ReplicatedStorage").ClientSidedActions:GetChil
         table.insert(weaponList, v.Name)
     end;
 end;
+
+for i,v in pairs(game:GetService("Workspace").Interactions:GetChildren()) do
+    if v.Data.Type.Value == "Dialog" then
+        table.insert(npcList, v.Name)
+    end;
+end;
+
+
+
+--//Tab One Start\\--
+
+
+
+
+local Y = X.New({
+    Title = "Main"
+})
+
+
 
 Y.Toggle({Text = "Autofarm",Callback = function(value)
 shared.autoFarm = value
@@ -118,6 +118,54 @@ Y.Slider({Text = "Distance",Min = -10,Max = 10,Def = 6.5,Callback = function(val
     shared.mobDistance = value
 end});
 
+
+
+
+
+--//Tab Two Start\\--
+
+
+
+
+
+local Y2 = X.New({
+    Title = "Options"
+})
+
+local IF = Y2.Toggle({Text = "Infinite Lives",Callback = function(value)
+shared.godMode = value
+
+pcall(function()
+game.Players.LocalPlayer.CharacterAdded:Connect(function()
+    game.Players.LocalPlayer.Character.Humanoid.Died:Connect(function()
+        if shared.godMode then
+                    game.Players.LocalPlayer.Character.Humanoid:Destroy()
+                end;
+            end);
+        end);
+    end);
+end});
+
+Y2.Toggle({Text = "Kill Aura",Callback = function(value)
+    shared.killAura = value
+
+    while shared.killAura and wait() do
+        game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
+    end;
+end});
+
+Y2.Button({Text = "Discord",Callback = function()
+    setclipboard("https://discord.gg/FZdxeYc8WC")
+end});
+
+
+
+--//Tab 3\\--
+
+local Y3 = X.New({
+    Title = "Local Player"
+})
+
 Y3.Toggle({Text = "No Cooldown",Callback = function(value)
     shared.noCooldown = value
 
@@ -134,45 +182,53 @@ Y3.Toggle({Text = "No Cooldown",Callback = function(value)
     end);
 end});
 
-local IF = Y3.Toggle({Text = "Infinite Lives",Callback = function(value)
-shared.godMode = value
+Y3.Toggle({Text = "WalkSpeed",Callback = function(value)
+    shared.speedTrue = value
 
-pcall(function()
-game.Players.LocalPlayer.CharacterAdded:Connect(function()
-    game.Players.LocalPlayer.Character.Humanoid.Died:Connect(function()
-        if shared.godMode then
-                    game.Players.LocalPlayer.Character.Humanoid:Destroy()
-                end;
-            end);
-        end);
-    end);
-end});
-
-Y3.Toggle({Text = "Kill Aura",Callback = function(value)
-    shared.killAura = value
-
-    while shared.killAura and wait() do
-        game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
+    while shared.speedTrue and wait() do
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = shared.speedValue
+    if not shared.speedValue then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+        end;
     end;
 end});
 
-Y3.Button({Text = "Don't Use Farm + Kill Aura",Callback = function()
-
+Y3.Slider({Text = "Speed",Min = 0,Max = 500,Def = 16,Callback = function(value)
+    shared.speedValue = value
 end});
 
-Y3.Button({Text = "Discord",Callback = function()
-    setclipboard("https://discord.gg/FZdxeYc8WC")
-end})
+Y3.Dropdown({Text = "NPC", Options = npcList, Callback = function(value)
+    shared.npcTP = value
+end});
 
-Y2.Button({Text = "Warp Bandit Camp",Callback = function()
+Y3.Button({Text = "Teleport",Callback = function()
+    for SowdHomo,v in pairs(game:GetService("Workspace").Interactions:GetChildren()) do
+        if v.Name == shared.npcTP then  
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame            
+        end;
+    end;
+end});
+
+
+
+--//Tab 4\\--
+
+local Y4 = X.New({
+    Title = "Bandit/Ascension"
+})
+
+
+
+
+Y4.Button({Text = "Warp Bandit Camp",Callback = function()
     local a={[1]=workspace.Interactions.BanditCamps.Data.ID,[2]={[1]="Let's go !"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a))
 end})
 
-Y2.Dropdown({Text = "Difficulty", Options = {"Bandit Camp","Ascension"}, Callback = function(value)
+Y4.Dropdown({Text = "Difficulty", Options = {"Bandit Camp","Ascension"}, Callback = function(value)
     writefile("Difficulty.txt",value) 
 end});
 
-local B = Y2.Toggle({Text = "Auto Ascension/Bandit",Enabled = nil,Callback = function(value) --//CLOSE YOU EYES WE ARE UNDER ATTACK THE CODE IS AWFUL OGHEUGGHUW BOOM OH GOD GET ODWN FUWEGFYIWEGY8WEGEWYFGWE BOOM BOOM
+local B = Y4.Toggle({Text = "Auto Ascension/Bandit",Enabled = nil,Callback = function(value) --//CLOSE YOU EYES WE ARE UNDER ATTACK THE CODE IS AWFUL OGHEUGGHUW BOOM OH GOD GET ODWN FUWEGFYIWEGY8WEGEWYFGWE BOOM BOOM
     shared.autoBandit = value
 
     if shared.autoBandit then 
@@ -192,8 +248,9 @@ local B = Y2.Toggle({Text = "Auto Ascension/Bandit",Enabled = nil,Callback = fun
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and not v:FindFirstChild("LookDirection") then
                 if v.Humanoid.Health > 0 then
                     repeat wait()
+                        if game.Players.LocalPlayer.Character.Humanoid.Health <= 20 then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
                         game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0)
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0) if game.Players.LocalPlayer.Character.Humanoid.Health <= 20 then  game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
                         until v.Humanoid.Health <= 0 or not shared.autoBandit
                     end;
                 end;
@@ -202,7 +259,7 @@ local B = Y2.Toggle({Text = "Auto Ascension/Bandit",Enabled = nil,Callback = fun
     end;
 end});
 
-Y2.Button({Text = "Auto Camp Off",Callback = function()
+Y4.Button({Text = "Auto Camp Off",Callback = function()
     writefile("Eternal Nightmare.txt","spencerlikesdudes123") 
 end});
 
