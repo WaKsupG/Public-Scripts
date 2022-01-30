@@ -83,6 +83,16 @@ Y.Dropdown({Text = "Weapon", Options = weaponList, Callback = function(value)
     writefile("WhatWeaponBro.txt",value) 
 end});
 
+Y.Toggle({Text = "Item Farm",Callback = function(value)
+shared.itemFarm = value
+
+while shared.itemFarm and wait() do
+for i,v in pairs(game:GetService("Workspace").Interactions:GetChildren()) do
+            game:GetService("ReplicatedStorage").Requests.GetNodeData:InvokeServer(workspace.Interactions:FindFirstChild(v.Name))
+        end;
+    end;
+end});
+
 Y.Toggle({Text = "Hide Identity",Callback = function(value)
 shared.hideName = value
 
