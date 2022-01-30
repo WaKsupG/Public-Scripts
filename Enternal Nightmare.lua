@@ -119,7 +119,7 @@ shared.godMode = value
 
 while shared.godMode and wait() do
 pcall(function()
-if game.Players.LocalPlayer.Character.Humanoid.Health <= 35 then 
+if game.Players.LocalPlayer.Character.Humanoid.Health <= 45 then 
                 game.Players.LocalPlayer.Character.Humanoid:Destroy() 
             end;
         end);
@@ -132,6 +132,10 @@ Y3.Toggle({Text = "Kill Aura",Callback = function(value)
     while shared.killAura and wait() do
         game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
     end;
+end});
+
+Y3.Button({Text = "Don't Use Farm + Kill Aura",Callback = function()
+
 end});
 
 Y3.Button({Text = "Discord",Callback = function()
@@ -153,7 +157,7 @@ local B = Y2.Toggle({Text = "Auto Bandit",Enabled = nil,Callback = function(valu
     if game.PlaceId ~= 8627695244 then 
     local a={[1]=workspace.Interactions.BanditCamps.Data.ID,[2]={[1]="Let's go !"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a)) end;
     pcall(function() for a,b in pairs(game:GetService("Workspace"):GetDescendants()) do if b:IsA("TouchTransmitter")then firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,1)firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,0)end end
-    if game.Players.LocalPlayer.Character.Humanoid.Health <= 35 then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
+    if game.Players.LocalPlayer.Character.Humanoid.Health <= 45 then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
         for i,v in pairs(game:GetService("Workspace").Entity:GetChildren()) do
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and not v:FindFirstChild("LookDirection") then
                 if v.Humanoid.Health > 0 then
