@@ -26,7 +26,7 @@ local Y2 = X.New({
 })
 
 game:GetService("RunService").Stepped:Connect(function()
-    if shared.autoFarm then
+    if shared.autoFarm or shared.autoBandit then
     for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") and v.CanCollide == true then
             v.CanCollide = false
@@ -70,6 +70,14 @@ pcall(function()
                 end;
             end;
         end);
+    end;
+end});
+
+Y.Toggle({Text = "Kill Aura",Callback = function(value)
+    shared.killAura = value
+
+    while shared.killAura and wait() do
+        game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
     end;
 end});
 
