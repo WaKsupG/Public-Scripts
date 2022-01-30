@@ -91,28 +91,6 @@ Y.Dropdown({Text = "Weapon", Options = weaponList, Callback = function(value)
     writefile("WhatWeaponBro.txt",value) 
 end});
 
-Y.Toggle({Text = "Item Farm",Callback = function(value)
-shared.itemFarm = value
-
-while shared.itemFarm and wait() do
-for i,v in pairs(game:GetService("Workspace").Interactions:GetChildren()) do
-            game:GetService("ReplicatedStorage").Requests.GetNodeData:InvokeServer(workspace.Interactions:FindFirstChild(v.Name))
-        end;
-    end;
-end});
-
-Y.Toggle({Text = "Hide Identity",Callback = function(value)
-shared.hideName = value
-
-while shared.hideName and wait() do
-    pcall(function()
-        if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Overhead") then
-                game.Players.LocalPlayer.Character.HumanoidRootPart.Overhead:Destroy()
-            end;
-        end);
-    end;
-end});
-
 Y.Slider({Text = "Distance",Min = -10,Max = 10,Def = 6.5,Callback = function(value)
     shared.mobDistance = value
 end});
@@ -148,10 +126,11 @@ end});
 Y2.Toggle({Text = "Kill Aura",Callback = function(value)
     shared.killAura = value
 
-    while shared.killAura and wait() do
+    while shared.killAura and wait(0.1) do
         game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
     end;
 end});
+
 
 Y2.Button({Text = "Discord",Callback = function()
     setclipboard("https://discord.gg/FZdxeYc8WC")
