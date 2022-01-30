@@ -114,12 +114,12 @@ Y3.Toggle({Text = "No Cooldown",Callback = function(value)
     end);
 end});
 
-Y3.Toggle({Text = "Infinite Lives",Callback = function(value)
+local IF = Y3.Toggle({Text = "Infinite Lives",Callback = function(value)
 shared.godMode = value
 
 while shared.godMode and wait() do
 pcall(function()
-if game.Players.LocalPlayer.Character.Humanoid.Health <= 45 then 
+if game.Players.LocalPlayer.Character.Humanoid.Health <= 10 then 
                 game.Players.LocalPlayer.Character.Humanoid:Destroy() 
             end;
         end);
@@ -153,15 +153,16 @@ local B = Y2.Toggle({Text = "Auto Bandit",Enabled = nil,Callback = function(valu
         writefile("Eternal Nightmare.txt","shared.autoBandit = true") 
     end;
         
-    while shared.autoBandit and wait() do 
-    if game.PlaceId ~= 8627695244 then 
+    while shared.autoBandit and wait() do
+    if game.PlaceId ~= 8627695244 then
     local a={[1]=workspace.Interactions.BanditCamps.Data.ID,[2]={[1]="Let's go !"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a)) end;
-    pcall(function() for a,b in pairs(game:GetService("Workspace"):GetDescendants()) do if b:IsA("TouchTransmitter")then firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,1)firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,0)end end
-    if game.Players.LocalPlayer.Character.Humanoid.Health <= 45 then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
+    pcall(function()
+        for a,b in pairs(game:GetService("Workspace"):GetDescendants()) do if b:IsA("TouchTransmitter")then firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,1)firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,0)end end
         for i,v in pairs(game:GetService("Workspace").Entity:GetChildren()) do
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and not v:FindFirstChild("LookDirection") then
                 if v.Humanoid.Health > 0 then
-                    repeat wait() 
+                    repeat wait()
+                        if game.Players.LocalPlayer.Character.Humanoid.Health <= 10 then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
                         game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0)
                         until v.Humanoid.Health <= 0 or not shared.autoBandit
