@@ -40,6 +40,14 @@ game:GetService("RunService").Stepped:Connect(function()
     end;
 end);
 
+game:GetService("RunService").Stepped:Connect(function()
+    if shared.autoBandit then
+        if game.Players.LocalPlayer.Character.Humanoid.Health <= 20 then 
+            game.Players.LocalPlayer.Character.Humanoid:Destroy() 
+        end;
+    end;
+end);
+
 if isfile("Eternal Nightmare.txt") and isfile("WhatWeaponBro.txt") and isfile("Difficulty.txt") then
     print("It's there")
 else
@@ -129,17 +137,15 @@ end});
 local IF = Y3.Toggle({Text = "Infinite Lives",Callback = function(value)
 shared.godMode = value
 
-while shared.godMode and wait() do
 pcall(function()
-if game.Players.LocalPlayer.Character.Humanoid.Health <= shared.resetAt then 
-                game.Players.LocalPlayer.Character.Humanoid:Destroy() 
-            end;
+game.Players.LocalPlayer.CharacterAdded:Connect(function()
+    game.Players.LocalPlayer.Character.Humanoid.Died:Connect(function()
+        if shared.godMode then
+                    game.Players.LocalPlayer.Character.Humanoid:Destroy()
+                end;
+            end);
         end);
-    end;
-end});
-
-Y3.Slider({Text = "Reset Lives At",Min = 0,Max = 70,Def = 35,Callback = function(value)
-    shared.resetAt = value
+    end);
 end});
 
 Y3.Toggle({Text = "Kill Aura",Callback = function(value)
@@ -186,7 +192,6 @@ local B = Y2.Toggle({Text = "Auto Ascension/Bandit",Enabled = nil,Callback = fun
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and not v:FindFirstChild("LookDirection") then
                 if v.Humanoid.Health > 0 then
                     repeat wait()
-                        if game.Players.LocalPlayer.Character.Humanoid.Health <= shared.resetAt then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
                         game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0)
                         until v.Humanoid.Health <= 0 or not shared.autoBandit
