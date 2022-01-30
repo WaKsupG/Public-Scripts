@@ -56,7 +56,6 @@ for i,v in pairs(game:GetService("Workspace").Interactions:GetChildren()) do
 end;
 
 
-
 --//Tab One Start\\--
 
 
@@ -135,15 +134,15 @@ local Y2 = X.New({
 local IF = Y2.Toggle({Text = "Infinite Lives",Callback = function(value)
 shared.godMode = value
 
-pcall(function()
-game.Players.LocalPlayer.CharacterAdded:Connect(function()
-    game.Players.LocalPlayer.Character.Humanoid.Died:Connect(function()
-        if shared.godMode then
-                    game.Players.LocalPlayer.Character.Humanoid:Destroy()
-                end;
-            end);
-        end);
-    end);
+while shared.godMode do
+    if game.Players.LocalPlayer.Character.Humanoid.Health <= shared.resetAt then 
+            game.Players.LocalPlayer.Character.Humanoid:Destroy() 
+        end;
+    end;
+end});
+
+Y2.Slider({Text = "Reset Lives At",Min = 0,Max = 100,Def = 16,Callback = function(value)
+    shared.resetAt = value
 end});
 
 Y2.Toggle({Text = "Kill Aura",Callback = function(value)
@@ -236,21 +235,21 @@ local B = Y4.Toggle({Text = "Auto Ascension/Bandit",Enabled = nil,Callback = fun
     end;
         
     while shared.autoBandit and wait() do
+    pcall(function()
     if game.PlaceId ~= 8627695244 and readfile("Difficulty.txt") == "Bandit Camp" then
         local a={[1]=workspace.Interactions.BanditCamps.Data.ID,[2]={[1]="Let's go !"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a))
     end;
     if game.PlaceId ~= 7417350864 and readfile("Difficulty.txt") == "Ascension" then
         local a={[1]=workspace.Interactions:FindFirstChild("Undercover Druid").Data.ID,[2]={[1]="Ascension"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a))
     end;
-    pcall(function()
         for a,b in pairs(game:GetService("Workspace"):GetDescendants()) do if b:IsA("TouchTransmitter")then firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,1)firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,0)end end
         for i,v in pairs(game:GetService("Workspace").Entity:GetChildren()) do
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and not v:FindFirstChild("LookDirection") then
                 if v.Humanoid.Health > 0 then
                     repeat wait()
-                        if game.Players.LocalPlayer.Character.Humanoid.Health <= 20 then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
+                        if game.Players.LocalPlayer.Character.Humanoid.Health <= 45 then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
                         game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0) if game.Players.LocalPlayer.Character.Humanoid.Health <= 20 then  game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0)
                         until v.Humanoid.Health <= 0 or not shared.autoBandit
                     end;
                 end;
