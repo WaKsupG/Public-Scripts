@@ -1,10 +1,29 @@
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/LegoHacks/Utilities/main/UI.lua"))();
+repeat wait() until game:IsLoaded()
 
-local Window = Library:CreateWindow("Autofarm")
+local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
 
-local folder = Window:AddFolder("Main")
+local X = Material.Load({
+    Title = "Eternal Nightmare - 10x",
+    Style = 2,
+    SizeX = 500,
+    SizeY = 350,
+    Theme = "Dark",
+    ColorOverrides = {
+        MainFrame = Color3.fromRGB(60,60,60)
+    }
+})
 
-local folder2 = Window:AddFolder("Extra")
+for i, v in next, getconnections(game.Players.LocalPlayer.Idled) do
+    v:Disable();
+end;    
+
+local Y = X.New({
+    Title = "Main"
+})
+
+local Y2 = X.New({
+    Title = "Bandit"
+})
 
 game:GetService("RunService").Stepped:Connect(function()
     if shared.autoFarm then
@@ -17,14 +36,25 @@ game:GetService("RunService").Stepped:Connect(function()
     end;
 end);
 
+if isfile("Eternal Nightmare.txt") and isfile("WhatWeaponBro.txt") then
+    print("It's there")
+else
+    writefile("Eternal Nightmare.txt","")
+    writefile("WhatWeaponBro.txt","")
+end;
+
 local weaponList = {};
+local readWeapon = readfile("WhatWeaponBro.txt")
+shared.mobDistance = 6.3
+shared.weapon = readWeapon
+
 for i,v in pairs(game:GetService("ReplicatedStorage").ClientSidedActions:GetChildren()) do
     if string.find(v.Name, "Basic") then
         table.insert(weaponList, v.Name)
     end;
 end;
 
-folder:AddToggle({text = "Autofarm", callback = function(value) 
+Y.Toggle({Text = "Autofarm",Callback = function(value)
 shared.autoFarm = value
     
 while shared.autoFarm and wait() do
@@ -43,11 +73,12 @@ pcall(function()
     end;
 end});
 
-folder:AddList({text = "Weapon", values = weaponList, callback = function(value)
-    shared.weapon = value
+Y.Dropdown({Text = "Weapon", Options = weaponList, Callback = function(value)
+    shared.weapon = value 
+    writefile("WhatWeaponBro.txt",value) 
 end});
 
-folder:AddToggle({text = "Hide Identity", callback = function(value) 
+Y.Toggle({Text = "Hide Identity",Callback = function(value)
 shared.hideName = value
 
 while shared.hideName and wait() do
@@ -59,11 +90,11 @@ while shared.hideName and wait() do
     end;
 end});
 
-folder:AddSlider({text = 'Distance', min = 0, max = 10, incrementalMode = true, callback = function(value) 
+Y.Slider({Text = "Distance",Min = 0,Max = 10,Def = 6.5,Callback = function(value)
     shared.mobDistance = value
 end});
 
-folder2:AddToggle({text = "No Cooldown", callback = function(value)
+Y.Toggle({Text = "No Cooldown",Callback = function(value)
     shared.noCooldown = value
 
     game.Players.LocalPlayer.Character.Cooldowns.ChildAdded:Connect(function(nopeLol1)
@@ -79,25 +110,44 @@ folder2:AddToggle({text = "No Cooldown", callback = function(value)
     end);
 end});
 
-folder2:AddButton({text = "Discord", callback = function(value) 
+Y.Button({Text = "Discord",Callback = function()
     setclipboard("https://discord.gg/FZdxeYc8WC")
 end})
 
-folder2:AddToggle({text = "Auto Bandit Stage", callback = function(value)
-    shared.banditStage = value
-
-    while shared.banditStage and wait(1) do
-        for i,v in pairs(game:GetService("Workspace"):GetDescendants()) do
-            if v:IsA("TouchTransmitter") then
-                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
-            end;
-        end;
-    end;
-end});
-
-folder2:AddButton({text = "Warp Bandit Camp", callback = function(value) 
+Y2.Button({Text = "Warp Bandit Camp",Callback = function()
     local a={[1]=workspace.Interactions.BanditCamps.Data.ID,[2]={[1]="Let's go !"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a))
 end})
 
+local B = Y2.Toggle({Text = "Auto Bandit",Enabled = nil,Callback = function(value) --//CLOSE YOU EYES WE ARE UNDER ATTACK THE CODE IS AWFUL OGHEUGGHUW BOOM OH GOD GET ODWN FUWEGFYIWEGY8WEGEWYFGWE BOOM BOOM
+    shared.autoBandit = value
 
-Library:Init()
+    if shared.autoBandit then 
+        writefile("Eternal Nightmare.txt","shared.autoBandit = true") 
+    end;
+        
+    while shared.autoBandit and wait() do 
+    if game.PlaceId ~= 8627695244 then 
+    local a={[1]=workspace.Interactions.BanditCamps.Data.ID,[2]={[1]="Let's go !"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a)) end;
+    pcall(function() for a,b in pairs(game:GetService("Workspace"):GetDescendants()) do if b:IsA("TouchTransmitter")then firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,1)firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,0)end end
+        for i,v in pairs(game:GetService("Workspace").Entity:GetChildren()) do
+            if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and not v:FindFirstChild("LookDirection") then
+                if v.Humanoid.Health > 0 then
+                    repeat wait() 
+                        if game.Players.LocalPlayer.Character.Humanoid.Health <= 35 then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
+                        game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0)
+                        until v.Humanoid.Health <= 0 or not shared.autoBandit
+                    end;
+                end;
+            end;
+        end);
+    end;
+end});
+
+Y2.Button({Text = "Auto Bandit Off",Callback = function()
+    writefile("Eternal Nightmare.txt","spencerlikesdudes123") 
+end});
+
+if readfile("Eternal Nightmare.txt") == "shared.autoBandit = true" then
+    B:SetState(true)
+end;
