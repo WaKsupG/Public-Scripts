@@ -134,7 +134,7 @@ local Y2 = X.New({
 local IF = Y2.Toggle({Text = "Infinite Lives",Callback = function(value)
 shared.godMode = value
 
-while shared.godMode do
+while shared.godMode and wait() do
     if game.Players.LocalPlayer.Character.Humanoid.Health <= shared.resetAt then 
             game.Players.LocalPlayer.Character.Humanoid:Destroy() 
         end;
