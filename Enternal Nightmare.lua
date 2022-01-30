@@ -26,7 +26,7 @@ local Y3 = X.New({
 })
 
 local Y2 = X.New({
-    Title = "Bandit"
+    Title = "Bandit/Ascension"
 })
 
 game:GetService("RunService").Stepped:Connect(function()
@@ -40,11 +40,12 @@ game:GetService("RunService").Stepped:Connect(function()
     end;
 end);
 
-if isfile("Eternal Nightmare.txt") and isfile("WhatWeaponBro.txt") then
+if isfile("Eternal Nightmare.txt") and isfile("WhatWeaponBro.txt") and isfile("Difficulty.txt") then
     print("It's there")
 else
     writefile("Eternal Nightmare.txt","")
     writefile("WhatWeaponBro.txt","")
+    writefile("Difficulty.txt","")
 end;
 
 local weaponList = {};
@@ -161,7 +162,11 @@ Y2.Button({Text = "Warp Bandit Camp",Callback = function()
     local a={[1]=workspace.Interactions.BanditCamps.Data.ID,[2]={[1]="Let's go !"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a))
 end})
 
-local B = Y2.Toggle({Text = "Auto Bandit",Enabled = nil,Callback = function(value) --//CLOSE YOU EYES WE ARE UNDER ATTACK THE CODE IS AWFUL OGHEUGGHUW BOOM OH GOD GET ODWN FUWEGFYIWEGY8WEGEWYFGWE BOOM BOOM
+Y2.Dropdown({Text = "Difficulty", Options = {"Bandit Camp","Ascension"}, Callback = function(value)
+    writefile("Difficulty.txt",value) 
+end});
+
+local B = Y2.Toggle({Text = "Auto Ascension/Bandit",Enabled = nil,Callback = function(value) --//CLOSE YOU EYES WE ARE UNDER ATTACK THE CODE IS AWFUL OGHEUGGHUW BOOM OH GOD GET ODWN FUWEGFYIWEGY8WEGEWYFGWE BOOM BOOM
     shared.autoBandit = value
 
     if shared.autoBandit then 
@@ -169,8 +174,12 @@ local B = Y2.Toggle({Text = "Auto Bandit",Enabled = nil,Callback = function(valu
     end;
         
     while shared.autoBandit and wait() do
-    if game.PlaceId ~= 8627695244 then
-    local a={[1]=workspace.Interactions.BanditCamps.Data.ID,[2]={[1]="Let's go !"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a)) end;
+    if game.PlaceId ~= 8627695244 and readfile("Difficulty.txt") == "Bandit Camp" then
+        local a={[1]=workspace.Interactions.BanditCamps.Data.ID,[2]={[1]="Let's go !"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a))
+    end;
+    if game.PlaceId ~= 7417350864 and readfile("Difficulty.txt") == "Ascension" then
+        local a={[1]=workspace.Interactions:FindFirstChild("Undercover Druid").Data.ID,[2]={[1]="Ascension"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a))
+    end;
     pcall(function()
         for a,b in pairs(game:GetService("Workspace"):GetDescendants()) do if b:IsA("TouchTransmitter")then firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,1)firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,0)end end
         for i,v in pairs(game:GetService("Workspace").Entity:GetChildren()) do
@@ -188,7 +197,7 @@ local B = Y2.Toggle({Text = "Auto Bandit",Enabled = nil,Callback = function(valu
     end;
 end});
 
-Y2.Button({Text = "Auto Bandit Off",Callback = function()
+Y2.Button({Text = "Auto Camp Off",Callback = function()
     writefile("Eternal Nightmare.txt","spencerlikesdudes123") 
 end});
 
