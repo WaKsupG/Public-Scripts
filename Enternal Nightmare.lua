@@ -21,6 +21,10 @@ local Y = X.New({
     Title = "Main"
 })
 
+local Y3 = X.New({
+    Title = "Extra"
+})
+
 local Y2 = X.New({
     Title = "Bandit"
 })
@@ -73,14 +77,6 @@ pcall(function()
     end;
 end});
 
-Y.Toggle({Text = "Kill Aura",Callback = function(value)
-    shared.killAura = value
-
-    while shared.killAura and wait() do
-        game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
-    end;
-end});
-
 Y.Dropdown({Text = "Weapon", Options = weaponList, Callback = function(value)
     shared.weapon = value 
     writefile("WhatWeaponBro.txt",value) 
@@ -98,11 +94,11 @@ while shared.hideName and wait() do
     end;
 end});
 
-Y.Slider({Text = "Distance",Min = 0,Max = 10,Def = 6.5,Callback = function(value)
+Y.Slider({Text = "Distance",Min = -10,Max = 10,Def = 6.5,Callback = function(value)
     shared.mobDistance = value
 end});
 
-Y.Toggle({Text = "No Cooldown",Callback = function(value)
+Y3.Toggle({Text = "No Cooldown",Callback = function(value)
     shared.noCooldown = value
 
     game.Players.LocalPlayer.Character.Cooldowns.ChildAdded:Connect(function(nopeLol1)
@@ -118,7 +114,27 @@ Y.Toggle({Text = "No Cooldown",Callback = function(value)
     end);
 end});
 
-Y.Button({Text = "Discord",Callback = function()
+Y3.Toggle({Text = "Infinite Lives",Callback = function(value)
+shared.godMode = value
+
+while shared.godMode and wait() do
+pcall(function()
+if game.Players.LocalPlayer.Character.Humanoid.Health <= 35 then 
+                game.Players.LocalPlayer.Character.Humanoid:Destroy() 
+            end;
+        end);
+    end;
+end});
+
+Y3.Toggle({Text = "Kill Aura",Callback = function(value)
+    shared.killAura = value
+
+    while shared.killAura and wait() do
+        game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
+    end;
+end});
+
+Y3.Button({Text = "Discord",Callback = function()
     setclipboard("https://discord.gg/FZdxeYc8WC")
 end})
 
@@ -137,11 +153,11 @@ local B = Y2.Toggle({Text = "Auto Bandit",Enabled = nil,Callback = function(valu
     if game.PlaceId ~= 8627695244 then 
     local a={[1]=workspace.Interactions.BanditCamps.Data.ID,[2]={[1]="Let's go !"}}game:GetService("ReplicatedStorage").Requests.GetDialog:InvokeServer(unpack(a)) end;
     pcall(function() for a,b in pairs(game:GetService("Workspace"):GetDescendants()) do if b:IsA("TouchTransmitter")then firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,1)firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart,b.Parent,0)end end
+    if game.Players.LocalPlayer.Character.Humanoid.Health <= 35 then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
         for i,v in pairs(game:GetService("Workspace").Entity:GetChildren()) do
             if game.Players.LocalPlayer.Character and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and not v:FindFirstChild("LookDirection") then
                 if v.Humanoid.Health > 0 then
                     repeat wait() 
-                        if game.Players.LocalPlayer.Character.Humanoid.Health <= 35 then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
                         game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0)
                         until v.Humanoid.Health <= 0 or not shared.autoBandit
