@@ -229,6 +229,7 @@ local B = Y4.Toggle({Text = "Auto Ascension/Bandit",Enabled = nil,Callback = fun
                 if v.Humanoid.Health > 0 then
                     repeat wait()
                         if game.Players.LocalPlayer.Character.Humanoid.Health <= 45 then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
+                        game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0)
                         until v.Humanoid.Health <= 0 or not shared.autoBandit
                     end;
