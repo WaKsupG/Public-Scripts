@@ -112,21 +112,27 @@ local Y2 = X.New({
 local IF = Y2.Toggle({Text = "Infinite Lives",Callback = function(value)
 shared.godMode = value
 
-while shared.godMode and wait() do
-    if game.Players.LocalPlayer.Character.Humanoid.Health <= shared.resetAt then 
-            game.Players.LocalPlayer.Character.Humanoid:Destroy() 
-        end;
-    end;
+pcall(function()
+game:GetService('Players').PlayerAdded:Connect(function(LP)
+    LP.CharacterAdded:Connect(function(LPC)
+        LPC:WaitForChild("Humanoid").Died:Connect(function()
+            if shared.godMode then
+                        game.Players.LocalPlayer.Character.Humanoid:Destroy();
+                    end;
+                end);
+            end);
+        end);
+    end);
 end});
 
-Y2.Slider({Text = "Reset Lives At",Min = 0,Max = 100,Def = 16,Callback = function(value)
+Y2.Slider({Text = "Reset Lives At",Min = 0,Max = 100,Def = 20,Callback = function(value)
     shared.resetAt = value
 end});
 
 Y2.Toggle({Text = "Kill Aura",Callback = function(value)
     shared.killAura = value
 
-    while shared.killAura and wait(0.1) do
+    while shared.killAura and wait(.3) do
         game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
     end;
 end});
@@ -149,13 +155,13 @@ Y3.Toggle({Text = "No Cooldown",Callback = function(value)
 
     game.Players.LocalPlayer.Character.Cooldowns.ChildAdded:Connect(function(nopeLol1)
     if shared.noCooldown then
-            nopeLol1.Name = "Hi"
+            nopeLol1.Name = "spencerlikesmenlol";
         end;
     end);
     
     game.Players.LocalPlayer.Character.Cooldowns.DescendantAdded:Connect(function(nopeLol2)
     if shared.noCooldown then
-            nopeLol2.Name = "Hi There Buddy"
+            nopeLol2.Name = "sowdlikesboyslol"
         end;
     end);
 end});
@@ -227,7 +233,6 @@ local B = Y4.Toggle({Text = "Auto Ascension/Bandit",Enabled = nil,Callback = fun
                 if v.Humanoid.Health > 0 then
                     repeat wait()
                         if game.Players.LocalPlayer.Character.Humanoid.Health <= 45 then game.Players.LocalPlayer.Character.Humanoid:Destroy() end;
-                        game:GetService("ReplicatedStorage").Requests.UseSkill:FireServer(shared.weapon,1)
                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.mobDistance,0)
                         until v.Humanoid.Health <= 0 or not shared.autoBandit
                     end;
