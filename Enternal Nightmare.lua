@@ -125,10 +125,6 @@ game:GetService('Players').PlayerAdded:Connect(function(LP)
     end);
 end});
 
-Y2.Slider({Text = "Reset Lives At",Min = 0,Max = 100,Def = 20,Callback = function(value)
-    shared.resetAt = value
-end});
-
 Y2.Toggle({Text = "Kill Aura",Callback = function(value)
     shared.killAura = value
 
