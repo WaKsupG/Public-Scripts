@@ -113,15 +113,9 @@ local IF = Y2.Toggle({Text = "Infinite Lives",Callback = function(value)
 shared.godMode = value
 
 pcall(function()
-game:GetService('Players').PlayerAdded:Connect(function(LP)
-    LP.CharacterAdded:Connect(function(LPC)
-        LPC:WaitForChild("Humanoid").Died:Connect(function()
-            if shared.godMode then
-                        game.Players.LocalPlayer.Character.Humanoid:Destroy();
-                    end;
-                end);
-            end);
-        end);
+if shared.godMode then
+            local a=game.Players.LocalPlayer;if game.Players.LocalPlayer.Character then if game.Players.LocalPlayerr.Character:FindFirstChild("Humanoid")then game.Players.LocalPlayer.Character.Humanoid.Name="1"end;local b=game.Players.LocalPlayer.Character["1"]:Clone()b.Parent=game.Players.LocalPlayer.Character;b.Name="Humanoid"wait(0.1)game.Players.LocalPlayer.Character["1"]:Destroy()end
+        end;
     end);
 end});
 
