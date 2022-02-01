@@ -114,7 +114,7 @@ shared.godMode = value
 
 pcall(function()
 if shared.godMode then
-            local a=game.Players.LocalPlayer;if game.Players.LocalPlayer.Character then if game.Players.LocalPlayerr.Character:FindFirstChild("Humanoid")then game.Players.LocalPlayer.Character.Humanoid.Name="1"end;local b=game.Players.LocalPlayer.Character["1"]:Clone()b.Parent=game.Players.LocalPlayer.Character;b.Name="Humanoid"wait(0.1)game.Players.LocalPlayer.Character["1"]:Destroy()end
+            local a=game.Players.LocalPlayer;if a.Character then if a.Character:FindFirstChild("Humanoid")then a.Character.Humanoid.Name="1"end;local b=a.Character["1"]:Clone()b.Parent=a.Character;b.Name="Humanoid"wait(0.1)a.Character["1"]:Destroy()workspace.CurrentCamera.CameraSubject=a.Character.Humanoid;a.Character.Animate.Disabled=true;wait(0.1)a.Character.Animate.Disabled=false end
         end;
     end);
 end});
