@@ -44,7 +44,7 @@ shared.weapon = readWeapon
 shared.resetAt = 40
 
 for i,v in pairs(game:GetService("ReplicatedStorage").ClientSidedActions:GetChildren()) do
-    if string.find(v.Name, "Basic") then
+    if string.find(v.Name, "Basic") and not string.find(v.Name, "Old") then
         table.insert(weaponList, v.Name)
     end;
 end;
