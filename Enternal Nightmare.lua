@@ -38,6 +38,7 @@ end;
 
 local weaponList = {};
 local npcList = {};
+local getMouse = game.Players.LocalPlayer:GetMouse();
 local readWeapon = readfile("WhatWeaponBro.txt")
 shared.mobDistance = 6.3
 shared.weapon = readWeapon
@@ -114,6 +115,20 @@ shared.godMode = value
 
 pcall(function()
 if shared.godMode then
+            local a=game.Players.LocalPlayer;if a.Character then if a.Character:FindFirstChild("Humanoid")then a.Character.Humanoid.Name="1"end;local b=a.Character["1"]:Clone()b.Parent=a.Character;b.Name="Humanoid"wait(0.1)a.Character["1"]:Destroy()workspace.CurrentCamera.CameraSubject=a.Character.Humanoid;a.Character.Animate.Disabled=true;wait(0.1)a.Character.Animate.Disabled=false end
+        end;
+    end);
+end});
+
+Y2.TextField({Text = "Keybind (Lowecase)", Callback = function(value)
+    shared.godKey = value
+end});
+
+Y2.Toggle({Text = "Reset Lives Keybind",Callback = function(value)
+    shared.resetlivesBind = value
+
+    getMouse.KeyDown:Connect(function(key)
+        if key == shared.godKey and shared.resetlivesBind then
             local a=game.Players.LocalPlayer;if a.Character then if a.Character:FindFirstChild("Humanoid")then a.Character.Humanoid.Name="1"end;local b=a.Character["1"]:Clone()b.Parent=a.Character;b.Name="Humanoid"wait(0.1)a.Character["1"]:Destroy()workspace.CurrentCamera.CameraSubject=a.Character.Humanoid;a.Character.Animate.Disabled=true;wait(0.1)a.Character.Animate.Disabled=false end
         end;
     end);
