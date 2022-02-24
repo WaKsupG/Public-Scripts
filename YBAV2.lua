@@ -2,7 +2,7 @@
    local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
 
    local X = Material.Load({
-       Title = "Project 10x",
+       Title = "YBA - 10x",
        Style = 2,
        SizeX = 500,
        SizeY = 350,
@@ -292,6 +292,10 @@
 
    Y3.Button({Text = "Kill Yourself",Callback = function()
        game.Players.LocalPlayer.Character.Humanoid.Health = 0
+   end})
+
+   Y3.Button({Text = "Copy Discord",Callback = function()
+       setclipboard("https://discord.gg/A2GyDuphnT")
    end})
 
    setreadonly(mt, false);
