@@ -3,6 +3,12 @@ repeat wait() until game:IsLoaded()
 rconsolename('AOT Evolution') rconsoleprint('@@GREEN@@') rconsoleprint('Script By: 10x - https://www.unocha.org/ukraine') wait(1)
 
 --//Script\\--
+if isfile("AOT-10x.txt") and isfile("Diff.txt") then --//I Probs Should of saved using json format oh well
+    print("It's there")
+else
+    writefile("AOT-10x.txt","")
+    writefile("Diff.txt","")
+end;
 
 local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
 
@@ -38,18 +44,16 @@ Y.Toggle({Text = "Autofarm",Callback = function(value)
 shared.autoFarm = value
     
 while shared.autoFarm and wait() do
-pcall(function()
-for i,v in pairs(game:GetService("Workspace").Titans:GetChildren()) do
+    for i,v in pairs(game:GetService("Workspace").Titans:GetChildren()) do
     if v:FindFirstChild("Humanoid") then
         if game.Players.LocalPlayer.Character and v:FindFirstChild("Head") then
                 repeat wait() 
-                        for i,v in pairs(game:GetService("Workspace").Titans:GetChildren()) do game:GetService("RunService").POST:FireServer(true,"Slash",v,"Nape",400,true) end;
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Head.CFrame - Vector3.new(5,10,5)
-                        until not shared.autoFarm or not v:FindFirstChild("Humanoid")
-                    end;
+                    for i,v in pairs(game:GetService("Workspace").Titans:GetChildren()) do game:GetService("RunService").POST:FireServer(true,"Slash",v,"Nape",400,true) end;
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Head.CFrame - Vector3.new(5,10,5)
+                until not shared.autoFarm or not v:FindFirstChild("Humanoid")
                 end;
             end;
-        end);
+        end;
     end;
 end});
 
