@@ -43,23 +43,25 @@ folder:AddToggle({text = "Autofarm", callback = function(value)
     shared.autoFarm = value
 
     while shared.autoFarm and wait() do
+    pcall(function()
         for i,v in pairs(game:GetService("Workspace").NPCs.Alive:GetChildren()) do
             if v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v:FindFirstChild("VisualName") then
                 if string.match(v.VisualName.Value, shared.mob) then
                     if v.data.stats.level.Value <= tonumber(shared.belowLevel) then
                     repeat wait()
-                    if shared.Method == "Below" then
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.distanceMob,0)
-                        game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("Attack",{})
-                    elseif shared.Method == "Behind" then 
-                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -shared.distanceMob)
+                        if shared.Method == "Below" then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.distanceMob,0)
                             game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("Attack",{})
+                        elseif shared.Method == "Behind" then 
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -shared.distanceMob)
+                                game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("Attack",{})
+                            end;
+                        until v.Humanoid.Health <= 0 or not shared.autoFarm
                         end;
-                    until v.Humanoid.Health <= 0 or not shared.autoFarm
-                    end;
-                end
+                    end
+                end;
             end;
-        end;
+        end);
     end;
 end});
 
