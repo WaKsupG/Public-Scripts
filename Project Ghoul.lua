@@ -48,13 +48,15 @@ folder:AddToggle({text = "Autofarm", callback = function(value)
             if v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v:FindFirstChild("VisualName") then
                     if v.data.stats.level.Value <= shared.belowLevel then
                     repeat wait()
-                        if shared.Method == "Below" then
+                        if shared.Method == "Below" and not shared.autoEat then --//Little messy and aids sorry
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.distanceMob,0)
                             game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("Attack",{})
-                        elseif shared.Method == "Behind" then 
+                        elseif shared.Method == "Behind" and not shared.autoEat then 
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -shared.distanceMob)
-                                game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("Attack",{})
-                            end;
+                                game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("Attack",{}) 
+                        elseif shared.Method == "Behind" and shared.autoEat then if not game:GetService("Workspace").Live:FindFirstChild(" ") then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame + (v.HumanoidRootPart.CFrame.lookVector * -shared.distanceMob) game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("Attack",{}) end;
+                            elseif shared.Method == "Below" and shared.autoEat then if not game:GetService("Workspace").Live:FindFirstChild(" ") then game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.distanceMob,0) game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("Attack",{}) end;
+                        end;
                         until v.Humanoid.Health <= 0 or not shared.autoFarm
                     end
                 end;
@@ -69,6 +71,24 @@ shared.autoEquip = value
 while shared.autoEquip and wait() do
     if game:GetService("Players").LocalPlayer.data.notSavable.weaponEquipped.Value == false then
             game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("RequestEquip")
+        end;
+    end;
+end});
+
+folder:AddToggle({text = "Auto Eat", callback = function(value)
+    shared.autoEat = value
+    
+    while shared.autoEat and wait() do
+        for i,v in pairs(game:GetService("Workspace").Live:GetChildren()) do
+            if v.Name == " " then
+                if v:FindFirstChild("ClickDetector") and v:FindFirstChild("HumanoidRootPart") then
+                    local mags = (v.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude
+                    if mags <= 50 then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
+                    fireclickdetector(v.ClickDetector)
+                    end;
+                end;
+            end;
         end;
     end;
 end});
@@ -91,7 +111,11 @@ end});
 
 folder2:AddSlider({text = 'Distance', min = 1, max = 15, callback = function(value) 
     shared.distanceMob = value
-end})
+end});
+
+folder2:AddSlider({text = 'Speed', min = 1, max = 1500, callback = function(value) 
+    shared.distanceMob = value
+end});
 
 
 Library:Init();
