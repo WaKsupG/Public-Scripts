@@ -43,11 +43,9 @@ folder:AddToggle({text = "Autofarm", callback = function(value)
     shared.autoFarm = value
 
     while shared.autoFarm and wait() do
-    pcall(function()
         for i,v in pairs(game:GetService("Workspace").NPCs.Alive:GetChildren()) do
             if v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v:FindFirstChild("VisualName") then
-                if string.match(v.VisualName.Value, shared.mob) then
-                    if v.data.stats.level.Value <= tonumber(shared.belowLevel) then
+                    if v.data.stats.level.Value <= shared.belowLevel then
                     repeat wait()
                         if shared.Method == "Below" then
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame - Vector3.new(0,shared.distanceMob,0)
@@ -57,19 +55,13 @@ folder:AddToggle({text = "Autofarm", callback = function(value)
                                 game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("Attack",{})
                             end;
                         until v.Humanoid.Health <= 0 or not shared.autoFarm
-                        end;
                     end
                 end;
             end;
-        end);
     end;
 end});
 
-folder:AddList({text = 'Mob', values = {"Aogiri"}, callback = function(value)
-    shared.mob = value
-end});
-
-folder:AddBox({text = 'Target Level', callback = function(value)
+folder:AddSlider({text = 'Target Level', min = 1, max = 1000, callback = function(value) 
     shared.belowLevel = value
 end});
 
