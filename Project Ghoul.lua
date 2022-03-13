@@ -114,7 +114,7 @@ folder2:AddSlider({text = 'Distance', min = 1, max = 15, callback = function(val
 end});
 
 folder2:AddSlider({text = 'Speed', min = 1, max = 1500, callback = function(value) 
-    shared.distanceMob = value
+    getgenv().speed = value
 end});
 
 
