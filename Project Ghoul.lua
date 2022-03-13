@@ -43,6 +43,7 @@ folder:AddToggle({text = "Autofarm", callback = function(value)
     shared.autoFarm = value
 
     while shared.autoFarm and wait() do
+    pcall(function()
         for i,v in pairs(game:GetService("Workspace").NPCs.Alive:GetChildren()) do
             if v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 and v:FindFirstChild("VisualName") then
                     if v.data.stats.level.Value <= shared.belowLevel then
@@ -58,6 +59,7 @@ folder:AddToggle({text = "Autofarm", callback = function(value)
                     end
                 end;
             end;
+        end);
     end;
 end});
 
