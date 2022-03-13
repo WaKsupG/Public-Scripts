@@ -33,6 +33,13 @@ game:GetService("RunService").Stepped:Connect(function()
     end;
 end);
 
+--//Anti-AFK
+local VirtualUser = game:service("VirtualUser")
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end);
+
 --//Defaults
 shared.belowLevel = 300
 shared.Method = "Behind"
