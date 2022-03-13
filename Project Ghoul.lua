@@ -33,6 +33,11 @@ game:GetService("RunService").Stepped:Connect(function()
     end;
 end);
 
+--//Defaults
+shared.belowLevel = 300
+shared.Method = "Behind"
+shared.distanceMob = 10
+
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/LegoHacks/Utilities/main/UI.lua", true))()
 
 local Window = Library:CreateWindow("Project Ghoul")
