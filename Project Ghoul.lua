@@ -117,5 +117,12 @@ folder2:AddSlider({text = 'Speed', min = 1, max = 1500, callback = function(valu
     getgenv().speed = value
 end});
 
+folder:AddButton({text = 'Remove Seats', callback = function()
+    for i,v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Seat") then
+            v:Destroy()
+        end;
+    end;
+end});
 
 Library:Init();
