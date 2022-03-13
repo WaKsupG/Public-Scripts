@@ -63,6 +63,16 @@ folder:AddToggle({text = "Autofarm", callback = function(value)
     end;
 end});
 
+folder:AddToggle({text = "Auto Equip", callback = function(value)
+shared.autoEquip = value
+
+while shared.autoEquip and wait() do
+    if game:GetService("Players").LocalPlayer.data.notSavable.weaponEquipped.Value == false then
+            game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("RequestEquip")
+        end;
+    end;
+end});
+
 folder:AddSlider({text = 'Target Level', min = 1, max = 1000, callback = function(value) 
     shared.belowLevel = value
 end});
