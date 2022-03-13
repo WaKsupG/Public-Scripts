@@ -33,7 +33,7 @@ game:GetService("RunService").Stepped:Connect(function()
     end;
 end);
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/un-named%20backups/jans", true))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/LegoHacks/Utilities/main/UI.lua", true))()
 
 local Window = Library:CreateWindow("Project Ghoul")
 
@@ -60,6 +60,16 @@ folder:AddToggle({text = "Autofarm", callback = function(value)
                 end;
             end;
         end);
+    end;
+end});
+
+folder:AddToggle({text = "Auto Equip", callback = function(value)
+shared.autoEquip = value
+
+while shared.autoEquip and wait() do
+    if game:GetService("Players").LocalPlayer.data.notSavable.weaponEquipped.Value == false then
+            game:GetService("ReplicatedStorage").Events.RemoteEvent:FireServer("RequestEquip")
+        end;
     end;
 end});
 
