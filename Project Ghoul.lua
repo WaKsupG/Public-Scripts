@@ -132,7 +132,7 @@ folder2:AddSlider({text = 'Eat Distance', min = 1, max = 150, callback = functio
     shared.eatDistance = value
 end});
 
-folder2:AddSlider({text = 'Speed', min = 1, max = 1500, callback = function(value) 
+folder2:AddSlider({text = 'Speed', min = 1, max = 500, callback = function(value) 
     getgenv().speed = value
 end});
 
