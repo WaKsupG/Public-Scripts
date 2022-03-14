@@ -44,6 +44,7 @@ end);
 shared.belowLevel = 300
 shared.Method = "Behind"
 shared.distanceMob = 10
+shared.eatDistance = 50
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/LegoHacks/Utilities/main/UI.lua", true))()
 
@@ -91,17 +92,19 @@ folder:AddToggle({text = "Auto Eat", callback = function(value)
     shared.autoEat = value
     
     while shared.autoEat and wait() do
+    pcall(function()
         for i,v in pairs(game:GetService("Workspace").Live:GetChildren()) do
             if v.Name == " " then
                 if v:FindFirstChild("ClickDetector") and v:FindFirstChild("HumanoidRootPart") then
-                    local mags = (v.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude
-                    if mags <= 50 then
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
-                    fireclickdetector(v.ClickDetector)
+                    local mags = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude
+                    if mags <= shared.eatDistance then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
+                        fireclickdetector(v.ClickDetector)
+                        end;
                     end;
                 end;
             end;
-        end;
+        end);
     end;
 end});
 
@@ -123,6 +126,10 @@ end});
 
 folder2:AddSlider({text = 'Distance', min = 1, max = 15, callback = function(value) 
     shared.distanceMob = value
+end});
+
+folder2:AddSlider({text = 'Eat Distance', min = 1, max = 150, callback = function(value) 
+    shared.eatDistance = value
 end});
 
 folder2:AddSlider({text = 'Speed', min = 1, max = 1500, callback = function(value) 
