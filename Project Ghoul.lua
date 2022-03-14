@@ -120,6 +120,10 @@ folder:AddButton({text = 'Auto Eat Buggy In Public', callback = function()
     setclipboard("https://discord.gg/Mgn9E7ywg8")
 end});
 
+folder:AddButton({text = 'Script Discontinued', callback = function()
+    setclipboard("https://discord.gg/Mgn9E7ywg8")
+end});
+
 local Window2 = Library:CreateWindow("Settings")
 
 local folder2 = Window2:AddFolder('Custom')
