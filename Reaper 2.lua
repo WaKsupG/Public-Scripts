@@ -127,9 +127,15 @@ folder:AddToggle({text = "Auto Adjust Mob", callback = function(value)
     if getgenv().Quest == "Op Killer" and value then
         getgenv().OPK = true
         getgenv().AQ = false
+		getgenv().HMH = false
     elseif getgenv().Quest == "Acquired Taste" and value then
         getgenv().AQ = true
         getgenv().OPK = false
+		getgenv().HMH = false
+	elseif getgenv().Quest == "Hueco Mundo Hunt" and value then
+        getgenv().AQ = false
+        getgenv().OPK = false
+		getgenv().HMH = true
     end;
     
     while getgenv().AQ and wait() do    
@@ -158,6 +164,20 @@ folder:AddToggle({text = "Auto Adjust Mob", callback = function(value)
                 getgenv().Mob = "Corrupted Kido Corps"
             end;
         end); 
+    end;
+	
+	while getgenv().HMH and wait() do    
+    pcall(function()
+    local wtf = game:GetService("Players").LocalPlayer.PlayerGui.HUD.QuestsFrame2["Hueco Mundo Hunt"].Frame.Objective
+    
+    if string.match(wtf.Text,"Kill 1 Adjuchas") or string.match(wtf.Text,"Kill 2 Adjuchas") or string.match(wtf.Text,"Kill 3 Adjuchas") or string.match(wtf.Text,"Kill 4 Adjuchas")then
+            getgenv().Mob = "Adjucha"
+        elseif string.match(wtf.Text,"Kill 1 Vasto Lorde") and string.match(wtf.Text,"Kill 0 Adjuchas") then
+            getgenv().Mob = "Vasto Lorde"
+        elseif string.match(wtf.Text,"Kill 1 Enhanced Arrancars") or string.match(wtf.Text,"Kill 2 Enhanced Arrancars") and string.match(wtf.Text,"Kill 0 Vasto Lorde") and string.match(wtf.Text,"Kill 0 Adjuchas") then
+                getgenv().Mob = "Savage Hollow"
+            end;
+        end);
     end;
 end});
 
@@ -357,3 +377,4 @@ folder6:AddToggle({text = "Auto Reset", callback = function(value)
 end});
 
 Library:Init()
+'+
